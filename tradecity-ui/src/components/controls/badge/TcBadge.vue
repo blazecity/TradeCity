@@ -1,5 +1,5 @@
 <template>
-<div :class="['font-bold rounded-sm text-sm py-0.5 px-1.5 m-1 inline-block', childClass, fontColorWhite ? 'text-white' : 'text-black']">{{ text }}</div>
+<div :class="['font-bold rounded-sm text-xs p-0.5 m-1 inline-block', childClass, fontColorWhite ? 'text-white' : 'text-black']">{{ text }}</div>
 </template>
 
 <script setup lang="ts">
