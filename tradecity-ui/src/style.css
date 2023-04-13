@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: "Overpass";
+    src: url("./assets/fonts/Overpass-SemiBold.ttf") format("truetype");
+    font-style: bold;
+}
+
+@font-face {
+    font-family: "Overpass";
+    src: url("./assets/fonts/Overpass-Thin.ttf") format("truetype");
+    font-style: normal;
+}
+
+:root {
+    --primary: #1e1f22;
+    --secondary: #2b2d31;
+    --tertiary: #313338;
+    --dark: #141414;
+    --blue: #60A5FA;
+    --symbol-gray: #6f7282;
+}
