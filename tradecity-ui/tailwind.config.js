@@ -10,13 +10,25 @@ export default {
         "primary": "var(--primary)",
         "secondary": "var(--secondary)",
         "tertiary": "var(--tertiary)",
-        "dark": "var(--dark)"
+        "background-main": "var(--background-main)",
+        "dark": "var(--dark)",
+        "blue": "var(--blue)"
       },
       "fontFamily": {
-        "overpass": '"Overpass"'
+        "source": '"Source Sans Pro"'
       },
       "colors": {
-        "gray": "var(--symbol-gray)"
+        "gray": "var(--symbol-gray)",
+        "primary": "var(--primary)",
+        "secondary": "var(--secondary)",
+        "tertiary": "var(--tertiary)",
+        "dark": "var(--dark)",
+        "blue": "var(--blue)",
+        "dark-blue": "var(--dark-blue)"
+      },
+      "transitionProperty": {
+        "width": "width",
+        "height-width": "height, width"
       }
     },
   },

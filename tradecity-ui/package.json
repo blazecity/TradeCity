@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "immutable": "^4.3.0",
     "pinia": "^2.0.34",
     "rxjs": "^7.8.0",
     "vue": "^3.2.47"
