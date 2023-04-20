@@ -1,7 +1,7 @@
 <template>
-<div @click="select" :class="['flex mx-2 my-1.5 p-0.5 items-center functionality-item rounded', selected ? 'bg-neutral-600 bg-opacity-50' : '']">
+<div :class="['flex mx-2 my-1.5 p-0.5 items-center functionality-item rounded text-sm', selected ? 'bg-neutral-600 bg-opacity-50' : '']">
     <label-icon @click="bookmark" :styles="getIconStyle()" :height="24" :width="24" :filled="filled" />
-    <div>{{ functionality.name }}</div>
+    <div @click="select" class="w-full">{{ functionality.name }}</div>
 </div>
 </template>
 

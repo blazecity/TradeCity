@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { EventBus } from './eventbus';
-import { reactive, ref, shallowRef } from 'vue';
+import { ref, shallowRef } from 'vue';
 import { Module, ModuleFunctionalityGroup, SearchResultDocument } from './modules';
 import { ModuleFunctionality } from './modules';
 import HubIcon from '../components/icons/HubIcon.vue';
@@ -8,6 +8,17 @@ import DatabaseIcon from '../components/icons/DatabaseIcon.vue';
 import CodeIcon from '../components/icons/CodeIcon.vue';
 import { List, Set } from 'immutable';
 import { Orama, Results, create, insert, search, stemmers } from '@orama/orama';
+import { BroadcastChannel } from 'broadcast-channel';
+
+// TODO: This is just for demonstrating purposes, but has to be programmed out in a more generic way.
+export const useBroadcastChannel = defineStore("sharedState", () => {
+    const value = ref("");
+    const broadcaster = new BroadcastChannel<string>("sharedState");
+    const receiver = new BroadcastChannel<string>("sharedState");
+    const setValue = (newValue: string) => broadcaster.postMessage(newValue);
+    receiver.onmessage = message => value.value = message;
+    return { value, setValue };
+});
 
 export const useEventBus = defineStore("eventBus", () => {
     const stringEventBus = ref(new EventBus<string>());
@@ -17,7 +28,7 @@ export const useEventBus = defineStore("eventBus", () => {
 });
 
 export const useModuleIndex = defineStore("moduleIndex", () => {
-    const mods = [
+    const mods = List([
         new Module("bond", "Bonds", shallowRef(HubIcon), Set(["bd"]), List([
             new ModuleFunctionalityGroup("bond_general", "General", List([
                 new ModuleFunctionality("bond_general_1", "Func Bond", "bond function", Set([])),
@@ -37,7 +48,7 @@ export const useModuleIndex = defineStore("moduleIndex", () => {
                 new ModuleFunctionality("dev_general_2", "Func Dev 1", "dev function 1", Set([]))
             ]))
         ]))
-    ];
+    ]);
 
     const db = ref<Orama>()
     const searchResults = ref<Results>();

@@ -14,6 +14,9 @@ window.addEventListener("keydown", event => {
         booleanEventBus.emit("escape_pressed", new EventMessage("", true))
     }
 });
+
+let db;
+const request = window.indexedDB.open("MyTestDatabase", 3);
 </script>
 
 <style scoped>
