@@ -1,5 +1,5 @@
 <template>
-<div :class="['grid-cols-1 grid-rows-2 panel-inner-grid-template bg-tertiary m-1 rounded panel-grid-template p-1 text-sm', visible ? 'grid' : 'hidden']">
+<div :class="['grid-cols-1 grid-rows-2 panel-inner-grid-template bg-primary m-1 rounded panel-grid-template p-1 text-sm', visible ? 'grid' : 'hidden']">
     <div class="flex items-center">
         <span class="text-xs">{{ title }}</span>
         <clickable-icon styles="ml-auto">

@@ -1,5 +1,5 @@
 <template>
-<div class="mx-3 mt-2 text-sm text-gray">{{ name.toUpperCase() }}</div>
+<div class="mx-3 mt-2 text-sm text-symbol-gray">{{ name.toUpperCase() }}</div>
 <slot />
 </template>
 

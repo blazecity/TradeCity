@@ -1,13 +1,17 @@
 <template>
-<button type="button" class="bg-blue text-sm rounded-sm px-1.5 py-0.5 hover:bg-dark-blue m-0.5">{{ text }}</button>
+<button type="button" :class="['text-sm rounded-sm px-2.5 py-0.5 m-0.5 border border-neutral-600', styles, !dangerous ? 'bg-primary hover:bg-secondary' : 'bg-red-500 hover:bg-red-400']">{{ text }}</button>
 </template>
 
 <script setup lang="ts">
 interface TcButtonProps {
-    text: string
+    text: string,
+    dangerous?: boolean,
+    styles?: string
 }
 
-defineProps<TcButtonProps>();
+withDefaults(defineProps<TcButtonProps>(), {
+    dangerous: false
+});
 </script>
 
 <style scoped>

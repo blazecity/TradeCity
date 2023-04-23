@@ -1,8 +1,8 @@
 <template>
-<div class="flex items-center justify-between rounded bg-primary w-56">
+<div class="flex items-center justify-between rounded-sm w-56 border-neutral-600 border">
     <input @focusout="focusOut" :value="displayedValue" :placeholder="placeholder" type="text" class="general-input" :title="placeholder" autocomplete="new-password">
     <clickable-icon @click="clearValue">
-        <close-icon :height="12" :width="12" styles="fill-white mr-1" />
+        <close-icon :height="16" :width="16" styles="fill-neutral-400 mr-1" />
     </clickable-icon>
 </div>
 </template>
@@ -12,12 +12,13 @@ import { computed } from '@vue/reactivity';
 import { ref } from 'vue';
 import CloseIcon from '../../icons/CloseIcon.vue';
 import ClickableIcon from '../../icons/ClickableIcon.vue';
+import { InputType } from '../../../utils/types';
 
 interface TcInputProps {
     placeholder: string,
     styles?: string,
     defaultValue?: number | string,
-    type?: "string" | "number"
+    type?: InputType
 }
 
 const props = withDefaults(defineProps<TcInputProps>(), {

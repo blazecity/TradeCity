@@ -27,6 +27,8 @@
     --blue: #60A5FA;
     --dark-blue: #283a74;
     --symbol-gray: #6f7282;
+    --table-primary: #212429;
+    --table-secondary: #31353d;
 }
 
 @layer utilities {
@@ -62,5 +64,5 @@
 }
 
 .general-input {
-    @apply bg-primary w-full outline-none m-1 text-xs;
+    @apply bg-transparent w-full outline-none m-1;
 }
