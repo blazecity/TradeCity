@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       "fontFamily": {
-        "source": '"Source Sans Pro"'
+        "source": '"Webly Sleek UI"'
       },
       "colors": {
         "symbol-gray": "var(--symbol-gray)",
@@ -27,6 +27,8 @@ export default {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/line-clamp')
+  ],
 }
 

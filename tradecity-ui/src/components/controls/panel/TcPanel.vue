@@ -1,13 +1,13 @@
 <template>
-<div :class="['grid-cols-1 grid-rows-2 panel-inner-grid-template bg-primary m-1 rounded panel-grid-template p-1 text-sm', visible ? 'grid' : 'hidden']">
-    <div class="flex items-center">
+<div :class="['grid-cols-1 grid-rows-2 panel-inner-grid-template h-full bg-primary p-1 rounded panel-grid-template text-sm', visible ? 'grid' : 'hidden']">
+    <div class="flex items-center mb-0.5">
         <span class="text-xs">{{ title }}</span>
         <clickable-icon styles="ml-auto">
             <north-east-icon v-if="!expanded" @click="resize" :height="14" :width="14" styles="fill-white" />
             <south-west-icon v-else @click="resize" :height="14" :width="14" styles="fill-white" />
         </clickable-icon>
     </div>
-    <div class="overflow-auto scrollbar h-full">
+    <div class="overflow-auto scrollbar h-full p-0.5">
         <slot />
     </div>
 </div>

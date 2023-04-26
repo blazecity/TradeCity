@@ -1,5 +1,5 @@
 import { List } from "immutable";
-import { TableData } from "../../../utils/types";
+import { TableData, TableInputType } from "../../../utils/types";
 
 export interface ColumnOptions {
     name: string,
@@ -11,6 +11,8 @@ export interface ColumnOptions {
 }
 
 export class TcTableConfig<T extends TableData, U extends { [key in keyof T]: ColumnOptions }> {
+    private _numColumns: number;
+
     static defaultColumnOptions: ColumnOptions = {
         name: "",
         mutable: false,
@@ -26,12 +28,14 @@ export class TcTableConfig<T extends TableData, U extends { [key in keyof T]: Co
         public data: List<T>,
         public options: U 
     ) {
+        this._numColumns = Object.keys(options).length;
     }
 
-    public option(column: keyof T): ColumnOptions {
-        if (!this.options) return TcTableConfig.defaultColumnOptions;
-        const options = this.options[column];
-        if (options) return options;
-        return TcTableConfig.defaultColumnOptions;
+    public get numColumns(): number {
+        return this._numColumns;
+    }
+
+    public get cells(): List<TableInputType> {
+        return this.data.flatMap(dataPoint => Object.values(dataPoint));
     }
 }

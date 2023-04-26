@@ -7,7 +7,7 @@
     </div>
     <div v-if="searchResults.size > 0" class="absolute bg-primary mt-1 p-1 rounded w-full">
         <div v-for="resultGroup in searchResults">
-            <span class="m-1">{{ resultGroup.group }}</span>
+            <span class="m-1 font-bold">{{ resultGroup.group }}</span>
             <tc-search-result @click="selectFunctionality(result.funcId)" v-for="result in resultGroup.elements" :name="result.functionality" :description="result.description"></tc-search-result>
         </div>
         

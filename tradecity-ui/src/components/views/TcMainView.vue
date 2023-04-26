@@ -1,21 +1,14 @@
 <template>
 <div class="flex h-full w-full">
   <tc-navigation-modules />
-  <div class="grid grid-template flex-auto">
+  <div class="grid grid-template flex-auto h-full">
     <tc-header styles="col-span-2" />
     <tc-navigation-functionalities />
-    <main :class="['grid grid-cols-6 grid-rows-6 gap-px bg-background-main p-1', !functionalitiesVisible ? 'col-span-full' : '']">
-        <tc-panel title="CHF Bond Pricing Panel" :cols="6" :rows="2">
-          <tc-table :table-config="table"></tc-table>
-        </tc-panel>
-        <tc-panel title="Panel 2" :cols="3" :rows="2">
-          <tc-button text="Calculate" />
-          <tc-input placeholder="Hello" type="string"></tc-input>
-        </tc-panel>
-        <tc-panel title="Panel 2" :cols="3" :rows="2">Content 3</tc-panel>
-        <tc-panel title="Panel 2" :cols="3" :rows="2">Content 4</tc-panel>
-        <tc-panel title="Panel 2" :cols="3" :rows="2">Content 5</tc-panel>
-      </main>
+    <main :class="['grid grid-cols-6 grid-rows-6 h-full gap-px bg-background-main p-1.5 min-h-0', !functionalitiesVisible ? 'col-span-full' : '']">
+      <tc-panel title="Test Panel" :cols="6" :rows="7">
+        <tc-table :table-config="table" styles="col-span-full row-span-full"></tc-table>
+      </tc-panel>
+    </main>
   </div>
 </div>
 </template>
@@ -46,18 +39,68 @@ interface SampleTable extends TableData {
   field4: Date
 }
 
-const table = new TcTableConfig("", "", List<SampleTable>([
+const table = new TcTableConfig("", "Some Table", List<SampleTable>([
   { field1: "text1", field2: true, field3: 1, field4: new Date() },
   { field1: "text2", field2: false, field3: 2, field4: new Date() },
+  { field1: "text3", field2: false, field3: 2, field4: new Date() },
+  { field1: "text4", field2: false, field3: 2, field4: new Date() },
+  { field1: "text5", field2: false, field3: 2, field4: new Date() },
+  { field1: "text6", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text7", field2: false, field3: 2, field4: new Date() },
+  { field1: "text76", field2: false, field3: 2, field4: new Date() },
+  { field1: "text77", field2: false, field3: 2, field4: new Date() },
+  { field1: "text78", field2: false, field3: 2, field4: new Date() },
+
 ]), {
   field1: {
-    name: "Field 1"
+    name: "Field 1",
+    mutable: true
   },
   field2: {
     name: "Field 2"
   },
   field3: {
-    name: "Field 3"
+    name: "Field 3",
+    mutable: true
   },
   field4: {
     name: "Field 4"
