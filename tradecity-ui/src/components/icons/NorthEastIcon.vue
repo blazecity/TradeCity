@@ -12,7 +12,7 @@ interface NorthEastIconProps {
 } 
 
 withDefaults(defineProps<NorthEastIconProps>(), {
-    styles: "fill-blue",
+    styles: "fill-tc-blue",
     width: 48,
     height: 48
 });

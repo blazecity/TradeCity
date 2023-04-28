@@ -15,7 +15,7 @@ export default {
         "secondary": "var(--secondary)",
         "tertiary": "var(--tertiary)",
         "dark": "var(--dark)",
-        "blue": "var(--blue)",
+        "tc-blue": "var(--blue)",
         "dark-blue": "var(--dark-blue)",
         "background-main": "var(--background-main)",
         "table-primary": "var(--table-primary)",
@@ -28,7 +28,9 @@ export default {
     },
   },
   plugins: [
-    require('@tailwindcss/line-clamp')
+    require("@tailwindcss/forms")({
+      strategy: "class"
+    })
   ],
 }
 

@@ -12,7 +12,7 @@ interface HubIconProps {
 } 
 
 withDefaults(defineProps<HubIconProps>(), {
-    styles: "fill-blue",
+    styles: "fill-tc-blue",
     width: 48,
     height: 48
 });

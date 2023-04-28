@@ -37,8 +37,8 @@ function select(): void {
 }
 
 function getIconStyle(): string {
-    if (filled.value && selected.value) return "fill-blue mr-1";
-    if (filled.value) return "fill-blue mr-1";
+    if (filled.value && selected.value) return "fill-tc-blue mr-1";
+    if (filled.value) return "fill-tc-blue mr-1";
     return "fill-white mr-1";
 }
 </script>

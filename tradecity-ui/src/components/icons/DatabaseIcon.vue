@@ -12,7 +12,7 @@ interface DatabaseIconProps {
 } 
 
 withDefaults(defineProps<DatabaseIconProps>(), {
-    styles: "fill-blue",
+    styles: "fill-tc-blue",
     width: 48,
     height: 48
 });

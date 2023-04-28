@@ -10,15 +10,14 @@
 import { ref } from 'vue';
 import TcNavigationFunctionality from './TcNavigationFunctionality.vue';
 import TcNavigationFunctionalityGroup from './TcNavigationFunctionalityGroup.vue';
-import { List } from 'immutable';
 import { ModuleFunctionalityGroup } from '../../utils/modules';
 import { useEventBus, useModuleIndex } from '../../utils/store';
 import { defaultFunctionalitiesVisible } from '../../utils/constants';
 
-const functionalityGroups = ref<List<ModuleFunctionalityGroup>>();
+const functionalityGroups = ref<Array<ModuleFunctionalityGroup>>();
 const functionalitiesVisible = ref(defaultFunctionalitiesVisible);
 const { numberEventBus, booleanEventBus } = useEventBus();
 const { modules } = useModuleIndex();
-numberEventBus.subscribe("functionality_group_index_changed", eventMessage => functionalityGroups.value = modules.get(eventMessage.payload)?.functionalities ?? List());
+numberEventBus.subscribe("functionality_group_index_changed", eventMessage => functionalityGroups.value = modules[eventMessage.payload]?.functionalities ?? []);
 booleanEventBus.subscribe("functionality_bar_visible", eventMessage => functionalitiesVisible.value = eventMessage.payload);
 </script>

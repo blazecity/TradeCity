@@ -15,7 +15,7 @@ interface StarIconProps {
 } 
 
 withDefaults(defineProps<StarIconProps>(), {
-    styles: "fill-blue",
+    styles: "fill-tc-blue",
     width: 48,
     height: 48,
     filled: false

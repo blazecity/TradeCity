@@ -12,7 +12,7 @@ interface SwapIconProps {
 } 
 
 withDefaults(defineProps<SwapIconProps>(), {
-    styles: "fill-blue",
+    styles: "fill-tc-blue",
     width: 48,
     height: 48
 });

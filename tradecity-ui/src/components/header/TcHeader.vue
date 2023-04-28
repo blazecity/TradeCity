@@ -1,7 +1,7 @@
 <template>
 <header :class="['flex h-full border-b-[1px] border-b-zinc-900 shadow-sm items-center bg-tertiary', styles]">
     <div class="flex py-1 items-center min-w-[14rem] px-2 bg-tertiary">
-        <span>{{ moduleTitle }}</span>
+        <span class="font-bold">{{ moduleTitle }}</span>
         <clickable-icon styles="ml-auto" @click="hideFunctionalityBar">
             <hide-icon v-if="functionalitiesVisible" styles="fill-white" :height="17" :width="17" />
             <open-full-icon v-else styles="fill-white" :height="17" :width="17" />

@@ -12,7 +12,7 @@ interface CodeIconProps {
 } 
 
 withDefaults(defineProps<CodeIconProps>(), {
-    styles: "fill-blue",
+    styles: "fill-tc-blue",
     width: 48,
     height: 48
 });

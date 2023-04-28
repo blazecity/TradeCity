@@ -25,7 +25,7 @@ const { numberEventBus, stringEventBus, booleanEventBus } = useEventBus();
 function setSelectedModule(index: number): void {
     selectedModuleIndex.value = index;
     numberEventBus.emit("functionality_group_index_changed", new EventMessage("", index));
-    stringEventBus.emit("module_selected_name", new EventMessage("", modules.get(index)?.name ?? ""));
+    stringEventBus.emit("module_selected_name", new EventMessage("", modules[index]?.name ?? ""));
     booleanEventBus.emit("functionality_bar_visible", new EventMessage("", true));
 }
 

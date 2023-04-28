@@ -12,7 +12,7 @@ interface HideIconProps {
 } 
 
 withDefaults(defineProps<HideIconProps>(), {
-    styles: "fill-blue",
+    styles: "fill-tc-blue",
     width: 48,
     height: 48
 });

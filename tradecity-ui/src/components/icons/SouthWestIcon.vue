@@ -12,7 +12,7 @@ interface SouthWestIconProps {
 } 
 
 withDefaults(defineProps<SouthWestIconProps>(), {
-    styles: "fill-blue",
+    styles: "fill-tc-blue",
     width: 48,
     height: 48
 });

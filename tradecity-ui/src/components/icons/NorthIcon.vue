@@ -1,6 +1,6 @@
 <template>
     <svg :class="[styles, 'h-full']" xmlns="http://www.w3.org/2000/svg" :height="height" viewBox="0 96 960 960" :width="width">
-        <path d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z"/>
+        <path d="M450 976V290L242 498l-42-42 280-280 280 280-42 42-208-208v686h-60Z"/>
     </svg>
 </template>
     

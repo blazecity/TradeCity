@@ -1,18 +1,17 @@
 import { Component } from "vue";
-import { List, Set } from "immutable";
 
 export class Module {
     constructor(
         public readonly id: string,
         public readonly name: string, 
         public readonly iconComponent: Component, 
-        public readonly tags: Set<string>,
-        public readonly functionalities: List<ModuleFunctionalityGroup>
+        public readonly tags: Array<string>,
+        public readonly functionalities: Array<ModuleFunctionalityGroup>
     ) {}
 }
 
 export class ModuleFunctionalityGroup {
-    constructor(public readonly id: string, public readonly name: string, public readonly functionalities: List<ModuleFunctionality>) {}
+    constructor(public readonly id: string, public readonly name: string, public readonly functionalities: Array<ModuleFunctionality>) {}
 }
 
 export class ModuleFunctionality {
@@ -20,7 +19,7 @@ export class ModuleFunctionality {
         public readonly id: string,
         public readonly name: string,
         public readonly description: string,
-        public readonly tags: Set<string>,
+        public readonly tags: Array<string>,
     ) {}
 }
 

@@ -6,7 +6,6 @@ import { ModuleFunctionality } from './modules';
 import HubIcon from '../components/icons/HubIcon.vue';
 import DatabaseIcon from '../components/icons/DatabaseIcon.vue';
 import CodeIcon from '../components/icons/CodeIcon.vue';
-import { List, Set } from 'immutable';
 import { Orama, Results, create, insert, search, stemmers } from '@orama/orama';
 import { BroadcastChannel } from 'broadcast-channel';
 
@@ -28,27 +27,27 @@ export const useEventBus = defineStore("eventBus", () => {
 });
 
 export const useModuleIndex = defineStore("moduleIndex", () => {
-    const mods = List([
-        new Module("bond", "Bonds", shallowRef(HubIcon), Set(["bd"]), List([
-            new ModuleFunctionalityGroup("bond_general", "General", List([
-                new ModuleFunctionality("bond_general_1", "Func Bond", "bond function", Set([])),
-                new ModuleFunctionality("bond_general_2", "Func Bond 1", "bond function 1", Set([])),
-                new ModuleFunctionality("bond_general_3", "Func Bond 2", "bond function 2", Set([]))
-            ]))
-        ])),
-        new Module("marketdata", "Marketdata", shallowRef(DatabaseIcon), Set(["md"]), List([
-            new ModuleFunctionalityGroup("marketdata_general", "General", List([
-                new ModuleFunctionality("marketdata_general_1", "Func Marketdata", "marketdata function", Set([])),
-                new ModuleFunctionality("marketdata_general_2", "Func Marketdata 1", "marketdata function 1", Set([]))
-            ]))
-        ])),
-        new Module("dev", "Developer", shallowRef(CodeIcon), Set(), List([
-            new ModuleFunctionalityGroup("dev_general", "General", List([
-                new ModuleFunctionality("dev_general_1", "Func Dev", "dev function", Set([])),
-                new ModuleFunctionality("dev_general_2", "Func Dev 1", "dev function 1", Set([]))
-            ]))
-        ]))
-    ]);
+    const mods = [
+        new Module("bond", "Bonds", shallowRef(HubIcon), ["bd"], [
+            new ModuleFunctionalityGroup("bond_general", "General", [
+                new ModuleFunctionality("bond_general_1", "Func Bond", "bond function", []),
+                new ModuleFunctionality("bond_general_2", "Func Bond 1", "bond function 1", []),
+                new ModuleFunctionality("bond_general_3", "Func Bond 2", "bond function 2", [])
+            ])
+        ]),
+        new Module("marketdata", "Marketdata", shallowRef(DatabaseIcon), ["md"], [
+            new ModuleFunctionalityGroup("marketdata_general", "General", [
+                new ModuleFunctionality("marketdata_general_1", "Func Marketdata", "marketdata function", []),
+                new ModuleFunctionality("marketdata_general_2", "Func Marketdata 1", "marketdata function 1", [])
+            ])
+        ]),
+        new Module("dev", "Developer", shallowRef(CodeIcon), [], [
+            new ModuleFunctionalityGroup("dev_general", "General", [
+                new ModuleFunctionality("dev_general_1", "Func Dev", "dev function", []),
+                new ModuleFunctionality("dev_general_2", "Func Dev 1", "dev function 1", [])
+            ])
+        ])
+    ];
 
     const db = ref<Orama>()
     const searchResults = ref<Results>();
@@ -100,12 +99,12 @@ export const useModuleIndex = defineStore("moduleIndex", () => {
 
     dbSetup();
     const modules = ref(mods);
-    const searchFor = (term: string, resultCallback: (results: List<SearchResultDocument>) => void) => {
+    const searchFor = (term: string, resultCallback: (results: Array<SearchResultDocument>) => void) => {
         if (!db.value) return;
         search(db.value, {
             term: term,
             properties: "*"
-        }).then(results => resultCallback(List(results.hits.map(result => result.document as unknown as SearchResultDocument))));
+        }).then(results => resultCallback(results.hits.map(result => result.document as unknown as SearchResultDocument)));
     }
 
     return { modules, searchResults, searchFor };

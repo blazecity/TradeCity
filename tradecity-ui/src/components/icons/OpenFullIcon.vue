@@ -12,7 +12,7 @@ interface OpenFullIconProps {
 } 
 
 withDefaults(defineProps<OpenFullIconProps>(), {
-    styles: "fill-blue",
+    styles: "fill-tc-blue",
     width: 48,
     height: 48
 });

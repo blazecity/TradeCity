@@ -27,8 +27,8 @@
     --blue: #60A5FA;
     --dark-blue: #283a74;
     --symbol-gray: #6f7282;
-    --table-primary: #1b1d21;
-    --table-secondary: #2a2f36;
+    --table-primary: #10161a;
+    --table-secondary: #242c33;
 }
 
 @layer utilities {
@@ -69,4 +69,12 @@
 
 .general-input {
     @apply bg-transparent w-full outline-none m-1;
+}
+
+.table-textfield {
+    @apply py-0 px-1 m-0 outline-none bg-transparent text-center;
+}
+
+.checkbox {
+    @apply form-checkbox m-0.5 bg-primary checked:bg-primary border-gray-600 ring-tc-blue focus:ring-1 focus:ring-offset-1 focus:ring-offset-table-primary text-gray-800 checked:border-gray-600;
 }

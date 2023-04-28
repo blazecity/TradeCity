@@ -5,7 +5,7 @@
         <search-icon v-if="text.length === 0" styles="ml-auto mr-1 fill-white" :height="20" :width="20" />
         <close-icon v-else styles="ml-auto mr-1 hover:cursor-pointer fill-white" @click="resetText" :height="20" :width="20" />
     </div>
-    <div v-if="searchResults.size > 0" class="absolute bg-primary mt-1 p-1 rounded w-full">
+    <div v-if="searchResults.length > 0" class="absolute bg-primary mt-1 p-1 rounded w-full">
         <div v-for="resultGroup in searchResults">
             <span class="m-1 font-bold">{{ resultGroup.group }}</span>
             <tc-search-result @click="selectFunctionality(result.funcId)" v-for="result in resultGroup.elements" :name="result.functionality" :description="result.description"></tc-search-result>
@@ -20,7 +20,6 @@ import { ref } from 'vue';
 import SearchIcon from '../../icons/SearchIcon.vue';
 import CloseIcon from '../../icons/CloseIcon.vue';
 import { useModuleIndex } from '../../../utils/store';
-import { List } from 'immutable';
 import { SearchResultDocument } from '../../../utils/modules';
 import TcSearchResult from './TcSearchResult.vue';
 import { useEventBus } from '../../../utils/store';
@@ -33,14 +32,14 @@ interface SearchResultGroup {
     elements: Array<SearchResultDocument>
 }
 
-const searchResults = ref<List<SearchResultGroup>>(List());
+const searchResults = ref<Array<SearchResultGroup>>([]);
 
 const { searchFor } = useModuleIndex();
 
 function search(): void {
     searchFor(text.value, results => {
-        if (results.size === 0) {
-            searchResults.value = List<SearchResultGroup>();
+        if (results.length === 0) {
+            searchResults.value = [];
         }
 
         const grouped = new Map<string, SearchResultGroup>();    
@@ -52,13 +51,13 @@ function search(): void {
             })
         });
 
-        searchResults.value = List(grouped.values());
+        searchResults.value = new Array(...grouped.values());
     });
 }
 
 function resetText(): void {
     text.value = "";
-    searchResults.value = List<SearchResultGroup>();
+    searchResults.value = [];
 }
 
 function selectFunctionality(id: string): void {
