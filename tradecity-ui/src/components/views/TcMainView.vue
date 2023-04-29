@@ -36,26 +36,25 @@ const table = reactive(new TcTableConfig("", "Some Table", [
   { field1: "text5", field2: true, field3: 5, field4: new Date(2022, 11, 5) },
   { field1: "text6", field2: false, field3: 6, field4: new Date(2022, 11, 6) },
   { field1: "text7", field2: true, field3: 7, field4: new Date(2022, 11, 7) },
+  { field2: false, field1: "", field4: new Date(), field3: 8 }
 ], {
   field1: {
-    name: "Field 1",
-    group: "Group 1"
+    name: "Field 1"
   },
   field2: {
     name: "Field 2",
+    group: "Group"
   },
   field3: {
     name: "Field 3",
     mutable: true,
-    decimalPoints: 3,
-    group: "Group 3"
+    decimalPoints: 3
   },
   field4: {
     name: "Field 4",
-    mutable: true,
-    group: "Group 3"
+    mutable: true
   }
-}, console.log, { "Group": ["field1", "field3"] }));
+}, console.log, [["", 0, 0], ["Group", 1, 2], ["", 3, 3]]));
 </script>
 
 <style scoped>

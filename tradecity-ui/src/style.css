@@ -75,6 +75,10 @@
     @apply py-0 px-1 m-0 outline-none bg-transparent text-center;
 }
 
+.table-header-cell {
+    @apply z-30 bg-table-primary sticky top-0 py-0.5 text-gray-400 hover:cursor-pointer;
+}
+
 .checkbox {
     @apply form-checkbox m-0.5 bg-primary checked:bg-primary border-gray-600 ring-tc-blue focus:ring-1 focus:ring-offset-1 focus:ring-offset-table-primary text-gray-800 checked:border-gray-600;
 }

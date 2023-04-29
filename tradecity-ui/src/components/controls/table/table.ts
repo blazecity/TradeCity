@@ -9,10 +9,13 @@ export interface ColumnOptions {
     withTime?: boolean
 }
 
+type TableGroupingSettings = Array<[string, number, number]>
+
 export class TcTableConfig<T extends TableData, U extends { [key in keyof T]: ColumnOptions }> {
     public readonly originalData: Array<T>;
     public currentSorting: number = 0;
     public currentSortedField: string | keyof T = "";
+    public readonly grouped: boolean;
 
     static defaultColumnOptions: ColumnOptions = {
         name: "",
@@ -28,9 +31,10 @@ export class TcTableConfig<T extends TableData, U extends { [key in keyof T]: Co
         public data: Array<T>,
         public options: U,
         public onValueChanged: (dataObject: T) => void = () => {},
-        public grouping?: { [key: string]: Array<keyof T> },
+        public grouping: TableGroupingSettings = []
     ) {
         this.originalData = [...data];
+        this.grouped = this.grouping.length > 0;
     }
 
     public get numColumns(): number {
