@@ -6,7 +6,6 @@ export interface ColumnOptions {
     mutable?: boolean,
     decimalPoints?: number, 
     width?: string,
-    group?: string,
     withTime?: boolean
 }
 
@@ -20,7 +19,6 @@ export class TcTableConfig<T extends TableData, U extends { [key in keyof T]: Co
         mutable: false,
         decimalPoints: 0,
         width: "",
-        group: "",
         withTime: false,
     };
 
@@ -29,7 +27,8 @@ export class TcTableConfig<T extends TableData, U extends { [key in keyof T]: Co
         public label: string,
         public data: Array<T>,
         public options: U,
-        public onValueChanged: (dataObject: T) => void = () => {}
+        public onValueChanged: (dataObject: T) => void = () => {},
+        public grouping?: { [key: string]: Array<keyof T> },
     ) {
         this.originalData = [...data];
     }

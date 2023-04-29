@@ -6,6 +6,9 @@
     </div>
     <div class="overflow-auto scrollbar">
         <table class="border-separate border-spacing-0">
+            <tr v-if="tableConfiguration.grouping">
+                Hihi
+            </tr>
             <tr>
                 <th v-for="[key, option] in Object.entries(tableConfiguration.options)" @click="sortBy(key)" :key="key" class="z-30 bg-table-primary sticky top-0 py-1 text-gray-400 hover:cursor-pointer">
                     <div class="flex justify-center">
@@ -16,7 +19,7 @@
                     </div>
                 </th>
             </tr>
-            <tr v-for="(dataObject, rowIndex) in tableConfiguration.data" :key="rowIndex" class="odd:bg-table-primary text-gray-200">
+            <tr v-for="(dataObject, rowIndex) in tableConfiguration.data" :key="rowIndex" class="even:bg-table-primary text-gray-200">
                 <td v-for="[key, value] in Object.entries(dataObject)" :key="key + rowIndex" :class="['text-center', tableConfiguration.options[key].mutable ? 'bg-black bg-opacity-80 border-zinc-800 border-b border-x' : '', (rowIndex === 0 && tableConfiguration.options[key].mutable) ? 'border-t' : '']">
                    <input type="date" v-if="(value instanceof Date)" :value="formatDate(value)" @focusout="event => assignDate(dataObject, key, event)" :disabled="!tableConfiguration.options[key].mutable" class="form-input py-0 pr-0 pl-1 w-[5.5rem] text-xs text-gray-200 bg-transparent border-0">
                    <input type="checkbox" v-if="typeof value === 'boolean'" v-model="dataObject[key]" @focusout="valueChanged(dataObject)" :disabled="!tableConfiguration.options[key].mutable" class="checkbox">
