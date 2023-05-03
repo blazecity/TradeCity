@@ -1,5 +1,5 @@
 <template>
-    <span :class="['arrow-box absolute w-auto py-2 px-3 m-2 min-w-max rounded-md text-white text-sm bg-dark duration-100 scale-0 group-hover:scale-100', leftDirection, bold ? 'font-bold' : 'font-normal']">{{ text }}</span>
+    <span :class="['z-50 arrow-box absolute w-auto py-2 px-3 m-2 min-w-max rounded-md text-white text-sm bg-dark duration-100 scale-0 group-hover:scale-100', leftDirection, bold ? 'font-bold' : 'font-normal']">{{ text }}</span>
 </template>
 
 <script setup lang="ts">
