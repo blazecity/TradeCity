@@ -1,5 +1,5 @@
 <template>
-<tc-main-view />
+<tc-main-view @click="outsideClick" />
 </template>
 
 <script setup lang="ts">
@@ -11,12 +11,11 @@ import { useEventBus } from './utils/store';
 const { booleanEventBus } = useEventBus();
 window.addEventListener("keydown", event => {
     if (event.key === "Escape") {
-        booleanEventBus.emit("escape_pressed", new EventMessage("", true))
+        booleanEventBus.emit("escape_clicked", new EventMessage("", true))
     }
 });
+const outsideClick = () => booleanEventBus.emit("outside_clicked", new EventMessage("", true));
 
-let db;
-const request = window.indexedDB.open("MyTestDatabase", 3);
 </script>
 
 <style scoped>

@@ -1,6 +1,7 @@
 <template>
-<div class="flex items-center justify-between rounded-sm w-56 border-neutral-600 border">
-    <input @focusout="focusOut" :value="displayedValue" :placeholder="placeholder" type="text" class="general-input" :title="placeholder" autocomplete="new-password">
+<div :class="['flex items-center justify-between rounded-sm border-neutral-600 border text-xs', styles ? styles : 'w-56']">
+    <label v-if="showLabel" :for="id"></label>
+    <input :id="id" @input="input" :value="displayedValue" :placeholder="placeholder" type="text" class="general-input" :title="placeholder" autocomplete="new-password">
     <clickable-icon @click="clearValue">
         <close-icon :height="16" :width="16" styles="fill-neutral-400 mr-1" />
     </clickable-icon>
@@ -18,7 +19,8 @@ interface TcInputProps {
     placeholder: string,
     styles?: string,
     defaultValue?: number | string,
-    type?: InputType
+    type?: InputType,
+    showLabel?: boolean
 }
 
 const props = withDefaults(defineProps<TcInputProps>(), {
@@ -31,9 +33,10 @@ interface TcInputEmits {
 }
 
 const emit = defineEmits<TcInputEmits>();
+const id = crypto.randomUUID();
 const inputValue = ref<string | number | undefined>(props.defaultValue);
 const displayedValue = computed(() => {
-    if (props.type === "string" && inputValue.value) {
+    if (props.type === "string" && inputValue.value !== undefined) {
         emit("textInput", inputValue.value.toString());
         return inputValue.value;
     }
@@ -47,10 +50,6 @@ const displayedValue = computed(() => {
     return Intl.NumberFormat("de-CH").format(num);
 });
 
-const focusOut = (event: FocusEvent) => inputValue.value = (event.target as HTMLInputElement).value; 
+const input = (event: Event) => inputValue.value = (event.target as HTMLInputElement).value; 
 const clearValue = () => inputValue.value = undefined;
 </script>
-
-<style scoped>
-
-</style>

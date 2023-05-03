@@ -63,10 +63,6 @@
     }
 }
 
-.functionality-item {
-    @apply hover:bg-zinc-100 hover:bg-opacity-10 hover:cursor-pointer;
-}
-
 .general-input {
     @apply bg-transparent w-full outline-none m-1;
 }

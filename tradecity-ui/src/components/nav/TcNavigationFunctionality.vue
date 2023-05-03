@@ -1,5 +1,5 @@
 <template>
-<div :class="['flex mx-2 my-1.5 p-0.5 items-center functionality-item rounded text-sm', selected ? 'bg-neutral-600 bg-opacity-50' : '']">
+<div :class="['flex mx-2 my-1.5 p-0.5 items-center functionality-item rounded-sm text-sm hover:cursor-pointer', selected ? 'bg-tc-blue' : 'hover:bg-zinc-100 hover:bg-opacity-10']">
     <label-icon @click="bookmark" :styles="getIconStyle()" :height="24" :width="24" :filled="filled" />
     <div @click="select" class="w-full">{{ functionality.name }}</div>
 </div>
@@ -37,7 +37,7 @@ function select(): void {
 }
 
 function getIconStyle(): string {
-    if (filled.value && selected.value) return "fill-tc-blue mr-1";
+    if (filled.value && selected.value) return "fill-dark-blue mr-1";
     if (filled.value) return "fill-tc-blue mr-1";
     return "fill-white mr-1";
 }
