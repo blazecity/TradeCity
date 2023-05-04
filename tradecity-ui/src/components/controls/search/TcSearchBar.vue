@@ -23,7 +23,7 @@ import { useModuleIndex } from '../../../utils/store';
 import { SearchResultDocument } from '../../../utils/modules';
 import TcSearchResult from './TcSearchResult.vue';
 import { useEventBus } from '../../../utils/store';
-import { EventMessage } from '../../../utils/eventbus';
+import { EventMessage, Topics } from '../../../utils/eventbus';
 
 const text = ref("");
 
@@ -62,7 +62,7 @@ function resetText(): void {
 
 function selectFunctionality(id: string): void {
     const { stringEventBus } = useEventBus();
-    stringEventBus.emit("functionality_selected", new EventMessage("tc_search_bar", id));
+    stringEventBus.emit(Topics.FUNCTIONALITY_SELECTED, new EventMessage("tc_search_bar", id));
 }
 </script>
 

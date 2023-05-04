@@ -1,12 +1,13 @@
 <template>
 <div :class="['hover:cursor-pointer inline-block hover:bg-primary rounded', styles]">
-    <slot />
-</div>
+        <slot></slot>
+    </div>
 </template>
 
 <script setup lang="ts">
+
 interface ClickableIconProps {
-    styles?: string
+    styles?: string,
 }
 
 defineProps<ClickableIconProps>();

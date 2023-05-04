@@ -9,6 +9,7 @@
         <div class="flex">
           <tc-combo-box :item-list="itemList" placeholder="Reaaaaalllllyy loooooonnnggggg placeholder" multi-select @selection-changed="selection"></tc-combo-box>
         </div>
+        <span data-context="context1">Some span</span>
       </tc-panel>
     </main>
   </div>
@@ -20,7 +21,7 @@ import TcNavigationModules from '../nav/TcNavigationModules.vue';
 import TcNavigationFunctionalities from '../nav/TcNavigationFunctionalities.vue';
 import TcHeader from '../header/TcHeader.vue';
 import TcPanel from '../controls/panel/TcPanel.vue';
-import TcInput from '../controls/input/TcInput.vue';
+import TcButton from '../controls/button/TcButton.vue';
 import TcComboBox from '../controls/combobox/TcComboBox.vue';
 import { useEventBus } from '../../utils/store';
 import { ref } from 'vue';
@@ -59,6 +60,10 @@ const itemList: ComboBoxItemList = {
 }
 
 const selection = (items: ComboBoxItemList) => console.log(items);
+
+document.addEventListener("click", event => {
+  console.log(event.target)
+})
 </script>
 
 <style scoped>

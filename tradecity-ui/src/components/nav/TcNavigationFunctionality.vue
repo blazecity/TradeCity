@@ -10,7 +10,7 @@ import { onUnmounted, ref } from 'vue';
 import LabelIcon from '../icons/LabelIcon.vue';
 import { useEventBus } from '../../utils/store';
 import { ModuleFunctionality } from '../../utils/modules';
-import { EventMessage } from '../../utils/eventbus';
+import { EventMessage, Topics } from '../../utils/eventbus';
 
 interface TcNavgationFunctionalityProps {
     functionality: ModuleFunctionality
@@ -21,7 +21,7 @@ const props = defineProps<TcNavgationFunctionalityProps>();
 const filled = ref(false);
 const selected = ref(false);
 const { stringEventBus } = useEventBus();
-const subscription = stringEventBus.subscribe("functionality_selected", eventMessage => selected.value = eventMessage.payload === props.functionality.id);
+const subscription = stringEventBus.subscribe(Topics.FUNCTIONALITY_SELECTED, eventMessage => selected.value = eventMessage.payload === props.functionality.id);
 
 onUnmounted(() => subscription.unsubscribe());
 
@@ -32,8 +32,8 @@ function bookmark(): void {
 function select(): void {
     console.log(props.functionality);
     selected.value = true;
-    stringEventBus.emit("functionality_selected", new EventMessage("", props.functionality.id));
-    stringEventBus.emit("functionality_selected_name", new EventMessage("", props.functionality.name));
+    stringEventBus.emit(Topics.FUNCTIONALITY_SELECTED, new EventMessage("", props.functionality.id));
+    stringEventBus.emit(Topics.FUNCTIONALITY_SELECTED_NAME, new EventMessage("", props.functionality.name));
 }
 
 function getIconStyle(): string {

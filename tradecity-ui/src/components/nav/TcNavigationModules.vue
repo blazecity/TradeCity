@@ -13,7 +13,7 @@
 
 <script setup lang="ts">import { ref } from 'vue';
 import { useEventBus, useModuleIndex } from '../../utils/store';
-import { EventMessage } from '../../utils/eventbus';
+import { EventMessage, Topics } from '../../utils/eventbus';
 import TcNavigationIcon from './TcNavigationIcon.vue';
 import SwapIcon from '../icons/SwapIcon.vue';
 
@@ -24,15 +24,15 @@ const { numberEventBus, stringEventBus, booleanEventBus } = useEventBus();
 
 function setSelectedModule(index: number): void {
     selectedModuleIndex.value = index;
-    numberEventBus.emit("functionality_group_index_changed", new EventMessage("", index));
-    stringEventBus.emit("module_selected_name", new EventMessage("", modules[index]?.name ?? ""));
-    booleanEventBus.emit("functionality_bar_visible", new EventMessage("", true));
+    numberEventBus.emit(Topics.FUNCTIONALITY_GROUP_INDEX_CHANGED, new EventMessage("", index));
+    stringEventBus.emit(Topics.MODULE_SELECTED_NAME, new EventMessage("", modules[index]?.name ?? ""));
+    booleanEventBus.emit(Topics.FUNCTIONALITY_BAR_VISIBLE, new EventMessage("", true));
 }
 
 function selectHomeModule(): void {
     selectedModuleIndex.value = -1;
     const { booleanEventBus } = useEventBus();
-    booleanEventBus.emit("homeModuleSelected", new EventMessage("tc_navigation_hs_selected", true));
+    booleanEventBus.emit(Topics.HOME_MODULE_SELECTED, new EventMessage("tc_navigation_hs_selected", true));
 }
 
 function isModuleSelected(index: number): boolean {

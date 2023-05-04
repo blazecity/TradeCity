@@ -19,7 +19,7 @@ import NorthEastIcon from '../../icons/NorthEastIcon.vue';
 import SouthWestIcon from '../../icons/SouthWestIcon.vue';
 import { computed } from '@vue/reactivity';
 import { useEventBus } from '../../../utils/store';
-import { EventMessage } from '../../../utils/eventbus';
+import { EventMessage, Topics } from '../../../utils/eventbus';
 import ClickableIcon from '../../icons/ClickableIcon.vue';
 
 interface TcPanelProps {
@@ -37,11 +37,11 @@ const { booleanEventBus } = useEventBus();
 
 const colSpan = computed(() => expanded.value ? ['1', '-1'] : [`span ${props.cols}`, `span ${props.cols}`]);
 const rowSpan = computed(() => expanded.value ? ['1', '-1'] : [`span ${props.rows}`, `span ${props.rows}`]);
-const subscription = booleanEventBus.subscribe("panel_expanded", eventMessage => visible.value = eventMessage.messageId === panelId || !eventMessage.payload);
+const subscription = booleanEventBus.subscribe(Topics.PANEL_EXPANDED, eventMessage => visible.value = eventMessage.messageId === panelId || !eventMessage.payload);
 
 function resize(): void {
     expanded.value = !expanded.value;
-    booleanEventBus.emit("panel_expanded", new EventMessage(panelId, expanded.value));
+    booleanEventBus.emit(Topics.PANEL_EXPANDED, new EventMessage(panelId, expanded.value));
 }
 
 onUnmounted(() => subscription.unsubscribe());
