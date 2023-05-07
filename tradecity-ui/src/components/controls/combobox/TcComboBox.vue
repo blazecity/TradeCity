@@ -1,7 +1,7 @@
 <template>
 <tc-tooltip :text="placeholder" :visible="!expanded">
     <div :class="['relative inline-block text-xs', styles]" @click="comboboxClicked">
-        <div class="flex items-center justify-between rounded-sm w-56 border-neutral-600 border pl-1 pr-0.5 py-1">
+        <div class="flex items-center justify-between rounded-sm w-56 border-neutral-600 border pl-1 pr-0.5 py-1 bg-primary">
             <div class="flex items-center overflow-auto no-scroll">
                 <div v-if="selectedItems.items.size === 0" class="text-neutral-400 line-clamp-1">{{ placeholder }}</div>
                 <div v-for="[key, item] in selectedItems.items" :key="key" class="flex flex-nowrap shrink-0 justify-between items-center bg-gray-600 ml-0.5 rounded-sm pl-1">
@@ -16,7 +16,7 @@
                 <south-icon v-else :height="16" :width="16" styles="fill-neutral-400 mr-0.5" />
             </clickable-icon>
         </div>
-        <div v-if="expanded" class="absolute rounded-sm border-neutral-600 border block mt-1 w-full p-1">
+        <div v-if="expanded" class="absolute rounded-sm border-neutral-600 border block mt-1 w-full p-1 bg-primary">
             <tc-input placeholder="Search" styles="w-full mb-1" type="string" @text-input="searchItems" />
             <div v-for="[key, item] in shownItems" :key="key" @click="mutateEntries(key)" :class="['px-1.5 py-0.5 rounded-sm hover:bg-tc-blue',  markedItemCursor !== -1 && shownItems[markedItemCursor][0] === key ? 'bg-tc-blue' : '']"> {{ item }}</div>
         </div>
@@ -31,12 +31,11 @@ import NorthIcon from '../../icons/NorthIcon.vue';
 import SouthIcon from '../../icons/SouthIcon.vue';
 import CloseIcon from '../../icons/CloseIcon.vue';
 import TcInput from '../input/TcInput.vue';
-import TcTooltip from '../tooltip/TcToolTip.vue';
+import TcTooltip from '../tooltip/TcTooltip.vue';
 import { ComboBoxItemList, ComboBoxItem } from './combobox';
 import { useEventBus } from '../../../utils/store';
 import { Orama, create, insert, search, stemmers } from '@orama/orama';
-
-// TODO: Show placeholder
+import { Topics } from '../../../utils/eventbus';
 
 interface TcComboBoxProps {
     itemList: ComboBoxItemList,
@@ -62,8 +61,8 @@ const selectedItems = reactive({
 });
 const shownItems = ref<Array<[string, string]>>(Object.entries(props.itemList).map(([key, value]) => [key, value.name]));
 const { booleanEventBus } = useEventBus();
-booleanEventBus.subscribe("escape_clicked", () => expanded.value = false);
-booleanEventBus.subscribe("outside_clicked", () => {
+booleanEventBus.subscribe(Topics.ESCAPE_CLICKED, () => expanded.value = false);
+booleanEventBus.subscribe(Topics.OUTSIDE_CLICK, () => {
     expanded.value = clickedOn && expanded.value;
     clickedOn = false;
 });
