@@ -8,13 +8,13 @@
             </div>
             <div class="absolute w-20 h-20 scale-0 group-hover:scale-100 bg-transparent pl-3 left-full -top-1.5">
                 <div class="context-menu">
-                    <div v-for="subelement in group.items" class="context-menu-item" @click="subelement.callback">{{ subelement.name }}</div>
+                    <div v-for="subelement in group.items" class="context-menu-item" @click="executeAndClose(subelement.callback)">{{ subelement.name }}</div>
                 </div>
             </div>
         </div>
         <div v-if="group.type === 'single'">
             <hr class="border-neutral-600 my-1">
-            <div v-for="subelement in group.items" class="context-menu-item" @click="subelement.callback">
+            <div v-for="subelement in group.items" class="context-menu-item" @click="executeAndClose(subelement.callback)">
                 {{ subelement.name }}
             </div>
         </div>
@@ -57,6 +57,11 @@ document.addEventListener("contextmenu", event => {
         menu.style.top = event.pageY + "px";
     }
 });
+
+function executeAndClose(callback: () => void): void {
+    callback();
+    close();
+}
 
 function close(): void {
     if (contextmenu.value) {

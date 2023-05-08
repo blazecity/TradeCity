@@ -9,7 +9,7 @@
 import { onUnmounted, ref } from 'vue';
 import LabelIcon from '../icons/LabelIcon.vue';
 import { useEventBus } from '../../utils/store';
-import { ModuleFunctionality } from '../../utils/modules';
+import { ModuleFunctionality } from './modules';
 import { EventMessage, Topics } from '../../utils/eventbus';
 
 interface TcNavgationFunctionalityProps {

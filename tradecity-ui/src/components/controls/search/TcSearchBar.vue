@@ -20,7 +20,7 @@ import { ref } from 'vue';
 import SearchIcon from '../../icons/SearchIcon.vue';
 import CloseIcon from '../../icons/CloseIcon.vue';
 import { useModuleIndex } from '../../../utils/store';
-import { SearchResultDocument } from '../../../utils/modules';
+import { SearchResultDocument } from '../../nav/modules';
 import TcSearchResult from './TcSearchResult.vue';
 import { useEventBus } from '../../../utils/store';
 import { EventMessage, Topics } from '../../../utils/eventbus';

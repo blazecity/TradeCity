@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
 import { EventBus } from './eventbus';
 import { ref, shallowRef } from 'vue';
-import { Module, ModuleFunctionalityGroup, SearchResultDocument } from './modules';
-import { ModuleFunctionality } from './modules';
+import { Module, ModuleFunctionalityGroup, SearchResultDocument } from '../components/nav/modules';
+import { ModuleFunctionality } from '../components/nav/modules';
 import HubIcon from '../components/icons/HubIcon.vue';
 import DatabaseIcon from '../components/icons/DatabaseIcon.vue';
 import CodeIcon from '../components/icons/CodeIcon.vue';

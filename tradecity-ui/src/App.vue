@@ -9,8 +9,11 @@ import TcContextMenu from './components/controls/contextmenu/TcContextMenu.vue';
 import { EventMessage, Topics } from './utils/eventbus';
 import { useEventBus } from './utils/store';
 
-// TODO: Implement generic context menu functionality
 // TODO: Implement context based header
+// TODO: Bookmarking favorites
+// TODO: View change on functionality click
+// TODO: Align Table API with Context Menu API
+
 const { booleanEventBus } = useEventBus();
 window.addEventListener("keydown", event => {
     if (event.key === "Escape") {
@@ -19,6 +22,3 @@ window.addEventListener("keydown", event => {
 });
 const outsideClick = () => booleanEventBus.emit(Topics.OUTSIDE_CLICK, new EventMessage("", true));
 </script>
-
-<style scoped>
-</style>

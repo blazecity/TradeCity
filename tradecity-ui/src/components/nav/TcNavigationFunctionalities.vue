@@ -10,7 +10,7 @@
 import { ref } from 'vue';
 import TcNavigationFunctionality from './TcNavigationFunctionality.vue';
 import TcNavigationFunctionalityGroup from './TcNavigationFunctionalityGroup.vue';
-import { ModuleFunctionalityGroup } from '../../utils/modules';
+import { ModuleFunctionalityGroup } from './modules';
 import { useEventBus, useModuleIndex } from '../../utils/store';
 import { defaultFunctionalitiesVisible } from '../../utils/constants';
 import { Topics } from '../../utils/eventbus';
