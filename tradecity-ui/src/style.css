@@ -78,3 +78,11 @@
 .checkbox {
     @apply form-checkbox m-0.5 bg-primary checked:bg-primary border-gray-600 ring-tc-blue focus:ring-1 focus:ring-offset-1 focus:ring-offset-table-primary text-gray-800 checked:border-gray-600;
 }
+
+.context-menu {
+    @apply absolute bg-black rounded-sm text-xs p-1.5 min-w-[13rem];
+}
+
+.context-menu-item {
+    @apply hover:bg-tc-blue hover:cursor-pointer rounded-sm px-1 py-0.5 mb-0.5;
+}

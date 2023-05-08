@@ -8,12 +8,31 @@ import DatabaseIcon from '../components/icons/DatabaseIcon.vue';
 import CodeIcon from '../components/icons/CodeIcon.vue';
 import { Orama, Results, create, insert, search, stemmers } from '@orama/orama';
 import { BroadcastChannel } from 'broadcast-channel';
+import { TcContextMenuConfig } from '../components/controls/contextmenu/contextmenu';
 
-// TODO: This is just for demonstrating purposes, but has to be programmed out in a more generic way.
-export const useBroadcastChannel = defineStore("sharedState", () => {
-    const value = ref("");
-    const broadcaster = new BroadcastChannel<string>("sharedState");
-    const receiver = new BroadcastChannel<string>("sharedState");
+export const useContextMenu = defineStore("contextmenu", () => {
+    const store = new Map<string, TcContextMenuConfig>();
+    const currentConfig = ref<TcContextMenuConfig | null>();
+
+    const registerContextMenu = (config: TcContextMenuConfig) => store.set(config.id, config);
+    const setContextMenu = (id: string) => currentConfig.value = store.get(id);
+
+    return { registerContextMenu, setContextMenu, currentConfig };
+});
+
+/**
+ * Custom hook for using a global broadcast channel.
+ * 
+ * Usage:
+ * 
+ * const store = useBroadcastChannel();
+ * const { value } = storeToRefs(store); --> for maintaining reactivity
+ * const { setValue } = store;
+ */
+export const useBroadcastChannel = defineStore("broadcast", () => {
+    const value = ref("init");
+    const broadcaster = new BroadcastChannel<string>("broadcast");
+    const receiver = new BroadcastChannel<string>("broadcast");
     const setValue = (newValue: string) => broadcaster.postMessage(newValue);
     receiver.onmessage = message => value.value = message;
     return { value, setValue };
