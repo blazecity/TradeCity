@@ -1,6 +1,6 @@
 <template>
 <div ref="contextmenu" class="flex-col hidden context-menu">
-    <div v-if="currentConfig != null" v-for="group in Object.values(currentConfig.elements)">
+    <div v-if="currentConfig != null" v-for="group in Object.values(currentConfig.elements)" :key="group.name">
         <div v-if="group.type === 'submenu'" class="relative group context-menu-item">
             <div class="flex justify-between">
                 <span>{{ group.name }}</span>
@@ -8,13 +8,13 @@
             </div>
             <div class="absolute w-20 h-20 scale-0 group-hover:scale-100 bg-transparent pl-3 left-full -top-1.5">
                 <div class="context-menu">
-                    <div v-for="subelement in group.items" class="context-menu-item" @click="executeAndClose(subelement.callback)">{{ subelement.name }}</div>
+                    <div v-for="subelement in group.items" :key="subelement.id" class="context-menu-item" @click="executeAndClose(subelement.callback)">{{ subelement.name }}</div>
                 </div>
             </div>
         </div>
         <div v-if="group.type === 'single'">
             <hr class="border-neutral-600 my-1">
-            <div v-for="subelement in group.items" class="context-menu-item" @click="executeAndClose(subelement.callback)">
+            <div v-for="subelement in group.items" :key="subelement.id" class="context-menu-item" @click="executeAndClose(subelement.callback)">
                 {{ subelement.name }}
             </div>
         </div>

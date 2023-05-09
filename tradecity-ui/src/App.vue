@@ -10,8 +10,8 @@ import { EventMessage, Topics } from './utils/eventbus';
 import { useEventBus } from './utils/store';
 
 // TODO: Implement context based header
-// TODO: Bookmarking favorites
-// TODO: View change on functionality click
+// TODO: Bookmarking favorites (requires main view for home menu)
+// TODO: View change on functionality click (together with context based header)
 // TODO: Align Table API with Context Menu API
 
 const { booleanEventBus } = useEventBus();
