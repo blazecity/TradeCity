@@ -7,29 +7,29 @@
     <div class="overflow-auto scrollbar">
         <table class="border-separate border-spacing-0">
             <tr v-if="tableConfiguration.grouped">
-                <th v-for="groupingOption in tableConfiguration.grouping" class="table-header-cell h-px" :colspan="groupingOption[2] - groupingOption[1] + 1">
+                <th v-for="[key, group] of Object.entries(tableConfiguration.options)" :key="key" class="table-header-cell h-px" :colspan="Object.keys(group.elements).length">
                     <div class="flex justify-center h-full">
-                        <span class="mx-1 flex-1">{{ groupingOption[0] }}</span>
+                        <span class="mx-1 flex-1">{{  group.isGrouped ? group.name : "" }}</span>
                         <span class="border-r border-r-gray-700 my-0.5"></span>
                     </div>
                 </th>
             </tr>
             <tr>
-                <th v-for="[key, option] in Object.entries(tableConfiguration.options)" @click="sortBy(key)" :key="key" class="table-header-cell">
+                <th v-for="[index, [_, option]] of tableConfiguration.flatColumnOptions.entries()" @click="sortBy(index)" :key="index" class="table-header-cell">
                     <div class="flex justify-center">
                         <span class="mx-1 flex-1">{{ option.name }}</span>
-                        <north-icon v-if="tableConfiguration.currentSortedField === key && tableConfiguration.currentSorting === 1" :width="16" :height="16" styles="fill-white" />
-                        <south-icon v-if="tableConfiguration.currentSortedField === key && tableConfiguration.currentSorting === -1" :width="16" :height="16" styles="fill-white" />
+                        <north-icon v-if="tableConfiguration.currentSortedField === index && tableConfiguration.currentSorting === 1" :width="16" :height="16" styles="fill-white" />
+                        <south-icon v-if="tableConfiguration.currentSortedField === index && tableConfiguration.currentSorting === -1" :width="16" :height="16" styles="fill-white" />
                         <span class="border-r border-r-gray-700 my-0.5"></span>
                     </div>
                 </th>
             </tr>
             <tr v-for="(dataObject, rowIndex) in tableConfiguration.data" :key="rowIndex" class="even:bg-table-primary text-gray-200">
-                <td v-for="[key, value] in Object.entries(tableConfiguration.options)" :key="key + rowIndex" :class="['text-center', tableConfiguration.options[key].mutable ? 'bg-black bg-opacity-80 border-zinc-800 border-b border-x' : '', (rowIndex === 0 && tableConfiguration.options[key].mutable) ? 'border-t' : '']">
-                    <input type="date" v-if="(dataObject[key] instanceof Date)" :value="formatDate(dataObject[key] as Date)" @focusout="event => assignDate(dataObject, key, event)" :disabled="!tableConfiguration.options[key].mutable" class="form-input py-0 pr-0 pl-1 w-[5.5rem] text-xs text-gray-200 bg-transparent border-0">
-                    <input type="checkbox" v-if="typeof dataObject[key] === 'boolean'" v-model="dataObject[key]" @focusout="valueChanged(dataObject)" :disabled="!tableConfiguration.options[key].mutable" class="checkbox">
-                    <input type="text" v-if="typeof dataObject[key] === 'number'" :value="formatNumber(dataObject[key] as number, key)" @focusout="event => assignNumber(dataObject, key, event)" :disabled="!tableConfiguration.options[key].mutable" class="table-textfield">
-                    <input type="text" v-if="typeof dataObject[key] === 'string'" v-model="dataObject[key]" @focusout="event => valueChanged(dataObject)" :disabled="!tableConfiguration.options[key].mutable" class="table-textfield">
+                <td v-for="[colIndex, [colKey, option]] of tableConfiguration.flatColumnOptions.entries()" :key="colKey + colIndex + rowIndex" :class="['text-center', option.mutable ? 'bg-black bg-opacity-80 border-zinc-800 border-b border-x' : '', (rowIndex === 0 && option.mutable) ? 'border-t' : '']">
+                    <input type="date" v-if="(dataObject[colKey] instanceof Date)" :value="formatDate(dataObject[colKey] as Date)" @focusout="event => assignDate(dataObject, colKey, event)" :disabled="!option.mutable" class="form-input py-0 pr-0 pl-1 w-[5.5rem] text-xs text-gray-200 bg-transparent border-0">
+                    <input type="checkbox" v-if="typeof dataObject[colKey] === 'boolean'" v-model="dataObject[colKey]" @focusout="valueChanged(dataObject)" :disabled="!option.mutable" class="checkbox">
+                    <input type="text" v-if="typeof dataObject[colKey] === 'number'" :value="formatNumber(dataObject[colKey] as number, option.decimalPoints)" @focusout="event => assignNumber(dataObject, colKey, event)" :disabled="!option.mutable" class="table-textfield">
+                    <input type="text" v-if="typeof dataObject[colKey] === 'string'" v-model="dataObject[colKey]" @focusout="event => valueChanged(dataObject)" :disabled="!option.mutable" class="table-textfield">
                 </td>
             </tr>
         </table>
@@ -37,19 +37,19 @@
 </div>
 </template>
 
-<script setup lang="ts" generic="T extends TableData, U extends { [key in keyof T]: ColumnOptions }">
+<script setup lang="ts" generic="T extends TableData">
 import { reactive } from 'vue';
 import { TableData } from '../../../utils/types';
-import { ColumnOptions, TcTableConfig } from './table';
+import { TcTableConfig } from './table';
 import NorthIcon from '../../icons/NorthIcon.vue';
 import SouthIcon from '../../icons/SouthIcon.vue';
 
 const props = defineProps<{
-    tableConfiguration: TcTableConfig<T, U>,
+    tableConfiguration: TcTableConfig<T>,
     styles?: string
 }>();
 
-const tableConfiguration = reactive(props.tableConfiguration) as TcTableConfig<T, U>;
+const tableConfiguration = reactive(props.tableConfiguration) as TcTableConfig<T>;
 
 // Date functions
 function assignDate(dataObject: T, key: string, event: Event): void {
@@ -71,13 +71,13 @@ function assignNumber(dataObject: T, key: string, event: Event): void {
     valueChanged(dataObject);
 }
 
-function formatNumber(value: number, field: string): string {
-    const decimalPlaces = props.tableConfiguration.options[field].decimalPoints ?? 0;
+function formatNumber(value: number, decimalPoints?: number): string {
+    const decimalPlaces = decimalPoints ?? 0;
     return Intl.NumberFormat("de-CH", {minimumFractionDigits: decimalPlaces, maximumFractionDigits: decimalPlaces}).format(value);
 }
 
 const valueChanged = (dataObject: T) => tableConfiguration.onValueChanged(dataObject);
-const sortBy = (field: string) => tableConfiguration.sortNext(field);
+const sortBy = (index: number) => tableConfiguration.sortNext(index);
 </script>
 
 <style scoped>
