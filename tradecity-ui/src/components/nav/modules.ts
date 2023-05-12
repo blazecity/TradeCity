@@ -1,26 +1,32 @@
 import { Component } from "vue";
 
-export class Module {
-    constructor(
-        public readonly id: string,
-        public readonly name: string, 
-        public readonly iconComponent: Component, 
-        public readonly tags: Array<string>,
-        public readonly functionalities: Array<ModuleFunctionalityGroup>
-    ) {}
+export type ModuleTree = {
+    [key: string]: Module
 }
 
-export class ModuleFunctionalityGroup {
-    constructor(public readonly id: string, public readonly name: string, public readonly functionalities: Array<ModuleFunctionality>) {}
+export type ModuleFunctionality = {
+    name: string,
+    description: string,
+    tags: Array<string>,
+    view: Component,
+    isBookmarked: boolean
 }
 
-export class ModuleFunctionality {
-    constructor(
-        public readonly id: string,
-        public readonly name: string,
-        public readonly description: string,
-        public readonly tags: Array<string>,
-    ) {}
+export type ModuleFunctionalityGroup = {
+    name: string,
+    functionalities: {
+        [funcKey: string]: ModuleFunctionality
+    }
+    
+}
+
+export type Module = {
+    name: string,
+    iconComponent: Component,
+    tags: Array<string>,
+    groups: {
+        [groupKey: string]: ModuleFunctionalityGroup
+    }
 }
 
 export interface SearchResultDocument {

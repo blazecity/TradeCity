@@ -72,7 +72,7 @@
 }
 
 .table-header-cell {
-    @apply z-30 bg-table-primary sticky top-0 py-0.5 text-gray-400 hover:cursor-pointer;
+    @apply z-30 bg-table-primary sticky top-0 py-1 text-gray-400 hover:cursor-pointer;
 }
 
 .checkbox {

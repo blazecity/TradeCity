@@ -8,9 +8,8 @@
     <div v-if="searchResults.length > 0" class="absolute bg-primary mt-1 p-1 rounded w-full">
         <div v-for="resultGroup in searchResults">
             <span class="m-1 font-bold">{{ resultGroup.group }}</span>
-            <tc-search-result @click="selectFunctionality(result.funcId)" v-for="result in resultGroup.elements" :name="result.functionality" :description="result.description"></tc-search-result>
+            <tc-search-result @click="selectFunctionality(result)" v-for="result in resultGroup.elements" :name="result.functionality" :description="result.description"></tc-search-result>
         </div>
-        
     </div>
 </div>
 </template>
@@ -19,11 +18,11 @@
 import { ref } from 'vue';
 import SearchIcon from '../../icons/SearchIcon.vue';
 import CloseIcon from '../../icons/CloseIcon.vue';
-import { useModuleIndex } from '../../../utils/store';
+import { useEventBus, useModuleIndex } from '../../../utils/store';
 import { SearchResultDocument } from '../../nav/modules';
 import TcSearchResult from './TcSearchResult.vue';
-import { useEventBus } from '../../../utils/store';
-import { EventMessage, Topics } from '../../../utils/eventbus';
+import { storeToRefs } from 'pinia';
+import { Topics } from '../../../utils/eventbus';
 
 const text = ref("");
 
@@ -34,7 +33,13 @@ interface SearchResultGroup {
 
 const searchResults = ref<Array<SearchResultGroup>>([]);
 
-const { searchFor } = useModuleIndex();
+const store = useModuleIndex();
+const { searchFor, modules } = store;
+const { selectedModule, selectedFunctionality } = storeToRefs(store);
+const { booleanEventBus } = useEventBus();
+
+booleanEventBus.subscribe(Topics.ESCAPE_CLICKED, () => resetText());
+booleanEventBus.subscribe(Topics.OUTSIDE_CLICK, () => resetText());
 
 function search(): void {
     searchFor(text.value, results => {
@@ -60,9 +65,10 @@ function resetText(): void {
     searchResults.value = [];
 }
 
-function selectFunctionality(id: string): void {
-    const { stringEventBus } = useEventBus();
-    stringEventBus.emit(Topics.FUNCTIONALITY_SELECTED, new EventMessage("tc_search_bar", id));
+function selectFunctionality(result: SearchResultDocument): void {
+    const mod = modules[result.moduleId];
+    selectedModule.value = [result.moduleId, mod];
+    selectedFunctionality.value = [result.funcId, mod.groups[result.groupId].functionalities[result.funcId]];
 }
 </script>
 

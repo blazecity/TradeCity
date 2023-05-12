@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { EventBus } from './eventbus';
-import { ref, shallowRef } from 'vue';
-import { Module, ModuleFunctionalityGroup, SearchResultDocument } from '../components/nav/modules';
+import { reactive, ref, shallowRef } from 'vue';
+import { Module, ModuleFunctionalityGroup, ModuleTree, SearchResultDocument } from '../components/nav/modules';
 import { ModuleFunctionality } from '../components/nav/modules';
 import HubIcon from '../components/icons/HubIcon.vue';
 import DatabaseIcon from '../components/icons/DatabaseIcon.vue';
@@ -9,6 +9,8 @@ import CodeIcon from '../components/icons/CodeIcon.vue';
 import { Orama, Results, create, insert, search, stemmers } from '@orama/orama';
 import { BroadcastChannel } from 'broadcast-channel';
 import { TcContextMenuConfig } from '../components/controls/contextmenu/contextmenu';
+import { applicationName } from './constants';
+import SwapIcon from '../components/icons/SwapIcon.vue';
 
 export const useContextMenu = defineStore("contextmenu", () => {
     const store = new Map<string, TcContextMenuConfig>();
@@ -46,27 +48,53 @@ export const useEventBus = defineStore("eventBus", () => {
 });
 
 export const useModuleIndex = defineStore("moduleIndex", () => {
-    const mods = [
-        new Module("bond", "Bonds", shallowRef(HubIcon), ["bd"], [
-            new ModuleFunctionalityGroup("bond_general", "General", [
-                new ModuleFunctionality("bond_general_1", "Func Bond", "bond function", []),
-                new ModuleFunctionality("bond_general_2", "Func Bond 1", "bond function 1", []),
-                new ModuleFunctionality("bond_general_3", "Func Bond 2", "bond function 2", [])
-            ])
-        ]),
-        new Module("marketdata", "Marketdata", shallowRef(DatabaseIcon), ["md"], [
-            new ModuleFunctionalityGroup("marketdata_general", "General", [
-                new ModuleFunctionality("marketdata_general_1", "Func Marketdata", "marketdata function", []),
-                new ModuleFunctionality("marketdata_general_2", "Func Marketdata 1", "marketdata function 1", [])
-            ])
-        ]),
-        new Module("dev", "Developer", shallowRef(CodeIcon), [], [
-            new ModuleFunctionalityGroup("dev_general", "General", [
-                new ModuleFunctionality("dev_general_1", "Func Dev", "dev function", []),
-                new ModuleFunctionality("dev_general_2", "Func Dev 1", "dev function 1", [])
-            ])
-        ])
-    ];
+    const specialModules: ModuleTree = {
+        home: {
+            name: applicationName,
+            iconComponent: shallowRef(SwapIcon),
+            tags: ["tc"],
+            groups: {}
+        }
+    }
+
+    const mods: ModuleTree = {
+        bond: {
+            name: "Bonds",
+            iconComponent: shallowRef(HubIcon),
+            tags: ["bd"],
+            groups: {
+                origination: {
+                    name: "Origination",
+                    functionalities: {
+                        dashboard: { name: "Dashboard", description: "Origination Dashboard", tags: [], view: shallowRef(), isBookmarked: false },
+                        pricing: { name: "Pricing", description: "Pricing Table", tags: [], view: shallowRef(), isBookmarked: false },
+                        presentation: { name: "Presentation Editor", description: "Presentation Editor", tags: [], view: shallowRef(), isBookmarked: false }
+                    }
+                }
+            }
+        },
+        marketdata: {
+            name: "Market Data",
+            iconComponent: shallowRef(DatabaseIcon),
+            tags: ["md"],
+            groups: {
+                general: {
+                    name: "General",
+                    functionalities: {
+
+                    }
+                }
+            }
+        },
+        dev: {
+            name: "Developer",
+            iconComponent: shallowRef(CodeIcon),
+            tags: [],
+            groups: {
+
+            }
+        }
+    }
 
     const db = ref<Orama>()
     const searchResults = ref<Results>();
@@ -93,21 +121,18 @@ export const useModuleIndex = defineStore("moduleIndex", () => {
             }
         });
     
-        for (const [modIndex, module] of mods.entries()) {
-            for (const [groupIndex, functionalityGroup] of module.functionalities.entries()) {
-                for (const [funcIndex, functionality] of functionalityGroup.functionalities.entries()) {
+        for (const [modKey, module] of Object.entries(mods)) {
+            for (const [groupKey, functionalityGroup] of Object.entries(module.groups)) {
+                for (const [funcKey, functionality] of Object.entries(functionalityGroup.functionalities)) {
                     await insert(index, {
                         functionality: functionality.name,
                         tags : functionality.tags.join(" "),
                         module: module.name,
                         group: functionalityGroup.name,
                         description: functionality.description,
-                        moduleIndex: modIndex,
-                        moduleId: module.id,
-                        groupIndex: groupIndex,
-                        groupId: functionalityGroup.id,
-                        funcIndex: funcIndex,
-                        funcId: functionality.id
+                        moduleId: modKey,
+                        groupId: groupKey,
+                        funcId: funcKey
                     });
                 }
             }
@@ -117,7 +142,10 @@ export const useModuleIndex = defineStore("moduleIndex", () => {
     }
 
     dbSetup();
-    const modules = ref(mods);
+    const modules = reactive(mods);
+    const selectedModule = ref<[string, Module]>(["home", specialModules["home"]]);
+    const selectedFunctionality = ref<[string, ModuleFunctionality]>();
+
     const searchFor = (term: string, resultCallback: (results: Array<SearchResultDocument>) => void) => {
         if (!db.value) return;
         search(db.value, {
@@ -126,5 +154,12 @@ export const useModuleIndex = defineStore("moduleIndex", () => {
         }).then(results => resultCallback(results.hits.map(result => result.document as unknown as SearchResultDocument)));
     }
 
-    return { modules, searchResults, searchFor };
+    return { 
+        specialModules, 
+        selectedModule, 
+        selectedFunctionality, 
+        modules, 
+        searchResults, 
+        searchFor 
+    };
 });
