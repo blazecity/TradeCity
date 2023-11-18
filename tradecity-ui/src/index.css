@@ -81,6 +81,8 @@
   --primary: #1e2124;
   --secondary: #282b30;
   --tertiary: #36393e;
+  --base: #3178c6;
+  --base-dark: #044c9b;
 }
 
 body {
