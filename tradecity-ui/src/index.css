@@ -83,3 +83,7 @@
   --tertiary: #36393e;
 }
 
+body {
+  background-color: var(--primary);
+  color: white;
+}
