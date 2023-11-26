@@ -1,10 +1,10 @@
 <template>
   <div :class="['base-input', validationResult.isValid ? 'valid-input' : 'error-input']">
     <input
-        :type="type" class="bg-transparent outline-none px-1.5 text-base" :value="displayedValue"
+        :type="type" class="bg-transparent outline-none px-1.5 text-normal" :value="displayedValue"
         @input="inputHandler" :placeholder="placeholder" v-bind="attrs"
     >
-    <tc-icon icon="close" clickable @click="resetClickHandler" />
+    <tc-icon :class="['text-lg', validationResult.isValid ? 'text-white' : 'text-red-500']" icon="close" clickable @click="resetClickHandler" />
   </div>
 </template>
 
@@ -21,7 +21,7 @@ import type {Ref} from "vue";
 import {computed, ref, useAttrs} from "vue";
 import {NextOperation} from "@/components/ui/input/index";
 
-interface TcInputProps {
+type TcInputProps = {
   modelValue: T;
   placeholder: string;
   validation?: ValidationFn<T>;
@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<TcInputProps>(), {
   type: "text"
 });
 
-interface TcInputEmits {
+type TcInputEmits = {
   (e: 'update:modelValue', value: T): void;
 }
 const emits = defineEmits<TcInputEmits>();

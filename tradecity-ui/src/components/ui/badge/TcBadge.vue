@@ -1,5 +1,5 @@
 <template>
-  <div class="text-base inline py-px px-0.5 rounded-sm font-bold">{{ text }}</div>
+  <div class="text-normal inline py-px px-0.5 rounded-sm font-bold">{{ text }}</div>
 </template>
 
 <script setup lang="ts">

@@ -13,13 +13,24 @@ export default {
         tertiary: "var(--tertiary)"
       },
       fontSize: {
-        base: "0.8rem"
+        normal: "0.77rem"
       },
       fontFamily: {
         icon: ["Material Icons"]
+      },
+      colors: {
+        base: "var(--base)",
+        "dark-base": "var(--base-dark)",
+        primary: "var(--primary)",
+        secondary: "var(--secondary)",
+        tertiary: "var(--tertiary)"
       }
     },
   },
-  plugins: [],
+  plugins: [
+      require("@tailwindcss/forms")({
+        strategy: "class"
+      })
+  ],
 }
 

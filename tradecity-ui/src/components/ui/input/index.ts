@@ -11,8 +11,8 @@ export enum NextOperation {
     NO_OP
 }
 
-export type InputType = number | string | Date;
-export type TargetType = number | string | Date;
+export type InputType = number | string | Date | boolean;
+export type TargetType = number | string | Date | boolean;
 
 export type SanitizingResult<T extends TargetType, V extends InputType> = {
     nextOperation: NextOperation;

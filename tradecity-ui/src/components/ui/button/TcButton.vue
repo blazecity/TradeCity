@@ -1,6 +1,6 @@
 <template>
   <button
-      :class="['text-base m-1 py-px px-2 rounded-sm font-medium', dangerous ? 'bg-red-500 hover:bg-red-700' : 'bg-base hover:bg-dark-base']"
+      :class="['text-normal m-1 py-0.5 px-2 rounded-sm font-medium min-w-fit', dangerous ? 'bg-red-500 hover:bg-red-700' : 'bg-base hover:bg-dark-base']"
       :disabled="disabled"
   >
     {{ text }}

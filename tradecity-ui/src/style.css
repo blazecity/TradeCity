@@ -78,9 +78,10 @@
 @font-face {
     font-family: 'Material Symbols Outlined';
     font-style: normal;
-    font-weight: 200;
-    src: url(https://fonts.gstatic.com/s/materialsymbolsoutlined/v151/kJF1BvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oDMzByHX9rA6RzaxHMPdY43zj-jCxv3fzvRNU22ZXGJpEpjC_1v-p_4MrImHCIJIZrDAvHOejbd5zrDAt.woff2) format('woff2');
+    font-weight: 300;
+    src: url(https://fonts.gstatic.com/s/materialsymbolsoutlined/v151/kJF1BvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oDMzByHX9rA6RzaxHMPdY43zj-jCxv3fzvRNU22ZXGJpEpjC_1v-p_4MrImHCIJIZrDDxHOejbd5zrDAt.woff2) format('woff2');
 }
+
 
 .material-icons {
     font-family: 'Material Symbols Outlined', sans-serif;
@@ -101,12 +102,16 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 :root {
     font-family: Inter, sans-serif;
     --primary: #1e2124;
     --secondary: #282b30;
     --tertiary: #36393e;
-    --base: #3178c6;
+    --base: #456498;
     --base-dark: #044c9b;
 }
 
@@ -117,8 +122,12 @@ body {
     font-weight: 200;
 }
 
+.standard-border {
+    @apply border rounded-sm border-neutral-600;
+}
+
 .base-input {
-    @apply inline-flex items-center border rounded-sm;
+    @apply inline-flex items-center border rounded-sm py-px;
 }
 
 .valid-input {
@@ -126,9 +135,60 @@ body {
 }
 
 .error-input {
-    @apply bg-red-200 border-red-700 bg-opacity-25 text-red-300;
+    @apply bg-red-300 border-red-700 bg-opacity-25 text-red-300;
 }
 
 input {
     color-scheme: dark;
 }
+
+.checkbox {
+    @apply form-checkbox z-0 mb-0.5 mx-0.5 bg-primary checked:bg-primary border-gray-600 ring-base focus:ring-1 focus:ring-offset-1 focus:ring-offset-primary text-gray-800 checked:border-gray-600;
+}
+
+.standard-hover {
+    @apply hover:bg-base hover:cursor-pointer;
+}
+
+/* SCROLL BAR */
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 2px;
+    height: 8px;
+}
+
+/* Track */
+.scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.scrollbar::-webkit-scrollbar-thumb {
+    background: #888;
+    border-width: 2px;
+    border-style: solid;
+    border-left-color: white;
+    border-right-color: white;
+    border-radius: 0.375rem;
+}
+
+/* Handle on hover */
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.large-icon {
+    @apply text-lg leading-none;
+}
+
