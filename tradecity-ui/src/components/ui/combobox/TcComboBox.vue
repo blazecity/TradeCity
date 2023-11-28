@@ -68,7 +68,7 @@ const searchTerm = ref("");
 const dropdownItems = ref(new Map(props.items.map(item => [item, false])));
 const displayedDropdownItems = ref(dropdownItems.value);
 const numberOfSelectedItems = computed(() => [...dropdownItems.value.values()].filter(isSelected => isSelected).length);
-const firstSelectedItem = computed(() => [...dropdownItems.value.entries()].find(([_, isSelected]) => isSelected)?.[0]);
+const firstSelectedItem = computed(() => [...dropdownItems.value.entries()].find(([, isSelected]) => isSelected)?.[0]);
 const lastSelectedItem = ref<ComboBoxItem<T>>();
 watch(searchTerm, async val => {
   if (val === "") {

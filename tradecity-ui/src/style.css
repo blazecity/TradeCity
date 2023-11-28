@@ -192,3 +192,8 @@ input {
     @apply text-lg leading-none;
 }
 
+/* Grid */
+.grid-rows-auto-fr {
+    grid-template-rows: auto 1fr;
+}
+

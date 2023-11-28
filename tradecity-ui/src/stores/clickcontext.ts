@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import {onBeforeUnmount, onMounted, onUnmounted, reactive, watch} from "vue";
+import {onBeforeUnmount, onMounted, reactive} from "vue";
 
 export enum Context {
     BODY,
