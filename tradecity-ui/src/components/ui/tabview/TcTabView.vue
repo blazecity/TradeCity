@@ -4,7 +4,7 @@
     <div class="border-b-zinc-800 border-b-[1px]">
       <div
           v-for="tab in tabs" :key="tab.id"
-          :class="['inline-block border-b-4 border-base px-2 py-1 hover:cursor-pointer',  activeTab === tab.id ? 'font-bold border-tc-blue bg-tertiary' : 'hover:bg-tertiary border-neutral-500']"
+          :class="['inline-block border-b-4 border-base px-2.5 py-1 hover:cursor-pointer',  activeTab === tab.id ? 'font-bold border-tc-blue bg-tertiary' : 'hover:bg-tertiary border-neutral-500']"
           @click="() => switchTab(tab.id)"
       >
         {{ tab.label }}
@@ -57,7 +57,11 @@ const tabs = computed(() => {
 
   return [];
 });
-watch(tabs, val => console.log(val), {immediate: true});
+watch(tabs, newTabs => {
+  if (activeTab.value === "" && newTabs.length > 1) {
+    activeTab.value = newTabs[0].id;
+  }
+}, {immediate: true});
 
 // ============ EVENT HANDLERS ============
 function switchTab(id: string) {
