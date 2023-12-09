@@ -197,3 +197,7 @@ input {
     grid-template-rows: auto 1fr;
 }
 
+.grid-cols-auto-fr {
+    grid-template-columns: auto 1fr;
+}
+

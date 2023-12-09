@@ -20,8 +20,9 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, useSlots, watch} from "vue";
+import {ref, watch} from "vue";
 import type {VNode} from "vue";
+import {useSlotProcessing} from "@/composables/slots";
 
 type TabItem = {
   id: string;
@@ -29,33 +30,21 @@ type TabItem = {
   component: VNode;
 }
 
-const slots = useSlots();
-
 const activeTab = ref("");
-
-const tabs = computed(() => {
-  const defaultSlot = slots.default;
-  if (defaultSlot) {
-    return defaultSlot().reduce((tabs: Array<TabItem>, child) => {
-      if (
-          child.props &&
-          "label" in child.props &&
-          "id" in child.props &&
-          typeof child.props.label === "string" &&
-          typeof child.props.id === "string"
-      ) {
-        tabs.push({
-          id: child.props.id,
-          label: child.props.label,
-          component: child
-        });
-      }
-
-      return tabs;
-    }, []);
+const tabs = useSlotProcessing<TabItem>(child => {
+  if (
+      child.props &&
+      "label" in child.props &&
+      "id" in child.props &&
+      typeof child.props.label === "string" &&
+      typeof child.props.id === "string"
+  ) {
+    return {
+      id: child.props.id,
+      label: child.props.label,
+      component: child
+    };
   }
-
-  return [];
 });
 watch(tabs, newTabs => {
   if (activeTab.value === "" && newTabs.length > 1) {

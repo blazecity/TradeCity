@@ -59,7 +59,7 @@ type TcComboBoxEmits = {
 }
 const emits = defineEmits<TcComboBoxEmits>();
 
-const { registerHandler } = useClickContext(); // TODO: Autoderegistering when unMounted
+const { registerHandler } = useClickContext();
 const searchDb = useSearch(props.items);
 
 const uuid = crypto.randomUUID();

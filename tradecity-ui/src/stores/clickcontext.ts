@@ -42,10 +42,7 @@ export const useClickContext = defineStore("clickcontext", () =>{
         };
 
         onMounted(() => {
-            const element = document.getElementById(id);
-            if (element) {
-                element.addEventListener("mousedown", guardElement);
-            }
+            document.getElementById(id)?.addEventListener("mousedown", guardElement, {});
 
             if (handlerMap.has(id)) {
                 handlerMap.get(id)?.handlers.set(context, handlerFn);
@@ -59,11 +56,7 @@ export const useClickContext = defineStore("clickcontext", () =>{
         });
 
         onBeforeUnmount(() => {
-            const element = document.getElementById(id);
-            if (element) {
-                element.removeEventListener("mousedown", guardElement);
-            }
-
+            document.getElementById(id)?.removeEventListener("mousedown", guardElement);
             handlerMap.delete(id);
         });
     }
