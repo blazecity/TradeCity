@@ -1,37 +1,15 @@
 <template>
-  <div class="flex items-center relative h-full w-full">
-    <tc-table :data="[]">
-      <tc-table-column>
-<!--        <template #header="props">-->
+    <div class="p-1">
+        <tc-table :data="tableData" description="Test" :headers="tableHeaders" grouped selectable class="h-60">
 
-<!--        </template>-->
-<!--        <template #data="props">-->
-
-<!--        </template>-->
-      </tc-table-column>
-      <tc-table-column-group>
-        <tc-table-column></tc-table-column>
-      </tc-table-column-group>
-      <tc-table-column>
-
-      </tc-table-column>
-    </tc-table>
-  </div>
-  <RouterView />
+        </tc-table>
+    </div>
 </template>
 
 <script setup lang="ts">
-import {RouterView} from 'vue-router'
 import {ref} from "vue";
 import {ClickType, Context, useClickContext} from "@/stores/clickcontext";
-import TcContextMenu from "@/components/ui/contextmenu/TcContextMenu.vue";
 import TcTable from "@/components/ui/table/TcTable.vue";
-import TcTableColumnGroup from "@/components/ui/table/TcTableColumnGroup.vue";
-import TcTableColumn from "@/components/ui/table/TcTableColumn.vue";
-
-const checkbox = ref(false);
-
-setTimeout(() => checkbox.value = true, 3000);
 
 const contextMenu: ContextMenu = [
   {
@@ -64,6 +42,10 @@ const contextMenu: ContextMenu = [
   }
 ];
 
+function p(): void {
+    console.log(tableData);
+}
+
 const cbItems = [
   { label: 'A', id: "a", data: { something: "a" } },
   { label: 'B', id: "b", data: { something: "b" } },
@@ -88,6 +70,56 @@ const cbItems = [
   { label: 'U', id: "u", data: { something: "u" } },
   { label: 'V', id: "v", data: { something: "v" } },
 ]
+
+type SampleData = {
+    id: number;
+    name: string;
+    birthday: Date;
+    isMember: boolean;
+}
+
+const tableData = ref([
+    { id: 1, name: "Jan Baumann", birthday: new Date(), isMember: true },
+    { id: 2, name: "Hanslig", birthday: new Date(), isMember: false },
+    { id: 2, name: "Hanslig", birthday: new Date(), isMember: false },
+    { id: 2, name: "Hanslig", birthday: new Date(), isMember: false },
+    { id: 2, name: "Hanslig", birthday: new Date(), isMember: false },
+    { id: 2, name: "Hanslig", birthday: new Date(), isMember: false },
+    { id: 2, name: "Hanslig", birthday: new Date(), isMember: false },
+    { id: 2, name: "Hanslig", birthday: new Date(), isMember: false },
+    { id: 2, name: "Hanslig", birthday: new Date(), isMember: false },
+    { id: 2, name: "Hanslig", birthday: new Date(), isMember: false },
+    { id: 2, name: "Hanslig", birthday: new Date(), isMember: false },
+    { id: 2, name: "Hanslig", birthday: new Date(), isMember: false },
+    { id: 2, name: "Hanslig", birthday: new Date(), isMember: false },
+    { id: 2, name: "Hanslig", birthday: new Date(), isMember: false },
+    { id: 2, name: "Hanslig", birthday: new Date(), isMember: false },
+    { id: 2, name: "Hanslig", birthday: new Date(), isMember: false },
+    { id: 2, name: "Hanslig", birthday: new Date(), isMember: false },
+    { id: 2, name: "Hanslig", birthday: new Date(), isMember: false },
+    { id: 2, name: "Hanslig", birthday: new Date(), isMember: false },
+    { id: 3, name: "UUUUUUU", birthday: new Date(), isMember: false },
+]);
+
+setTimeout(() => {
+    tableData.value.push({ id: 4, name: "HHHHHHHHHH", birthday: new Date(), isMember: true });
+}, 3000);
+
+const tableHeaders = {
+    group1: {
+        label: "Group 1",
+        headers: {
+            id: "ID",
+            name: "Name",
+            birthday: "Birthday",
+        }
+    },
+    group2: {
+        headers: {
+            isMember: "Member"
+        }
+    }
+}
 
 const { registerClick } = useClickContext();
 

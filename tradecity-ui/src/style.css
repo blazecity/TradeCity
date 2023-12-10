@@ -164,40 +164,62 @@ input {
 }
 
 .scrollbar::-webkit-scrollbar {
-    width: 2px;
-    height: 8px;
+    width: 12px;
+    height: 12px;
 }
 
 /* Track */
 .scrollbar::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    @apply bg-primary;
 }
 
 /* Handle */
 .scrollbar::-webkit-scrollbar-thumb {
-    background: #888;
-    border-width: 2px;
-    border-style: solid;
-    border-left-color: white;
-    border-right-color: white;
-    border-radius: 0.375rem;
+    @apply border-x-[3px] border-solid border-primary rounded-xl bg-neutral-700;
 }
 
 /* Handle on hover */
 .scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    @apply bg-neutral-400;
 }
+
+/* ICON */
 
 .large-icon {
     @apply text-lg leading-none;
 }
 
-/* Grid */
+/* GRID */
+
 .grid-rows-auto-fr {
     grid-template-rows: auto 1fr;
+}
+
+.grid-rows-fr-auto {
+    grid-template-rows: 1fr auto;
 }
 
 .grid-cols-auto-fr {
     grid-template-columns: auto 1fr;
 }
 
+/* TABLE */
+.table-header-cell {
+    @apply border-zinc-800 bg-tertiary border-b;
+}
+
+.table-data-row {
+    @apply hover:cursor-pointer hover:bg-base;
+}
+
+.table-data-cell {
+    @apply border-neutral-700 border-b;
+}
+
+.table-selectable-cell {
+    @apply bg-tertiary border-r border-zinc-800 border-b sticky left-0;
+}
+
+.table-default-cell-content {
+    @apply inline-block px-1;
+}
