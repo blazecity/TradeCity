@@ -1,15 +1,52 @@
 <template>
-    <div class="p-1">
-        <tc-table :data="tableData" description="Test" :headers="tableHeaders" grouped selectable class="h-60">
-
-        </tc-table>
-    </div>
+    <tc-panel-view class="grid-cols-6 grid-rows-6 h-full" #default="{ expansionHandler }">
+        <tc-panel title="Panel 1" :cols="3" :rows="3" :expansion-handler="expansionHandler">
+            <div class="h-[1000px] w-full">
+                <div>a</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+                <div>s</div>
+            </div>
+        </tc-panel>
+        <tc-panel title="Panel 2" :cols="3" :rows="3" :expansion-handler="expansionHandler">
+            b
+        </tc-panel>
+        <tc-panel title="Panel 2" :cols="3" :rows="3" :expansion-handler="expansionHandler">
+            c
+        </tc-panel>
+        <tc-panel title="Panel 2" :cols="3" :rows="3" :expansion-handler="expansionHandler">
+            d
+        </tc-panel>
+    </tc-panel-view>
 </template>
 
 <script setup lang="ts">
 import {ref} from "vue";
 import {ClickType, Context, useClickContext} from "@/stores/clickcontext";
-import TcTable from "@/components/ui/table/TcTable.vue";
+import TcPanelView from "@/components/ui/panelview/TcPanelView.vue";
+import TcPanel from "@/components/ui/panelview/TcPanel.vue";
 
 const contextMenu: ContextMenu = [
   {
