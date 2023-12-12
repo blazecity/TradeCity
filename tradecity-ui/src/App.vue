@@ -1,45 +1,5 @@
 <template>
-    <tc-panel-view class="grid-cols-6 grid-rows-6 h-full" #default="{ expansionHandler }">
-        <tc-panel title="Panel 1" :cols="3" :rows="3" :expansion-handler="expansionHandler">
-            <div class="h-[1000px] w-full">
-                <div>a</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-                <div>s</div>
-            </div>
-        </tc-panel>
-        <tc-panel title="Panel 2" :cols="3" :rows="3" :expansion-handler="expansionHandler">
-            b
-        </tc-panel>
-        <tc-panel title="Panel 2" :cols="3" :rows="3" :expansion-handler="expansionHandler">
-            c
-        </tc-panel>
-        <tc-panel title="Panel 2" :cols="3" :rows="3" :expansion-handler="expansionHandler">
-            d
-        </tc-panel>
-    </tc-panel-view>
+    <tc-notification title="Hlkoooooooooooooooooookkkkkkkkk" body="Worldkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk" />
 </template>
 
 <script setup lang="ts">
@@ -47,6 +7,7 @@ import {ref} from "vue";
 import {ClickType, Context, useClickContext} from "@/stores/clickcontext";
 import TcPanelView from "@/components/ui/panelview/TcPanelView.vue";
 import TcPanel from "@/components/ui/panelview/TcPanel.vue";
+import TcNotification from "@/components/ui/notification/TcNotification.vue";
 
 const contextMenu: ContextMenu = [
   {

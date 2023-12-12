@@ -175,7 +175,7 @@ input {
 
 /* Handle */
 .scrollbar::-webkit-scrollbar-thumb {
-    @apply border-x-[3px] border-solid border-primary rounded-xl bg-neutral-700;
+    @apply border-x-[3px] border-solid border-primary rounded-md bg-neutral-700;
 }
 
 /* Handle on hover */
