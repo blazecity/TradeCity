@@ -1,5 +1,5 @@
 <template>
-  <span :class="['material-icons', {'hover:bg-neutral-700 hover:cursor-pointer rounded-sm': clickable}]" @click="clickHandler">{{ icon }}</span>
+  <span :class="['material-icons', {'hover:bg-neutral-900 hover:cursor-pointer rounded-sm': clickable}]" @click="clickHandler">{{ icon }}</span>
 </template>
 
 <script setup lang="ts">

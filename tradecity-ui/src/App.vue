@@ -1,13 +1,23 @@
 <template>
-    <tc-notification title="Hlkoooooooooooooooooookkkkkkkkk" body="Worldkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk" />
+    <tc-button text="Open" @click="open" />
+    <tc-dialog title="A" v-model:open="isOpen">
+        <tc-ok-cancel-container>
+            Hello
+        </tc-ok-cancel-container>
+    </tc-dialog>
 </template>
 
 <script setup lang="ts">
 import {ref} from "vue";
 import {ClickType, Context, useClickContext} from "@/stores/clickcontext";
-import TcPanelView from "@/components/ui/panelview/TcPanelView.vue";
-import TcPanel from "@/components/ui/panelview/TcPanel.vue";
-import TcNotification from "@/components/ui/notification/TcNotification.vue";
+import TcButton from "@/components/ui/button/TcButton.vue";
+import TcDialog from "@/components/ui/dialog/TcDialog.vue";
+import TcOkCancelContainer from "@/components/ui/common/TcOkCancelContainer.vue";
+
+const isOpen = ref(false);
+function open() {
+    isOpen.value = true;
+}
 
 const contextMenu: ContextMenu = [
   {

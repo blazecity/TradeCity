@@ -1,9 +1,6 @@
 <template>
   <div :class="['grid grid-rows-auto-fr bg-secondary p-0.5 overflow-hidden', expanded ? 'col-span-full row-span-full' : 'group-[.panel-expanded]:hidden panel']">
-      <div class="flex justify-between p-0.5 mb-1">
-          <span class="text-xs font-bold">{{ title }}</span>
-          <tc-icon :icon="expanded ? 'close_fullscreen' : 'open_in_full'" class="text-[16px]" clickable @click="expandClickHandler" />
-      </div>
+      <tc-title-bar :title="title" icon="expanded ? 'close_fullscreen' : 'open_in_full'" @icon-click="expandClickHandler" />
       <div class="overflow-auto scrollbar">
           <slot></slot>
       </div>
@@ -11,8 +8,8 @@
 </template>
 
 <script setup lang="ts">
-import TcIcon from "@/components/ui/icons/TcIcon.vue";
 import {ref} from "vue";
+import TcTitleBar from "@/components/ui/common/TcTitleBar.vue";
 
 type TcPanelProps = {
     title: string;
