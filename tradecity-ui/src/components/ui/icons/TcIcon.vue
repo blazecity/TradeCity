@@ -1,11 +1,17 @@
 <template>
-  <span :class="['material-icons', {'hover:bg-neutral-900 hover:cursor-pointer rounded-sm': clickable}]" @click="clickHandler">{{ icon }}</span>
+  <span
+      :class="['material-icons', {'hover:cursor-pointer rounded-sm': clickable, 'hover:bg-base': dark && clickable, 'hover:bg-primary': !dark && clickable}]"
+      @click="clickHandler"
+  >
+      {{ icon }}
+  </span>
 </template>
 
 <script setup lang="ts">
 interface TcIconProps {
   icon: string;
   clickable?: boolean;
+  dark?: boolean;
 }
 const props = defineProps<TcIconProps>();
 

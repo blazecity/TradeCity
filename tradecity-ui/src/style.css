@@ -6,7 +6,7 @@
     font-family: "Webly Sleek UI";
     font-style: normal;
     font-weight: normal;
-    src: url(./assets/fonts/WeblySleek_UI_Light.woff2);
+    src: url(./assets/fonts/WeblySleek_UI_Semilight.woff2);
 }
 
 @font-face {
@@ -50,15 +50,16 @@
 
 :root {
     font-family: "Webly Sleek UI", sans-serif;
+    --dark: #171a1c;
     --primary: #1e2124;
     --secondary: #282b30;
-    --tertiary: #36393e;
-    --base: #2582dc;
-    --base-dark: #415a80;
+    --tertiary: #313338;
+    --base: #2f73fd;
+    --base-dark: #3b5275;
 }
 
 body {
-    background-color: var(--primary);
+    background-color: var(--tertiary);
     color: white;
     font-size: 0.8rem;
     font-weight: 200;
