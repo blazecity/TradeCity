@@ -8,11 +8,11 @@
 <script setup lang="ts">
 import TcIcon from "@/components/ui/icons/TcIcon.vue";
 
-type TcSubNavigationElement = {
+type TcFunctionalityNavigationElement = {
     text: string;
     icon?: string;
 }
-withDefaults(defineProps<TcSubNavigationElement>(), {
+withDefaults(defineProps<TcFunctionalityNavigationElement>(), {
     icon: "label"
 });
 </script>

@@ -2,7 +2,7 @@
   <div class="relative tooltip inline-block">
       <slot></slot>
       <div :class="[
-          'tooltip-content inline-block z-50 bg-black h-fit w-fit px-1.5 pt-0.5 pb-1 font-bold rounded-sm',
+          'tooltip-content inline-block z-50 bg-black h-fit w-fit px-1.5 pt-0.5 pb-1 font-bold rounded-sm whitespace-nowrap',
           { 'my-auto mr-0 ml-2.5 top-0 bottom-0 tooltip-content-right': direction === 'right' },
           { 'my-auto ml-0 mr-2.5 top-0 bottom-0 right-full tooltip-content-left': direction === 'left' },
           { 'mx-auto mt-0 mb-2.5 left-0 right-0 bottom-full tooltip-content-top': direction === 'top' },
@@ -16,7 +16,7 @@
 <script setup lang="ts">
 type TcTooltipProps = {
     text: string;
-    direction: "right" | "left" | "top" | "bottom";
+    direction?: "right" | "left" | "top" | "bottom";
 };
 withDefaults(defineProps<TcTooltipProps>(), {
     direction: "right"

@@ -10,10 +10,10 @@
 </template>
 
 <script setup lang="ts">
-type TcSubNavigationSubSectionProps = {
+type TcFunctionalityNavigationSectionProps = {
     title: string;
 };
-defineProps<TcSubNavigationSubSectionProps>();
+defineProps<TcFunctionalityNavigationSectionProps>();
 </script>
 
 <style scoped>

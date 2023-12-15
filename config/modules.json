@@ -1,0 +1,23 @@
+{
+  "fixedIncome": {
+    "name": "Fixed Income",
+    "icon": "hub",
+    "path": "/fixed_income",
+    "moduleContextComponentUrl": "",
+    "functionalityGroups": {
+      "origination": {
+        "name": "Origination",
+        "path": "origination",
+        "functionalities": {
+          "pricing": {
+            "name": "Bond Pricing",
+            "path": "pricing",
+            "chunk": "origination",
+            "componentUrl": "",
+            "functionalityContextComponentUrl": ""
+          }
+        }
+      }
+    }
+  }
+}

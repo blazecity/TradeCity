@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import {ClickType, Context, useClickContext} from "@/stores/clickcontext";
-import TcNavigation from "@/components/layout/nav/TcNavigation.vue";
+import TcNavigation from "@/components/nav/TcNavigation.vue";
 import TcMain from "@/components/layout/main/TcMain.vue";
 import TcFooter from "@/components/layout/footer/TcFooter.vue";
 import TcHeader from "@/components/layout/header/TcHeader.vue";

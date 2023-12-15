@@ -1,6 +1,6 @@
 <template>
     <tc-tooltip :text="text">
-        <tc-icon class="text-xl p-1 rounded-[0.5rem]" :icon="icon" clickable dark />
+        <tc-icon class="text-xl p-1 rounded-xl" :icon="icon" clickable dark />
     </tc-tooltip>
 </template>
 

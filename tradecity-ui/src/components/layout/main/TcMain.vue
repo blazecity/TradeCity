@@ -1,7 +1,7 @@
 <template>
   <main class="">
       <router-view name="MainArea"></router-view>
-      <tc-tooltip text="Top">
+      <tc-tooltip text="Topppppp  mmmmmmm">
           <tc-badge text="Top Badge" class="bg-yellow-200 text-black" />
       </tc-tooltip>
   </main>

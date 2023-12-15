@@ -10,9 +10,9 @@
 </template>
 
 <script setup lang="ts">
-import TcModuleContext from "@/components/layout/nav/sub/TcModuleContext.vue";
-import TcSubNavigationElement from "@/components/layout/nav/sub/TcSubNavigationElement.vue";
-import TcSubNavigationSubSection from "@/components/layout/nav/sub/TcSubNavigationSection.vue";
+import TcModuleContext from "@/components/layout/nav/functionality/TcModuleContext.vue";
+import TcSubNavigationElement from "@/components/layout/nav/functionality/TcFunctionalityNavigationElement.vue";
+import TcSubNavigationSubSection from "@/components/layout/nav/functionality/TcFunctionalityNavigationSection.vue";
 </script>
 
 <style scoped>
