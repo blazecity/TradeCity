@@ -1,11 +1,9 @@
 <template>
-<div>Temp 2</div>
+  <div>
+      Editing Client
+  </div>
 </template>
 
 <script setup lang="ts">
 
 </script>
-
-<style scoped>
-
-</style>

@@ -2,11 +2,11 @@
   <div class="relative tooltip inline-block">
       <slot></slot>
       <div :class="[
-          'tooltip-content inline-block z-50 bg-black h-fit w-fit px-1.5 pt-0.5 pb-1 font-bold rounded-sm whitespace-nowrap',
+          'tooltip-content text-black inline-block z-50 tooltip-background h-fit w-fit px-1.5 pt-0.5 pb-1 font-bold rounded-sm whitespace-nowrap',
           { 'my-auto mr-0 ml-2.5 top-0 bottom-0 tooltip-content-right': direction === 'right' },
           { 'my-auto ml-0 mr-2.5 top-0 bottom-0 right-full tooltip-content-left': direction === 'left' },
-          { 'mx-auto mt-0 mb-2.5 left-0 right-0 bottom-full tooltip-content-top': direction === 'top' },
-          { 'mx-auto mb-0 mt-2.5 left-0 right-0 top-full tooltip-content-bottom': direction === 'bottom' },
+          { 'mt-0 mb-2.5 left-1/2 -translate-x-1/2 bottom-full tooltip-content-top': direction === 'top' },
+          { 'mb-0 mt-2.5 left-1/2 -translate-x-1/2 top-full tooltip-content-bottom': direction === 'bottom' },
       ]">
           {{ text }}
       </div>
@@ -45,7 +45,7 @@ withDefaults(defineProps<TcTooltipProps>(), {
     margin-top: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent black transparent transparent;
+    border-color: transparent #9ca3af transparent transparent;
 }
 
 .tooltip-content-top::after {
@@ -56,7 +56,7 @@ withDefaults(defineProps<TcTooltipProps>(), {
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: black transparent transparent transparent;
+    border-color: #9ca3af transparent transparent transparent;
 }
 
 .tooltip-content-left::after {
@@ -67,7 +67,7 @@ withDefaults(defineProps<TcTooltipProps>(), {
     margin-top: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent transparent transparent black;
+    border-color: transparent transparent transparent #9ca3af;
 }
 
 .tooltip-content-bottom::after {
@@ -78,6 +78,10 @@ withDefaults(defineProps<TcTooltipProps>(), {
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent transparent black transparent;
+    border-color: transparent transparent #9ca3af transparent;
+}
+
+.tooltip-background {
+    background-color: #9ca3af;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <tc-input
-      class="-my-px" :zero-value="new Date()" :format="format" v-model="value" :placeholder="placeholder"
-      :sanitize="sanitize" :validation="validation" type="date"
+          class="-my-px" :zero-value="new Date()" :format="format" v-model="internalValue" :placeholder="placeholder"
+          :sanitize="sanitize" :validation="validation" type="date"
   />
 </template>
 
@@ -25,8 +25,9 @@ interface TcStringInputEmits {
 }
 const emits = defineEmits<TcStringInputEmits>();
 
-const value = ref(props.modelValue);
-watch(value, val => emits("update:modelValue", val), { immediate: true });
+const internalValue = ref(props.modelValue);
+watch(internalValue, val => emits("update:modelValue", val), { immediate: true });
+watch(() => props.modelValue, val => { internalValue.value = val }, { immediate: true });
 
 // ============== HELPER FUNCTIONS ==============
 function sanitize(val: string): SanitizingResult<Date, string> {

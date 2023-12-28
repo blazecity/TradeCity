@@ -24,6 +24,13 @@
     src: url(./assets/fonts/Material_Symbols.woff2) format('woff2');
 }
 
+@font-face {
+    font-family: 'Material Symbols Outlined Filled';
+    font-style: normal;
+    font-weight: 400;
+    src: url(./assets/fonts/Material_Symbols_Filled.woff2) format('woff2');
+}
+
 
 .material-icons {
     font-family: 'Material Symbols Outlined', sans-serif;
@@ -44,6 +51,21 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.material-symbols-filled {
+    font-family: 'Material Symbols Outlined Filled';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -54,8 +76,13 @@
     --primary: #1e2124;
     --secondary: #282b30;
     --tertiary: #313338;
-    --base: #2f73fd;
-    --base-dark: #3b5275;
+    --base: #375eac;
+    --base-dark: #0355ad;
+
+    /* table colors */
+    --table-primary: #171a1e;
+    --table-secondary: var(--secondary);
+    --table-tertiary: #333333;
 }
 
 body {
@@ -70,11 +97,23 @@ body {
 }
 
 .base-input {
-    @apply inline-flex items-center border rounded-sm py-px;
+    @apply inline-flex items-center border rounded-sm py-px w-full;
+}
+
+.table-input {
+    @apply inline-flex items-center bg-black;
+}
+
+.table-valid-input {
+
+}
+
+.table-error-input {
+    @apply bg-red-300 text-red-300;
 }
 
 .valid-input {
-    @apply bg-secondary border-neutral-600 bg-opacity-20;
+    @apply bg-dark border-neutral-600 bg-opacity-20;
 }
 
 .error-input {
@@ -85,8 +124,20 @@ input {
     color-scheme: dark;
 }
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 .checkbox {
-    @apply form-checkbox z-0 m-0.5 bg-primary checked:bg-primary border-gray-600 ring-base focus:ring-1 focus:ring-offset-1 focus:ring-offset-primary text-gray-800 checked:border-gray-600;
+    @apply form-checkbox m-px z-0 bg-primary checked:bg-primary border-gray-600 ring-base focus:ring-1 focus:ring-offset-1 focus:ring-offset-primary text-gray-800 checked:border-gray-600;
 }
 
 .standard-hover {
@@ -148,21 +199,30 @@ input {
 
 /* TABLE */
 .table-header-cell {
-    @apply border-zinc-800 bg-tertiary border-b;
+    @apply border-zinc-900 bg-table-secondary border-b border-l px-1;
+}
+
+.table-subheader-cell {
+    @apply border-zinc-900 bg-table-secondary border-b border-l p-0;
 }
 
 .table-data-row {
-    @apply hover:cursor-pointer hover:bg-base;
+    @apply hover:cursor-pointer hover:bg-zinc-700;
 }
 
 .table-data-cell {
-    @apply border-neutral-700 border-b;
+    @apply border-neutral-950 border-b border-l p-0;
 }
 
 .table-selectable-cell {
-    @apply bg-tertiary border-r border-zinc-800 border-b sticky left-0;
+    @apply flex bg-table-secondary border-zinc-900 border-b border-l sticky left-0 justify-center items-center;
 }
 
 .table-default-cell-content {
     @apply inline-block px-1;
+}
+
+/* SYSTEM STATUS TABLE */
+.system-status-cell {
+    @apply text-left align-top px-1 py-2;
 }

@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import TcIcon from "@/components/ui/icons/TcIcon.vue";
 import {onMounted, ref} from "vue";
-import {Context, useClickContext} from "@/stores/clickcontext";
+import {useClickContext} from "@/stores/clickcontext";
 
 type TcContextMenuProps = {
   contextMenu: ContextMenu;
@@ -48,7 +48,7 @@ const uuid = crypto.randomUUID();
 const subMenuId = ref("");
 const rootVisible = ref(false);
 
-registerHandler(uuid, Context.BODY, () => { rootVisible.value = false; });
+registerHandler(uuid, 1, () => rootVisible.value ??= false);
 
 // ========== EVENT HANDLERS ==========
 function showSubMenu(id: string): void {

@@ -1,7 +1,7 @@
 <template>
   <tc-input
-      :zero-value="zeroValue" :format="format" v-model="value" :placeholder="placeholder"
-      :sanitize="sanitize" :validation="validation"
+          :zero-value="zeroValue" :format="format" v-model="internalValue" :placeholder="placeholder"
+          :sanitize="sanitize" :validation="validation" :table-input="tableInput" :intermediate-sanitize="intermediateSanitize"
   />
 </template>
 
@@ -16,6 +16,7 @@ interface TcNumberInputProps {
   placeholder: string;
   decimalPlaces?: number;
   validation?: ValidationFn<number>;
+  tableInput?: boolean;
 }
 const props = withDefaults(defineProps<TcNumberInputProps>(), {
   validation: () => ({ isValid: true, errorMessage: "" }),
@@ -28,8 +29,9 @@ interface TcNumberInputEmits {
 const emits = defineEmits<TcNumberInputEmits>();
 
 const zeroValue = 0;
-const value = ref(props.modelValue);
-watch(value, val => emits("update:modelValue", val), { immediate: true });
+const internalValue = ref(props.modelValue);
+watch(internalValue, val => emits("update:modelValue", val), { immediate: true });
+watch(() => props.modelValue, val => { internalValue.value = val }, { immediate: true })
 
 // ============== HELPER FUNCTIONS ==============
 function sanitize(input: string): SanitizingResult<number, string> {
@@ -41,7 +43,6 @@ function sanitize(input: string): SanitizingResult<number, string> {
     };
   }
 
-  // TODO: Could be improved if all characters except m, k and - cannot even be entered.
   let intermediate = input
       .replace("k", "000")
       .replace("m", "000000")
@@ -71,7 +72,13 @@ function sanitize(input: string): SanitizingResult<number, string> {
   };
 }
 
+function intermediateSanitize(input: string): string {
+    return input
+        .replace("k", "000")
+        .replace("m", "000000");
+}
+
 function format(num: number): string {
-  return Intl.NumberFormat("de-CH", { maximumFractionDigits: props.decimalPlaces }).format(num);
+  return Intl.NumberFormat("de-CH", { minimumFractionDigits: props.decimalPlaces, maximumFractionDigits: props.decimalPlaces }).format(num);
 }
 </script>

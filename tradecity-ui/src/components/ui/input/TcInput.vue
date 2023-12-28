@@ -1,10 +1,21 @@
 <template>
-  <div :class="['base-input', validationResult.isValid ? 'valid-input' : 'error-input']">
-    <input
-        :type="type" class="bg-transparent outline-none px-1.5 text-normal" :value="displayedValue"
-        @input="inputHandler" :placeholder="placeholder" v-bind="attrs"
-    >
-    <tc-icon :class="['text-lg', validationResult.isValid ? 'text-white' : 'text-red-500']" icon="close" clickable @click="resetClickHandler" />
+  <div class="inline-flex items-center text-normal">
+      <label v-if="withLabel && !tableInput" :for="id" class="whitespace-nowrap mr-2">{{ placeholder }}</label>
+      <div :class="[
+          tableInput ? 'table-input' : 'base-input',
+          {
+              'valid-input': validationResult.isValid && !tableInput,
+              'error-input': !validationResult.isValid && !tableInput,
+              'table-valid-input': validationResult.isValid && tableInput,
+              'table-error-input': !validationResult.isValid && tableInput
+          }
+      ]">
+          <input
+              :id="id" :type="type" :class="['bg-transparent outline-none px-1.5 w-full', {'text-center': tableInput}]" :value="displayedValue"
+              @focusout="focusOutHandler" @input="inputHandler" onclick="this.select()" :placeholder="placeholder" v-bind="attrs"
+          >
+          <tc-icon v-if="!tableInput" :class="['text-lg', validationResult.isValid ? 'text-white' : 'text-red-500']" icon="close" clickable @click="resetClickHandler" />
+      </div>
   </div>
 </template>
 
@@ -18,7 +29,7 @@ import type {
   ValidationFn
 } from "@/components/ui/input/index";
 import type {Ref} from "vue";
-import {computed, ref, useAttrs} from "vue";
+import {computed, ref, useAttrs, watch} from "vue";
 import {NextOperation} from "@/components/ui/input/index";
 
 type TcInputProps = {
@@ -27,12 +38,16 @@ type TcInputProps = {
   validation?: ValidationFn<T>;
   format: FormatFn<T, V>;
   sanitize: SanitizeFn<T, V>;
+  intermediateSanitize?: (input: string) => string,
   zeroValue: T;
   type?: string;
+  withLabel?: boolean;
+  tableInput?: boolean;
 }
 const props = withDefaults(defineProps<TcInputProps>(), {
-  validation: () => ({ isValid: true, errorMessage: "" }),
-  type: "text"
+    validation: () => ({ isValid: true, errorMessage: "" }),
+    intermediateSanitize: input => input,
+    type: "text"
 });
 
 type TcInputEmits = {
@@ -42,13 +57,15 @@ const emits = defineEmits<TcInputEmits>();
 
 const attrs = useAttrs();
 
+const id = crypto.randomUUID();
 const rawInput = ref("");
 const sanitizedValue = ref(props.zeroValue) as Ref<T>;
 const displayedValue = ref(props.format(props.modelValue)) as Ref<V>;
 const validationResult = computed(() => props.validation(sanitizedValue.value));
+watch(() => props.modelValue, val => { displayedValue.value = props.format(val) }, { immediate: true });
 
 // ============== EVENT HANDLERS ==============
-function inputHandler(event: Event): void {
+function focusOutHandler(event: Event): void {
   const newValue = (event.target as HTMLInputElement).value;
   rawInput.value = newValue;
   const sanitizingResult = props.sanitize(newValue);
@@ -75,6 +92,11 @@ function inputHandler(event: Event): void {
       break;
     }
   }
+}
+
+function inputHandler(event: Event): void {
+    const newValue = (event.target as HTMLInputElement).value;
+    displayedValue.value = props.intermediateSanitize(newValue) as V;
 }
 
 function resetClickHandler(): void {

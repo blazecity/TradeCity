@@ -3,9 +3,13 @@
       <div>
           <slot></slot>
       </div>
-      <div class="flex w-full justify-end">
-          <tc-button text="Submit" @click="okClickHandler" />
-          <tc-button text="Cancel" @click="cancelClickHandler" />
+      <div class="flex gap-2 w-full justify-end p-2">
+          <tc-button @click="okClickHandler">
+              Submit
+          </tc-button>
+          <tc-button @click="cancelClickHandler" dangerous>
+              Cancel
+          </tc-button>
       </div>
   </div>
 </template>

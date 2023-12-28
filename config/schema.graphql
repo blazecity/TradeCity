@@ -1,0 +1,13 @@
+﻿schema {
+  query: Query
+}
+
+type Query {
+  temp: Temp!
+  tempById(id: Int!): Temp
+}
+
+type Temp {
+  a: String
+  b: String
+}

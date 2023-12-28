@@ -1,13 +1,23 @@
-export type ModuleTree = {
-    [key: string]: {
-        functionalityGroups: FunctionalityGroups
+export type ModuleSchema = {
+    [moduleKey: string]: {
+        name: string;
+        navigationName: string;
+        path: string;
+        icon: string;
+        functionalityGroups: {
+            [funcGroupKey: string]: {
+                name: string;
+                path: string;
+                functionalities: {
+                    [funcKey: string]: {
+                        name: string;
+                        navigationName: string;
+                        path: string;
+                        chunk: string;
+                    }
+                };
+            };
+        };
     };
 };
 
-export type FunctionalityGroups = {
-    [functionalityGroupKey: string]: Functionalities;
-};
-
-export type Functionalities = {
-    [functionalityKey: string]: {};
-};

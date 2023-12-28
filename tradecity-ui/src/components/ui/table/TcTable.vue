@@ -1,55 +1,70 @@
 <template>
-    <div class="grid grid-rows-fr-auto overflow-hidden w-fit bg-secondary border border-zinc-700">
+    <div class="grid grid-rows-fr-auto overflow-hidden w-fit h-full">
         <div class="overflow-auto scrollbar">
-            <table class="bg-secondary border-separate border-spacing-0">
+            <table class="bg-table-primary border-separate border-spacing-0 w-full">
                 <thead class="text-gray-400 sticky top-0 z-10">
-                <!-- group row -->
+                    <!-- group row -->
                     <tr v-if="grouped">
                         <th v-if="selectable" class="table-selectable-cell"></th>
                         <th
                             v-for="(group, groupKey, index) in headers" :key="groupKey" :colspan="Object.keys(group.headers).length"
-                            :class="['table-header-cell', {'border-l': index !== 0}]"
+                            :class="['table-header-cell', {'border-r': index === lengthHeaderGroups - 1, 'border-t': grouped}]"
                         >
                             <slot :name="'group.' + groupKey" :group="groupKey" :label="group.label">
-                                <span>{{ group.label ?? "" }}</span>
+                                <span class="whitespace-nowrap">{{ group.label ?? "" }}</span>
                             </slot>
                         </th>
                     </tr>
                     <!-- header row -->
                     <tr>
-                        <th v-if="selectable" class="table-selectable-cell">
+                        <th v-if="selectable" :class="['table-selectable-cell', {'border-t': !grouped}]">
                             <tc-check-box v-model="allSelected" />
                         </th>
                         <th
                             v-for="([headerKey, header], index) in flatHeaders" :key="headerKey"
-                            :class="['table-header-cell border-b', {'border-l': index !== 0}]"
+                            :class="['table-header-cell', {'border-r': index === lengthHeaders - 1, 'border-t': !grouped}]"
                         >
                             <slot :name="'header.' + headerKey" :header="headerKey" :label="header">
-                                <span class="table-default-cell-content">{{ header }}</span>
+                                <span class="table-default-cell-content whitespace-nowrap">{{ header }}</span>
+                            </slot>
+                        </th>
+                    </tr>
+                    <tr v-if="subHeader">
+                        <th v-if="selectable" class="table-selectable-cell"></th>
+                        <th
+                            v-for="([headerKey, header], index) in flatHeaders" :key="headerKey"
+                            :class="['table-subheader-cell', {'border-r': index === lengthHeaders - 1}]"
+                        >
+                            <slot :name="'subheader.' + headerKey" :header="headerKey" :label="header">
                             </slot>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- data row -->
-                    <tr v-for="entry in data" :class="['table-data-row', isSelected(entry) ? 'bg-gray-500' : 'bg-secondary']">
+                    <tr v-for="(entry, dataIndex) in data" :key="dataIndex"
+                        :class="['table-data-row', isSelected(entry) ? 'bg-gray-500' : 'bg-table-primary']"
+                    >
                         <td v-if="selectable" class="table-selectable-cell">
                             <tc-check-box :model-value="isSelected(entry)" @update:model-value="() => toggleSelectionHandler(entry)" />
                         </td>
                         <td v-for="([headerKey, ], index) in flatHeaders" :key="headerKey"
-                            :class="['table-data-cell', {'border-l': index !== 0}]" @click="() => toggleSelectionHandler(entry)"
+                            :class="['table-data-cell', {'border-r': index === lengthHeaders - 1}]"
+                            @click="() => toggleSelectionHandler(entry)"
                         >
-                            <slot :name="'data.' + headerKey" :data="entry" :header="headerKey">
-                                <span class="table-default-cell-content">{{ entry[headerKey as keyof T] }}</span>
-                            </slot>
+                            <div class="flex items-center justify-center">
+                                <slot :name="'data.' + headerKey" :data="entry" :header="headerKey" :data-index="dataIndex">
+                                    <span class="table-default-cell-content">{{ entry[headerKey as keyof T] }}</span>
+                                </slot>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="bg-tertiary px-1 border-t border-zinc-800">
+        <div v-if="footer" class="bg-tertiary px-1 border-t border-zinc-800">
             <slot name="footer">
-                <span class="text-gray-200">{{ description }}</span>
+                <span class="text-gray-200 text-xs">{{ description }}</span>
             </slot>
         </div>
     </div>
@@ -66,6 +81,8 @@ type TcTableProps = {
     headers: TableHeaderGroups<T>;
     grouped?: boolean;
     selectable?: boolean;
+    footer?: boolean;
+    subHeader?: boolean;
 };
 const props = defineProps<TcTableProps>();
 
@@ -85,6 +102,8 @@ watch(allSelected, isSelected => {
         selectedData.clear();
     }
 });
+const lengthHeaderGroups = computed(() => Object.keys(props.headers).length);
+const lengthHeaders = computed(() => flatHeaders.value.length);
 
 // ========== HELPER FUNCTIONS ==========
 function isSelected(dataEntry: T): boolean {
@@ -93,12 +112,12 @@ function isSelected(dataEntry: T): boolean {
 
 // ========== EVENT HANDLERS ==========
 function toggleSelectionHandler(dataEntry: T): void {
+    if (!props.selectable) return;
+
     if (isSelected(dataEntry)) {
         selectedData.delete(dataEntry);
     } else {
         selectedData.add(dataEntry);
     }
-
-
 }
 </script>

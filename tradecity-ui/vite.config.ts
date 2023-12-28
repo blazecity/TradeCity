@@ -8,7 +8,7 @@ import moduleGeneration from "./build/modules/plugin-module-generation";
 export default defineConfig({
   plugins: [
     vue(),
-    moduleGeneration(),
+    moduleGeneration()
   ],
   resolve: {
     alias: {
@@ -20,18 +20,12 @@ export default defineConfig({
       output: {
         // manual chunks only working with dynamic imports
         chunkFileNames: "assets/[name]/[name].js",
-        manualChunks: id => {
-          if (id.includes("src/components/temp/")) {
-            return "temp";
-          }
-
-          if (id.includes("src/components/ui/")) {
-            return "ui";
-          }
-
-          return "hel";
-        }
       }
+    }
+  },
+  server: {
+    proxy: {
+      "/graphql": "http://localhost:5246"
     }
   }
 })

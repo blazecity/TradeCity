@@ -1,20 +1,80 @@
 {
+  "home": {
+    "navigationName": "Home",
+    "name": "TradeCity",
+    "icon": "title",
+    "path": "/",
+    "functionalityGroups": {
+
+    }
+  },
   "fixedIncome": {
+    "navigationName": "FixedIncome",
     "name": "Fixed Income",
     "icon": "hub",
     "path": "/fixed_income",
-    "moduleContextComponentUrl": "",
     "functionalityGroups": {
       "origination": {
         "name": "Origination",
         "path": "origination",
         "functionalities": {
           "pricing": {
+            "navigationName": "BondPricing",
             "name": "Bond Pricing",
             "path": "pricing",
-            "chunk": "origination",
-            "componentUrl": "",
-            "functionalityContextComponentUrl": ""
+            "chunk": "origination"
+          },
+          "comparables": {
+            "navigationName": "OriginationComparables",
+            "name": "Comparables Management",
+            "path": "/comparables_management",
+            "chunk": "origination"
+          }
+        }
+      }
+    }
+  },
+  "clients": {
+    "navigationName": "Clients",
+    "name": "Clients",
+    "icon": "manage_accounts",
+    "path": "/clients",
+    "functionalityGroups": {
+      "clientManagement": {
+        "name": "Client Management",
+        "path": "management",
+        "functionalities": {
+          "add": {
+            "navigationName": "AddClient",
+            "name": "Add Client",
+            "path": "create",
+            "chunk": "clients"
+          },
+          "edit": {
+            "navigationName": "EditClient",
+            "name": "Edit Client",
+            "path": "edit",
+            "chunk": "clients"
+          }
+        }
+      }
+    }
+  },
+  "dev": {
+    "navigationName": "Developer",
+    "name": "Developer",
+    "icon": "code",
+    "path": "/developer",
+    "functionalityGroups": {
+      "system": {
+        "name": "System",
+        "path": "system",
+        "functionalities": {
+          "status": {
+            "navigationName": "SystemStatus",
+            "name": "System Status",
+            "path": "status",
+            "chunk": "system"
           }
         }
       }

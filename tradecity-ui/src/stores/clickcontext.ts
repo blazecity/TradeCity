@@ -1,10 +1,6 @@
 import {defineStore} from "pinia";
 import {onBeforeUnmount, onMounted, reactive} from "vue";
-
-export enum Context {
-    BODY,
-    MODAL
-}
+import type {PositiveInteger} from "@/utilities/numbers";
 
 export enum ClickType {
     OUTSIDE,
@@ -13,27 +9,40 @@ export enum ClickType {
 
 export type ClickContext = {
     clickToggle: boolean;
-    context: Context;
     clickType: ClickType;
 }
 
-type HandlerFn = () => void;
+type HandlerFn = () => boolean;
 type Handler = {
     id: string;
-    handlers: Map<Context, HandlerFn>;
+    level: number;
+    handlerFn: HandlerFn;
     guard: boolean;
 };
 
 export const useClickContext = defineStore("clickcontext", () =>{
     const clickContext: ClickContext = reactive({
         clickToggle: true,
-        context: Context.BODY,
         clickType: ClickType.ESCAPE
     });
 
     const handlerMap = new Map<string, Handler>();
+    const handlerQueue = new Array<Array<Handler>>();
 
-    const registerHandler = (id: string, context: Context, handlerFn: () => void) => {
+    const removeFromHandlerQueue = (id: string) => {
+        if (handlerMap.has(id)) {
+            const currentLevel = handlerMap.get(id)!.level
+            const handlerQueueLevel = handlerQueue[currentLevel];
+            if (handlerQueueLevel) {
+                const index = handlerQueueLevel.findIndex(element => element.id === id);
+                if (index > -1) {
+                    handlerQueueLevel.splice(index, 1);
+                }
+            }
+        }
+    }
+
+    const registerHandler = <N extends number>(id: string, level: PositiveInteger<N>, handlerFn: HandlerFn) => {
         const guardElement = () => {
             const h = handlerMap.get(id);
             if (h) {
@@ -42,16 +51,23 @@ export const useClickContext = defineStore("clickcontext", () =>{
         };
 
         onMounted(() => {
-            document.getElementById(id)?.addEventListener("mousedown", guardElement, {});
+            document.getElementById(id)?.addEventListener("mousedown", guardElement);
+            removeFromHandlerQueue(id);
 
-            if (handlerMap.has(id)) {
-                handlerMap.get(id)?.handlers.set(context, handlerFn);
+            const handler: Handler = {
+                id,
+                level,
+                handlerFn,
+                guard: false
+            };
+
+            handlerMap.set(id, handler);
+
+            const handlerList = handlerQueue[level];
+            if (handlerList) {
+                handlerList.push(handler)
             } else {
-                handlerMap.set(id, {
-                    id,
-                    handlers: new Map([[context, handlerFn]]),
-                    guard: false
-                });
+                handlerQueue[level] = [handler];
             }
         });
 
@@ -61,18 +77,25 @@ export const useClickContext = defineStore("clickcontext", () =>{
         });
     }
 
-    const registerClick = (context: Context, clickType: ClickType) => {
-        clickContext.context = context;
+    const registerClick = (clickType: ClickType) => {
         clickContext.clickToggle = !clickContext.clickToggle;
         clickContext.clickType = clickType;
 
-        handlerMap.forEach(handler => {
-            if (handler.guard) {
-                handler.guard = false;
-            } else {
-                handler.handlers.get(context)?.();
+        for (let i = handlerQueue.length - 1; i >= 0; i--) {
+            let didConsumeEvent = false;
+            const handlerList = handlerQueue[i];
+            if (!handlerList) continue;
+
+            for (const handler of handlerList) {
+
+                if (handler.guard) handler.guard = false
+                else if (handler.handlerFn()) didConsumeEvent = true;
             }
-        })
+            if (didConsumeEvent) break;
+        }
+        for (const handlerList of handlerQueue) {
+
+        }
     };
 
     return { registerHandler, registerClick };

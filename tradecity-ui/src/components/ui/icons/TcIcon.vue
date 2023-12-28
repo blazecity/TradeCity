@@ -1,6 +1,19 @@
 <template>
   <span
-      :class="['material-icons', {'hover:cursor-pointer rounded-sm': clickable, 'hover:bg-base': dark && clickable, 'hover:bg-primary': !dark && clickable}]"
+      :class="[
+          filled ? 'material-symbols-filled' : 'material-icons',
+          {
+              'hover:cursor-pointer': clickable,
+              'rounded-xl': rounding === 'rounded' && clickable,
+              'rounded-sm': rounding === 'semi-rounded' && clickable,
+              'rounded-none': rounding === 'unrounded' && clickable,
+              'hover:bg-base': dark && clickable,
+              'hover:bg-neutral-700': !dark && clickable,
+              'bg-base': dark && durableBackground,
+              'bg-neutral-700': !dark && durableBackground,
+              'bg-gray-500': soft && durableBackground
+          }
+      ]"
       @click="clickHandler"
   >
       {{ icon }}
@@ -11,9 +24,15 @@
 interface TcIconProps {
   icon: string;
   clickable?: boolean;
+  rounding?: "rounded" | "semi-rounded" | "unrounded";
   dark?: boolean;
+  soft?: boolean;
+  durableBackground?: boolean;
+  filled?: boolean;
 }
-const props = defineProps<TcIconProps>();
+const props = withDefaults(defineProps<TcIconProps>(), {
+    rounding: "semi-rounded"
+});
 
 interface TcIconEmits {
   (e: "click"): void;

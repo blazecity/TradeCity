@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-secondary shadow-dark-r z-10 p-1.5">
-      <slot></slot>
-  </div>
+<div class="bg-primary h-full w-full">
+    Comparables
+</div>
 </template>
 
 <script setup lang="ts">
