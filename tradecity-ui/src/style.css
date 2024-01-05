@@ -101,7 +101,7 @@ body {
 }
 
 .table-input {
-    @apply inline-flex items-center bg-black;
+    @apply inline-flex items-center bg-black w-full;
 }
 
 .table-valid-input {

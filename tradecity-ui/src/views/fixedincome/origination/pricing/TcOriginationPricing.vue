@@ -18,7 +18,7 @@
           <tc-origination-pricing-table />
       </tc-panel>
       <tc-panel title="Pricing Comparison Chart" :rows="1" :cols="2" :expansion-handler="expansionHandler">
-          <span>res: {{ x }}</span>
+          <tc-origination-pricing-chart />
       </tc-panel>
       <tc-panel title="Bond Lists" :rows="1" :cols="4" :expansion-handler="expansionHandler">
           <tc-origination-pricing-lists />
@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import TcPanelView from "@/components/ui/panelview/TcPanelView.vue";
 import TcPanel from "@/components/ui/panelview/TcPanel.vue";
-import TcOriginationPricingTable from "@/components/fixedincome/origination/pricing/TcOriginationPricingTable.vue";
+import TcOriginationPricingTable from "@/components/fixedincome/origination/pricing/table/TcOriginationPricingTable.vue";
 import TcButton from "@/components/ui/button/TcButton.vue";
 import {useQuery} from "@vue/apollo-composable";
 import {graphql} from "@/gql/gql";
@@ -41,8 +41,9 @@ import TcIcon from "@/components/ui/icons/TcIcon.vue";
 import TcComboBox from "@/components/ui/combobox/TcComboBox.vue";
 import TcBadge from "@/components/ui/badge/TcBadge.vue";
 import TcDialog from "@/components/ui/dialog/TcDialog.vue";
-import TcOriginationPricingEditor from "@/components/fixedincome/origination/pricing/TcOriginationPricingEditor.vue";
-import TcOriginationPricingLists from "@/components/fixedincome/origination/pricing/TcOriginationPricingLists.vue";
+import TcOriginationPricingEditor from "@/components/fixedincome/origination/pricing/table/TcOriginationPricingEditor.vue";
+import TcOriginationPricingLists from "@/components/fixedincome/origination/pricing/lists/TcOriginationPricingLists.vue";
+import TcOriginationPricingChart from "@/components/fixedincome/origination/pricing/chart/TcOriginationPricingChart.vue";
 
 const addPricingLabel = "Add Pricing";
 

@@ -1,13 +1,27 @@
 ﻿schema {
-  query: Query
+  query: ClientQuery
 }
 
-type Query {
-  temp: Temp!
-  tempById(id: Int!): Temp
+type Client {
+  id: UnsignedLong
+  name: String
+  key: String
+  bloombergCode: String
+  active: Boolean!
 }
 
-type Temp {
-  a: String
-  b: String
+type ClientInsert {
+  name: String
+  bloombergCode: String
 }
+
+type ClientQuery {
+  clients: ClientInsert!
+  clientById(id: UnsignedLong!): Client!
+  clientByName(name: String): String!
+  clientByKey(key: String): String!
+  clientByBloombergCode(bloombergCode: String): String!
+}
+
+"The UnsignedLong scalar type represents a unsigned 64-bit numeric non-fractional value greater than or equal to 0."
+scalar UnsignedLong

@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package clients;
+
+service ClientAdministration {
+  rpc AddClient (BaseClient) returns (AddClientResponse);
+  rpc UpdateClient (UpdateClientRequest) returns (UpdateClientResponse);
+  rpc DeleteClient (DeleteClientRequest) returns (DeleteClientResponse);
+  rpc GetClientById (GetClientByIdRequest) returns (SingleClient);
+  rpc GetClientByKey (GetClientByKeyRequest) returns (SingleClient);
+  rpc GetClientByBloombergCode (GetClientByBloombergCodeRequest) returns (SingleClient);
+  rpc GetClientsByName (GetClientByNameRequest) returns (ClientList);
+}
+
+message BaseClient {
+  string name = 1;
+  string bloombergCode = 2;
+  string key = 3;
+}
+
+message SingleClient {
+  uint64 id = 1;
+  string name = 2;
+  string bloombergCode = 3;
+  string key = 4;
+  bool active = 5;
+}
+
+message AddClientResponse {
+  uint64 id = 1;
+}
+
+message UpdateClientRequest {
+  uint64 id = 1;
+  BaseClient client = 2;
+}
+
+message UpdateClientResponse {
+  bool successful = 1;
+}
+
+message DeleteClientRequest {
+  uint64 id = 1;
+}
+
+message DeleteClientResponse {
+  bool successful = 1;
+}
+
+message GetClientByIdRequest {
+  uint64 id = 1;
+}
+
+message GetClientByKeyRequest {
+  string key = 1;
+}
+
+message GetClientByBloombergCodeRequest {
+  string bloombergCode = 1;
+}
+
+message GetClientByNameRequest {
+  string name = 1;
+}
+
+message ClientList {
+  repeated SingleClient clients = 1;
+}

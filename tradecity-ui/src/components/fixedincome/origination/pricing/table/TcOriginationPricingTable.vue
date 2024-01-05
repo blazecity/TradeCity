@@ -56,7 +56,7 @@ import TcIcon from "@/components/ui/icons/TcIcon.vue";
 import TcDialog from "@/components/ui/dialog/TcDialog.vue";
 import TcTooltip from "@/components/ui/tooltip/TcTooltip.vue";
 import TcOriginationPricingHeaderLabel
-    from "@/components/fixedincome/origination/pricing/TcOriginationPricingHeaderLabel.vue";
+    from "@/components/fixedincome/origination/pricing/table/TcOriginationPricingHeaderLabel.vue";
 
 const tableHeaders = reactive({
     baseGroup: {

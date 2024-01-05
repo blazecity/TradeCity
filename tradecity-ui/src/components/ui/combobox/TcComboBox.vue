@@ -2,7 +2,7 @@
     <div :id="uuid" class="inline-block relative text-normal">
         <div class="flex items-center gap-2">
             <span v-if="withLabel" class="whitespace-nowrap">{{ placeholder }}</span>
-            <div class="flex items-center justify-between standard-border bg-dark px-1 py-px w-full">
+            <div :class="['flex items-center justify-between bg-dark px-1 py-px w-full', {' standard-border': !forTable}]">
                 <div class="flex gap-1 overflow-x-auto scrollbar">
                     <tc-combo-box-selected-item v-if="numberOfSelectedItems > 0">
                         {{ firstSelectedItem?.label }}
@@ -16,7 +16,7 @@
             </div>
         </div>
         <!-- dropdown -->
-        <div v-if="expanded" class="dropdown absolute standard-border p-1 mt-1 bg-dark w-96 max-h-80 overflow-hidden">
+        <div v-if="expanded" class="dropdown absolute standard-border p-1 mt-1 bg-dark w-96 max-h-80 overflow-hidden z-10">
             <!-- dropdown action bar -->
             <div class="flex items-center gap-1 mb-1.5">
                 <tc-string-input class="flex-grow" v-model="searchTerm" placeholder="Search"/>
@@ -56,6 +56,7 @@ type TcComboBoxProps = {
     level?: number;
     multiSelect?: boolean;
     withLabel?: boolean;
+    forTable?: boolean;
 }
 const props = withDefaults(defineProps<TcComboBoxProps>(), {
     level: 0

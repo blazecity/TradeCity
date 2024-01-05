@@ -1,0 +1,47 @@
+GRAPHQL http://localhost:5246/graphql
+
+query ClientQuery {
+    clientById(id: 1) {
+        name
+    }
+}
+
+###
+@hostName=localhost
+@port=5223
+@host={{hostName}}:{{port}}
+
+GRPC {{host}}/clients.ClientAdministration/GetClientById
+
+{
+  "id": 1
+}
+
+###
+GRPC {{host}}/clients.ClientAdministration/AddClient
+
+{
+  "name": "Luzerner Kantonalbank AG",
+  "bloombergCode": "KBLUZE",
+  "key": "LUKB"
+}
+
+###
+GRPC {{host}}/clients.ClientAdministration/UpdateClient
+
+{
+  "id": 1,
+  "client": {
+    "name": "Luzerner Kantonalbank AG",
+    "bloombergCode": "KBLUZE",
+    "key": "LUKB"
+  }
+}
+
+###
+GRPC {{host}}/clients.ClientAdministration/DeleteClient
+
+{
+  "id": 1
+}
+###

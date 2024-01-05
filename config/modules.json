@@ -11,7 +11,7 @@
   "fixedIncome": {
     "navigationName": "FixedIncome",
     "name": "Fixed Income",
-    "icon": "hub",
+    "icon": "flowsheet",
     "path": "/fixed_income",
     "functionalityGroups": {
       "origination": {

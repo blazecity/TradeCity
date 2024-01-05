@@ -10,13 +10,20 @@
         <Link>.dockerignore</Link>
       </Content>
       <Content Include="Dockerfile" />
-      <Folder Include="Models\" />
+      <Compile Include="Models\FixedIncome\Origination\Pricing.fs" />
+      <Compile Include="Models\FixedIncome\Origination\Comparables.fs" />
+      <Compile Include="Models\Clients\ClientManagement.fs" />
       <Compile Include="Program.fs" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="HotChocolate.AspNetCore" Version="13.8.1" />
       <PackageReference Include="HotChocolate.AspNetCore.CommandLine" Version="13.8.1" />
+      <PackageReference Include="HotChocolate.Types.Scalars" Version="13.8.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\TradeCity.Clients.Grpc.Client\TradeCity.Clients.Grpc.Client.csproj" />
     </ItemGroup>
 
 </Project>
