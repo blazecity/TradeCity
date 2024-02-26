@@ -14,7 +14,7 @@
               'bg-gray-500': soft && durableBackground
           }
       ]"
-      @click="clickHandler"
+      @click="handleClick"
   >
       {{ icon }}
   </span>
@@ -40,7 +40,7 @@ interface TcIconEmits {
 const emits = defineEmits<TcIconEmits>();
 
 // =========== EVENT HANDLERS ===========
-function clickHandler() {
+function handleClick() {
   if (props.clickable) {
     emits("click");
   }

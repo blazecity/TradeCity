@@ -7,7 +7,11 @@ import moduleGeneration from "./build/modules/plugin-module-generation";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      script: {
+        babelParserPlugins: ["explicitResourceManagement"]
+      }
+    }),
     moduleGeneration()
   ],
   resolve: {
@@ -16,6 +20,7 @@ export default defineConfig({
     }
   },
   build: {
+
     rollupOptions: {
       output: {
         // manual chunks only working with dynamic imports

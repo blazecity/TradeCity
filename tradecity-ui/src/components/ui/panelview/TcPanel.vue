@@ -3,7 +3,7 @@
       'grid grid-rows-auto-fr bg-primary p-0.5 overflow-hidden',
       expanded ? 'col-span-full row-span-full' : 'group-[.panel-expanded]:hidden panel'
   ]">
-      <tc-title-bar :title="title" :icon="expanded ? 'close_fullscreen' : 'open_in_full'" @icon-click="expandClickHandler" />
+      <tc-title-bar :title="title" :icon="expanded ? 'close_fullscreen' : 'open_in_full'" @icon-click="handleExpandClick" />
       <div class="overflow-auto scrollbar">
           <slot></slot>
       </div>
@@ -25,7 +25,8 @@ const props = defineProps<TcPanelProps>();
 const expanded = ref(false);
 
 // ============ EVENT HANDLERS ============
-function expandClickHandler(): void {
+
+function handleExpandClick(): void {
     expanded.value = !expanded.value;
     props.expansionHandler(expanded.value);
 }

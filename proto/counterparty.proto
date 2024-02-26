@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+package tradecity.counterparty;
+
+option csharp_namespace = "TradeCity.Counterparty.Grpc.Messages";
+
+service CounterpartyService {
+  rpc AddCounterparty (AddCounterpartyRequest) returns (AddCounterpartyResponse);
+  rpc UpdateCounterparty (UpdateCounterpartyRequest) returns (UpdateCounterpartyResponse);
+  rpc DeleteCounterparty (DeleteCounterpartyRequest) returns (DeleteCounterpartyResponse);
+  rpc SearchCounterparties (SearchCounterpartiesRequest) returns (SearchCounterpartiesResponse);
+  rpc GetCounterpartyById (GetCounterpartyByIdRequest) returns (GetCounterpartyByIdResponse);
+  rpc GetCounterpartyByKey (GetCounterpartyByKeyRequest) returns (GetCounterpartyByKeyResponse);
+  rpc GetCounterpartyByBloombergCode (GetCounterpartyByBloombergCodeRequest) returns (GetCounterpartyByBloombergCodeResponse);
+  rpc GetCounterpartyByName (GetCounterpartiesByNameRequest) returns (GetCounterpartiesByNameResponse);
+}
+
+message BaseCounterparty {
+  string name = 1;
+  string bloombergCode = 2;
+  string key = 3;
+}
+
+message Counterparty {
+  uint64 id = 1;
+  string name = 2;
+  string bloombergCode = 3;
+  string key = 4;
+  bool active = 5;
+}
+
+message AddCounterpartyRequest {
+  BaseCounterparty counterparty = 1;
+}
+
+message AddCounterpartyResponse {
+  uint64 id = 1;
+}
+
+message UpdateCounterpartyRequest {
+  uint64 id = 1;
+  BaseCounterparty client = 2;
+}
+
+message UpdateCounterpartyResponse {
+  bool successful = 1;
+}
+
+message DeleteCounterpartyRequest {
+  uint64 id = 1;
+}
+
+message DeleteCounterpartyResponse {
+  bool successful = 1;
+}
+
+enum CounterpartySearchKey {
+  Id = 0;
+  Key = 1;
+  BloombergCode = 2;
+  Name = 3;
+} 
+
+message SearchCounterpartiesRequest {
+  CounterpartySearchKey searchKey = 1;
+  string searchValue = 2;
+}
+
+message SearchCounterpartiesResponse {
+  repeated Counterparty counterparties = 1;
+}
+
+message GetCounterpartyByIdRequest {
+  uint64 id = 1;
+}
+
+message GetCounterpartyByIdResponse {
+  optional Counterparty counterparty = 1;
+}
+
+message GetCounterpartyByKeyRequest {
+  string key = 1;
+}
+
+message GetCounterpartyByKeyResponse {
+  optional Counterparty counterparty = 1;
+}
+
+message GetCounterpartyByBloombergCodeRequest {
+  string bloombergCode = 1;
+}
+
+message GetCounterpartyByBloombergCodeResponse {
+  optional Counterparty counterparty = 1;
+}
+
+message GetCounterpartiesByNameRequest {
+  string name = 1;
+}
+
+message GetCounterpartiesByNameResponse {
+  repeated Counterparty counterparties = 1;
+}
+

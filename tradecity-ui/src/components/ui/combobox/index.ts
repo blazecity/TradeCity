@@ -3,9 +3,12 @@ import {ref} from "vue";
 
 export type ComboBoxItem<T> = {
     label: string,
-    id: string,
     data: T
-}
+};
+
+export type ComboBoxItems<T> = {
+    [id: string]: ComboBoxItem<T>;
+};
 
 type SchemaTypes = "string" | "number" | "boolean" | "string[]" | "number[]" | "boolean[]";
 
@@ -22,9 +25,9 @@ type Document<T> = {
 };
 
 
-export function useSearch<T extends object>(items: Array<ComboBoxItem<T>>) {
+export function useSearch<T extends object>(items: ComboBoxItems<T>) {
     const searchDb = ref<(term: string) => Promise<Array<string>>>(() => Promise.resolve([]));
-    if (items.length === 0) return searchDb;
+    if (Object.keys(items).length === 0) return searchDb;
     
     const schema: Schema<T> = {
         label: "string",
@@ -74,10 +77,10 @@ export function useSearch<T extends object>(items: Array<ComboBoxItem<T>>) {
             schema
         });
 
-        for (const item of items) {
+        for (const [id, item] of Object.entries(items)) {
             const dbEntry: Document<T> = {
                 label: item.label,
-                id: item.id,
+                id: id,
                 data: {}
             };
             Object.keys(schema.data).forEach(key => {

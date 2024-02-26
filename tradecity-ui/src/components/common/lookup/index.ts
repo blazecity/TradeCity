@@ -1,0 +1,1 @@
+export type SearchCallback = (resultCount: number, displayValueFn: () => string) => void;

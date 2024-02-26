@@ -1,18 +1,18 @@
 <template>
   <div>
       <!-- module navigation -->
-      <div :class="['flex flex-col gap-2 bg-dark border-r z-30 p-1.5', functionalitiesVisible ? 'border-zinc-950' : 'border-zinc-900']">
+      <div :class="['flex flex-col gap-2 bg-dark z-30 p-1.5', {'border-r border-zinc-950': functionalitiesVisible}]">
           <tc-module-navigation-element
                   v-for="(module, moduleKey) in moduleTree" :key="moduleKey" :icon="module.icon" :text="module.name" :path="module.path"
                   :navigation-name="module.navigationName" :is-selected="moduleKey === selectedModuleByRoute"
-                  :is-selected-softly="moduleKey === selectedModuleKey" @click="() => moduleClickHandler(moduleKey as unknown as string)"
+                  :is-selected-softly="moduleKey === selectedModuleKey" @click="() => handleModuleClick(moduleKey as unknown as string)"
           />
       </div>
       <!-- functionality navigation -->
-      <div :class="['grid grid-rows-auto-fr bg-dark min-w-[200px] z-20 h-full border-r border-zinc-900', {'hidden': !functionalitiesVisible}]">
-          <div class="flex items-center justify-between py-1 border-b border-zinc-950 px-2 font-bold h-7">
+      <div :class="['grid grid-rows-auto-fr bg-dark min-w-[200px] z-20 h-full', {'hidden': !functionalitiesVisible}]">
+          <div class="flex items-center justify-between py-1 border-b border-r border-zinc-950 px-2 font-bold h-7">
               <span v-if="selectedModule">{{ selectedModule.name }}</span>
-              <tc-icon class="large-icon" icon="remove" clickable @click="collapseClickHandler"  />
+              <tc-icon class="large-icon" icon="remove" clickable @click="handleCollapseClick"  />
           </div>
           <div class="h-full">
               <tc-functionality-navigation-section
@@ -69,12 +69,12 @@ const selectedFunctionality = computed(() => {
 const functionalitiesVisible = ref(false);
 
 // ========== EVENT HANDLERS ==========
-function moduleClickHandler(moduleKey: string): void {
+function handleModuleClick(moduleKey: string): void {
     functionalitiesVisible.value = true;
     selectedModuleKey.value = moduleKey;
 }
 
-function collapseClickHandler(): void {
+function handleCollapseClick(): void {
     functionalitiesVisible.value = false;
 }
 </script>

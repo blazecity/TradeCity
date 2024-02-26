@@ -12,7 +12,7 @@
                     </tc-combo-box-selected-item>
                     <span v-else class="text-gray-400">{{ placeholder }}</span>
                 </div>
-                <tc-icon class="large-icon ml-1" :icon="expanded ? 'north' : 'south'" clickable @click="expandClickHandler" />
+                <tc-icon class="large-icon ml-1" :icon="expanded ? 'north' : 'south'" clickable @click="handleExpandClick" />
             </div>
         </div>
         <!-- dropdown -->
@@ -20,16 +20,18 @@
             <!-- dropdown action bar -->
             <div class="flex items-center gap-1 mb-1.5">
                 <tc-string-input class="flex-grow" v-model="searchTerm" placeholder="Search"/>
-                <tc-button v-if="multiSelect" text="Select all" @click="selectAllClickHandler"/>
-                <tc-button v-if="multiSelect" text="Remove all" @click="removeAllClickHandler" dangerous/>
+                <tc-button v-if="multiSelect" text="Select all" @click="handleSelectAllClick"/>
+                <tc-button v-if="multiSelect" text="Remove all" @click="handleRemoveAllClick" dangerous/>
             </div>
             <div class="overflow-auto h-full">
                 <div v-for="([item, isSelected], index) in displayedDropdownItems" :key="index"
                      class="flex items-center px-0.5">
-                    <tc-check-box :model-value="isSelected"
-                                  @update:model-value="isNowSelected => selectedClickHandler(item, isNowSelected)"/>
+                    <tc-check-box
+                        :model-value="isSelected"
+                        @update:model-value="isNowSelected => handleSelectedClick(item, isNowSelected)"
+                    />
                     <div class="flex items-center flex-grow standard-hover rounded-sm px-1 ml-1"
-                         @click="() => selectedClickHandler(item, !isSelected)">
+                         @click="() => handleSelectedClick(item, !isSelected)">
                         <span>{{ item.label }}</span>
                         <slot :item="item"></slot>
                     </div>
@@ -49,14 +51,18 @@ import TcCheckBox from "@/components/ui/input/TcCheckBox.vue";
 import {useSearch} from "@/components/ui/combobox/index";
 import type {ComboBoxItem} from "@/components/ui/combobox/index";
 import {useClickContext} from "@/stores/clickcontext";
-
+// TODO: Muss über v-model gesteuert werden, da sonst keine Defaultwerte gesetzt werden können.
+// Flow: -> Die selektierten Items sind über den props mitgegeben, um sie als selektiert zu markieren, muss man
+// vergleichen, ob sie ob das item inter selektierten Collection drin ist. Es wäre dabei etwas effizienter die Combo
+// Box items als Objekt hineinzugeben, da dann mit einem Key gearbeitet werden kann.
 type TcComboBoxProps = {
-    items: Array<ComboBoxItem<T>>;
+    items: ComboBoxItems<T>;
     placeholder: string;
     level?: number;
     multiSelect?: boolean;
     withLabel?: boolean;
     forTable?: boolean;
+    selection: ComboBoxItems<T>;
 }
 const props = withDefaults(defineProps<TcComboBoxProps>(), {
     level: 0
@@ -64,8 +70,9 @@ const props = withDefaults(defineProps<TcComboBoxProps>(), {
 
 type ComboBoxItems<T> = Array<ComboBoxItem<T>>;
 type TcComboBoxEmits = {
-    (e: "selectionChanged", currentSelection: ComboBoxItems<T>, selectionAdded: ComboBoxItems<T>, selectionRemoved: ComboBoxItems<T>): void;
-}
+    "selectionChanged": [currentSelection: ComboBoxItems<T>, selectionAdded: ComboBoxItems<T>, selectionRemoved: ComboBoxItems<T>];
+    "update:selection": [currentSelection: ComboBoxItems<T>];
+};
 const emits = defineEmits<TcComboBoxEmits>();
 
 const {registerHandler} = useClickContext();
@@ -98,11 +105,11 @@ registerHandler(uuid, props.level, () => {
 });
 
 // ========== EVENT HANDLERS ==========
-function expandClickHandler(): void {
+function handleExpandClick(): void {
     expanded.value = !expanded.value;
 }
 
-function selectAllClickHandler(): void {
+function handleSelectAllClick(): void {
     const selectionAdded: ComboBoxItems<T> = [];
     dropdownItems.value.forEach((isSelected, item) => {
         if (!isSelected) {
@@ -113,7 +120,7 @@ function selectAllClickHandler(): void {
     emits("selectionChanged", [...dropdownItems.value.keys()], selectionAdded, []);
 }
 
-function removeAllClickHandler(): void {
+function handleRemoveAllClick(): void {
     const selectionRemoved: ComboBoxItems<T> = [];
     dropdownItems.value.forEach((isSelected, item) => {
         if (isSelected) {
@@ -124,7 +131,7 @@ function removeAllClickHandler(): void {
     emits("selectionChanged", [...dropdownItems.value.keys()], [], selectionRemoved);
 }
 
-function selectedClickHandler(item: ComboBoxItem<T>, isSelected: boolean): void {
+function handleSelectedClick(item: ComboBoxItem<T>, isSelected: boolean): void {
     if (!props.multiSelect && lastSelectedItem.value && isSelected) {
         dropdownItems.value.set(lastSelectedItem.value, false);
     }

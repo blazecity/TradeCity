@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Grpc.Core.Api" Version="2.60.0" />
+      <PackageReference Include="HotChocolate.Abstractions" Version="13.8.1" />
+      <PackageReference Include="HotChocolate.Types" Version="13.8.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\TradeCity.Utilities.Functional\TradeCity.Utilities.Functional.csproj" />
+    </ItemGroup>
+
+</Project>

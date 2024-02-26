@@ -2,17 +2,22 @@
     <div class="grid grid-rows-fr-auto overflow-hidden w-fit h-full">
         <div class="overflow-auto scrollbar">
             <table class="bg-table-primary border-separate border-spacing-0 w-full">
-                <thead class="text-gray-400 sticky top-0 z-10">
+                <thead class="sticky top-0 text-zinc-400 z-10">
                     <!-- group row -->
                     <tr v-if="grouped">
                         <th v-if="selectable" class="table-selectable-cell"></th>
                         <th
                             v-for="(group, groupKey, index) in headers" :key="groupKey" :colspan="Object.keys(group.headers).length"
-                            :class="['table-header-cell', {'border-r': index === lengthHeaderGroups - 1, 'border-t': grouped}]"
+                            :class="['table-header-cell']"
                         >
-                            <slot :name="'group.' + groupKey" :group="groupKey" :label="group.label">
-                                <span class="whitespace-nowrap">{{ group.label ?? "" }}</span>
-                            </slot>
+                            <div class="flex items-center">
+                                <div v-if="index !== 0" class="inline-block h-[12px] bg-zinc-700 w-px justify-self-start"></div>
+                                <div class="w-full">
+                                    <slot :name="'group.' + groupKey" :group="groupKey" :label="group.label">
+                                        <span class="whitespace-nowrap">{{ group.label ?? "" }}</span>
+                                    </slot>
+                                </div>
+                            </div>
                         </th>
                     </tr>
                     <!-- header row -->
@@ -22,21 +27,31 @@
                         </th>
                         <th
                             v-for="([headerKey, header], index) in flatHeaders" :key="headerKey"
-                            :class="['table-header-cell', {'border-r': index === lengthHeaders - 1, 'border-t': !grouped}]"
+                            :class="['table-header-cell', {'border-t': !grouped}]"
                         >
-                            <slot :name="'header.' + headerKey" :header="headerKey" :label="header">
-                                <span class="table-default-cell-content whitespace-nowrap">{{ header }}</span>
-                            </slot>
+                            <div class="flex justify-between items-center">
+                                <div v-if="index !== 0" class="inline-block h-[12px] bg-zinc-700 w-px justify-self-start"></div>
+                                <div class="w-full mx-0.5">
+                                    <slot :name="'header.' + headerKey" :header="headerKey" :label="header">
+                                        <span class="border-white table-default-cell-content whitespace-nowrap">{{ header }}</span>
+                                    </slot>
+                                </div>
+                            </div>
                         </th>
                     </tr>
                     <tr v-if="subHeader">
                         <th v-if="selectable" class="table-selectable-cell"></th>
                         <th
                             v-for="([headerKey, header], index) in flatHeaders" :key="headerKey"
-                            :class="['table-subheader-cell', {'border-r': index === lengthHeaders - 1}]"
+                            :class="['table-subheader-cell']"
                         >
-                            <slot :name="'subheader.' + headerKey" :header="headerKey" :label="header">
-                            </slot>
+                            <div class="flex justify-between items-center">
+                                <div v-if="index !== 0" class="inline-block h-[12px] bg-zinc-700 w-px justify-self-start"></div>
+                                <div class="w-full mx-0.5">
+                                    <slot :name="'subheader.' + headerKey" :header="headerKey" :label="header">
+                                    </slot>
+                                </div>
+                            </div>
                         </th>
                     </tr>
                 </thead>
@@ -46,11 +61,11 @@
                         :class="['table-data-row', isSelected(entry) ? 'bg-gray-500' : 'bg-table-primary']"
                     >
                         <td v-if="selectable" class="table-selectable-cell">
-                            <tc-check-box :model-value="isSelected(entry)" @update:model-value="() => toggleSelectionHandler(entry)" />
+                            <tc-check-box :model-value="isSelected(entry)" @update:model-value="() => handleToggleSelection(entry)" />
                         </td>
                         <td v-for="([headerKey, ], index) in flatHeaders" :key="headerKey"
-                            :class="['table-data-cell', {'border-r': index === lengthHeaders - 1}]"
-                            @click="() => toggleSelectionHandler(entry)"
+                            :class="['table-data-cell']"
+                            @click="() => handleToggleSelection(entry)"
                         >
                             <div class="flex items-center justify-center">
                                 <slot :name="'data.' + headerKey" :data="entry" :header="headerKey" :data-index="dataIndex">
@@ -111,7 +126,8 @@ function isSelected(dataEntry: T): boolean {
 }
 
 // ========== EVENT HANDLERS ==========
-function toggleSelectionHandler(dataEntry: T): void {
+
+function handleToggleSelection(dataEntry: T): void {
     if (!props.selectable) return;
 
     if (isSelected(dataEntry)) {

@@ -1,5 +1,5 @@
 <template>
-  <tc-ok-cancel-container class="w-[75vw]">
+  <tc-ok-cancel-container class="w-full">
       <tc-collapsable-panel title="General">
           <div class="grid grid-cols-3 gap-x-4 gap-y-1">
               <tc-string-input v-model="description" placeholder="Description" with-label class="w-full" />
@@ -19,19 +19,19 @@
           <div class="grid grid-cols-1 gap-y-1">
               <div class="flex items-center gap-1.5">
                   <tc-number-input v-model="tenor" placeholder="Tenor" with-label />
-                  <tc-button plain @click="() => addTenorClickHandler(0)">
+                  <tc-button plain @click="() => handleAddTenorClick(0)">
                       <tc-icon icon="add" class="large-icon" />
                       <span>Add</span>
                   </tc-button>
-                  <tc-button plain @click="() => addTenorClickHandler(1)">
+                  <tc-button plain @click="() => handleAddTenorClick(1)">
                       <tc-icon icon="upgrade" class="large-icon" />
                       <span>Add +1</span>
                   </tc-button>
-                  <tc-button plain @click="() => addTenorClickHandler(5)">
+                  <tc-button plain @click="() => handleAddTenorClick(5)">
                       <tc-icon icon="upgrade" class="large-icon" />
                       <span>Add +5</span>
                   </tc-button>
-                  <tc-button plain @click="addDefaultTenorClickHandler">
+                  <tc-button plain @click="handleAddDefaultTenorClick">
                       <tc-icon icon="format_list_numbered" class="large-icon" />
                       <span>Add Default Range</span>
                   </tc-button>
@@ -43,7 +43,7 @@
               <div class="bg-dark p-1 h-48">
                   <tc-table
                       :headers="tenorTableHeaders" :data="tableData" description="" selectable
-                      @selection-changed="tableSelectionChangedHandler"
+                      @selection-changed="handleTableSelectionChange"
                   >
                       <template #data.tenor="{ dataIndex }">
                           <tc-table-number-input :decimal-places="1" v-model="tableData[dataIndex].tenor" />
@@ -89,14 +89,14 @@ const tableData = reactive<Array<TenorTableData>>([]);
 
 // =========== EVENT HANDLERS ===========
 
-function addTenorClickHandler(increase: number): void {
+function handleAddTenorClick(increase: number): void {
     tenor.value += increase;
     tableData.push({
         tenor: tenor.value
     });
 }
 
-function addDefaultTenorClickHandler(): void {
+function handleAddDefaultTenorClick(): void {
     tableData.length = 0;
     tableData.push(
         { tenor:  1},
@@ -120,7 +120,7 @@ function addDefaultTenorClickHandler(): void {
     );
 }
 
-function tableSelectionChangedHandler(data: Array<TenorTableData>): void {
+function handleTableSelectionChange(data: Array<TenorTableData>): void {
     removeVisible.value = data.length > 0;
 }
 </script>

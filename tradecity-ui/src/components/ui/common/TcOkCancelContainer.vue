@@ -4,10 +4,10 @@
           <slot></slot>
       </div>
       <div class="flex gap-2 w-full justify-end p-2">
-          <tc-button @click="okClickHandler">
+          <tc-button @click="handleOkClick">
               Submit
           </tc-button>
-          <tc-button @click="cancelClickHandler" dangerous>
+          <tc-button @click="handleCancelClick" dangerous>
               Cancel
           </tc-button>
       </div>
@@ -24,11 +24,11 @@ type TcOkCancelContainerEmits = {
 const emits = defineEmits<TcOkCancelContainerEmits>();
 
 // ============ EVENT HANDLERS ============
-function okClickHandler(): void {
+function handleOkClick(): void {
     emits("ok");
 }
 
-function cancelClickHandler(): void {
+function handleCancelClick(): void {
     emits("cancel");
 }
 </script>

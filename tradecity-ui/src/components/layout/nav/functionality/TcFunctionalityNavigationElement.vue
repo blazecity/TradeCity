@@ -1,7 +1,7 @@
 <template>
   <div
       :class="['flex items-center standard-hover px-1 py-px m-1 rounded-sm', { 'bg-base': isSelected }]"
-      @click="navigationClickHandler"
+      @click="handleNavigationClick"
   >
       <tc-icon :icon="icon" class="text-xl mr-1" />
       <span class="-mt-0.5">{{ text }}</span>
@@ -25,7 +25,8 @@ const props = withDefaults(defineProps<TcFunctionalityNavigationElement>(), {
 const router = useRouter();
 
 // ========= EVENT HANDLERS =========
-function navigationClickHandler(): void {
+
+function handleNavigationClick(): void {
     router.push({ name: props.navigationName });
 }
 </script>

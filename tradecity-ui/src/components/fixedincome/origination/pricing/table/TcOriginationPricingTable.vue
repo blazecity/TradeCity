@@ -1,5 +1,5 @@
 <template>
-    <div class="p-1.5 bg-dark rounded-sm">
+    <div class="p-1.5 bg-neutral-950 rounded-sm">
         <div class="flex items-center gap-2 justify-between">
             <tc-badge :text="pricingDescription" class="bg-yellow-200 text-black" />
             <div class="flex items-center gap-1">
@@ -20,20 +20,29 @@
             </div>
         </div>
         <tc-table class="mt-1.5" :headers="tableHeaders" :data="tableData" description="Bond Pricing" grouped sub-header>
+            <template #data.tenor="{ dataIndex }">
+                <span>{{ tableData[dataIndex].tenor + " yr" }}</span>
+            </template>
             <template #data.msFixVsSaron="{ dataIndex }">
                 <tc-table-immutable-number :value="tableData[dataIndex].msFixVsSaron" :decimal-places="3" />
             </template>
-            <template #subheader.reofferSpread="{ dataIndex }">
-                <tc-table-number-input v-model="reofferSpreadAll" class="w-20" :decimal-places="1" />
+            <template #subheader.reofferSpread>
+                <tc-table-number-input v-model="reofferSpreadAll" class="w-8" :decimal-places="1" header />
             </template>
             <template #data.reofferSpread="{ dataIndex }">
-                <tc-table-number-input v-model="tableData[dataIndex].reofferSpread" class="w-20" :decimal-places="1" />
+                <tc-table-number-input
+                    v-model="tableData[dataIndex].reofferSpread" class="w-8" :decimal-places="1" with-border
+                    :first="dataIndex === 0"
+                />
             </template>
-            <template #subheader.netFee="{ dataIndex }">
-                <tc-table-number-input v-model="netFeeAll" class="w-12" :decimal-places="1" />
+            <template #subheader.netFee>
+                <tc-table-number-input v-model="netFeeAll" class="w-8" :decimal-places="1" header />
             </template>
             <template #data.netFee="{ dataIndex }">
-                <tc-table-number-input v-model="tableData[dataIndex].netFee" class="w-12" :decimal-places="1" />
+                <tc-table-number-input
+                    v-model="tableData[dataIndex].netFee" class="w-8" :decimal-places="1" with-border
+                    :first="dataIndex === 0"
+                />
             </template>
             <template #data.reofferYield="{ dataIndex }">
                 <tc-table-immutable-number :value="tableData[dataIndex].reofferYield" :decimal-places="3" />
@@ -64,8 +73,8 @@ const tableHeaders = reactive({
         headers: {
             tenor: "Tenor",
             msFixVsSaron: "MS fix vs SARON",
-            reofferSpread: "Reoffer spread",
-            reofferYield: "Reoffer yield",
+            reofferSpread: "Reoffer sprd",
+            reofferYield: "Reoffer yd",
             coupon: "Coupon",
             netFee: "Net fee"
         }
@@ -73,15 +82,8 @@ const tableHeaders = reactive({
     allInBondPricing: {
         label: "CHF All-in Bond Pricing",
         headers: {
-            chfAllInYield: "CHF All-in yield p. a.",
-            allInSpreadVsSaron: "All-in spread vs SARON CHF MS"
-        }
-    },
-    aallInBondPricing: {
-        label: "CHF All-in Bond Pricing",
-        headers: {
-            chfAllInYield: "CHF All-in yield p. a.",
-            allInSpreadVsSaron: "All-in spread vs SARON CHF MS"
+            chfAllInYield: "All-in yld",
+            allInSpreadVsSaron: "vs SARON MS"
         }
     }
 });

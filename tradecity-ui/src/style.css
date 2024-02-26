@@ -72,16 +72,16 @@
 
 :root {
     font-family: "Webly Sleek UI", sans-serif;
-    --dark: #171a1c;
+    --dark: #111315;
     --primary: #1e2124;
     --secondary: #282b30;
     --tertiary: #313338;
-    --base: #375eac;
+    --base: #0883ff;
     --base-dark: #0355ad;
 
     /* table colors */
-    --table-primary: #171a1e;
-    --table-secondary: var(--secondary);
+    --table-primary: #10161a;
+    --table-secondary: #1b1e26;
     --table-tertiary: #333333;
 }
 
@@ -101,7 +101,7 @@ body {
 }
 
 .table-input {
-    @apply inline-flex items-center bg-black w-full;
+    @apply inline-flex items-center w-full;
 }
 
 .table-valid-input {
@@ -199,19 +199,19 @@ input[type=number] {
 
 /* TABLE */
 .table-header-cell {
-    @apply border-zinc-900 bg-table-secondary border-b border-l px-1;
+    @apply border-zinc-800 bg-table-primary border-b py-1 px-0;
 }
 
 .table-subheader-cell {
-    @apply border-zinc-900 bg-table-secondary border-b border-l p-0;
+    @apply border-zinc-800 bg-table-primary py-1 px-0;
 }
 
 .table-data-row {
-    @apply hover:cursor-pointer hover:bg-zinc-700;
+    @apply hover:cursor-pointer hover:bg-zinc-700 odd:bg-table-secondary even:bg-table-primary;
 }
 
 .table-data-cell {
-    @apply border-neutral-950 border-b border-l p-0;
+    @apply p-0;
 }
 
 .table-selectable-cell {
@@ -225,4 +225,8 @@ input[type=number] {
 /* SYSTEM STATUS TABLE */
 .system-status-cell {
     @apply text-left align-top px-1 py-2;
+}
+
+h1 {
+    @apply text-xl text-white font-bold m-1.5;
 }

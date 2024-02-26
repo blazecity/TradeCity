@@ -3,7 +3,7 @@
     <div class="grid grid-cols-auto-fr items-center border-4 border-tertiary rounded-sm bg-tertiary">
       <template v-for="rootItem in contextMenu" :key="rootItem.id">
         <tc-icon :icon="rootItem.icon ?? ''" class="large-icon mx-1" />
-        <div class="flex flex-col relative border-l border-l-zinc-600" @click="() => clickHandler(rootItem.action)" @mouseenter="() => showSubMenu(rootItem.id)" @mouseleave="hideSubMenu">
+        <div class="flex flex-col relative border-l border-l-zinc-600" @click="() => handleClick(rootItem.action)" @mouseenter="() => showSubMenu(rootItem.id)" @mouseleave="hideSubMenu">
           <div class="flex justify-between items-center hover:cursor-pointer hover:bg-base rounded-sm py-0.5 px-2 ml-0.5">
             <div class="inline-block">{{ rootItem.label }}</div>
             <tc-icon v-if="rootItem.contextMenuItems" class="large-icon" icon="east" />
@@ -14,7 +14,7 @@
               :visible="subMenuId === rootItem.id"
               :context-menu="rootItem.contextMenuItems"
               class="left-full -top-3"
-              @action-click="subMenuActionClickHandler"
+              @action-click="handleSubMenuActionClick"
           />
         </div>
       </template>
@@ -59,7 +59,7 @@ function hideSubMenu(): void {
   subMenuId.value = "";
 }
 
-function clickHandler(action?: ContextMenuAction): void {
+function handleClick(action?: ContextMenuAction): void {
   if (action) {
     action();
     rootVisible.value = false;
@@ -71,7 +71,7 @@ function show(): void {
   rootVisible.value = true;
 }
 
-function subMenuActionClickHandler(): void {
+function handleSubMenuActionClick(): void {
   if (!props.isRoot) {
     emits("actionClick");
   } else {
@@ -80,6 +80,7 @@ function subMenuActionClickHandler(): void {
 }
 
 // ========= LIFECYLCE =========
+
 onMounted(() => {
   if (props.contextItemId && props.isRoot) {
     document.getElementById(props.contextItemId)?.addEventListener("contextmenu", event => {

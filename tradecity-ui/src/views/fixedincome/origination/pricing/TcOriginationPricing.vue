@@ -2,10 +2,10 @@
   <tc-panel-view class="h-full w-full pricing-grid" #default="{ expansionHandler }">
       <tc-panel title="CHF Bond Pricing" :rows="1" :cols="6" :expansion-handler="expansionHandler">
           <div class="flex items-center justify-between mb-1">
-              <tc-combo-box placeholder="Issuer" :items="[]" class="w-72" />
+              <tc-client-lookup />
               <tc-badge text="S&P A+ / ZKB A / Fedafin A-" class="bg-base" />
               <div>
-                  <tc-button plain @click="newPricingOpen = true">
+                  <tc-button plain @click="openNewPricingWindow">
                       <tc-icon icon="add" class="large-icon" />
                       <span>{{ addPricingLabel }}</span>
                   </tc-button>
@@ -13,6 +13,7 @@
                       <tc-icon icon="save" class="large-icon" />
                       <span>Save All</span>
                   </tc-button>
+                  <span>{{ message }}</span>
               </div>
           </div>
           <tc-origination-pricing-table />
@@ -36,31 +37,36 @@ import TcOriginationPricingTable from "@/components/fixedincome/origination/pric
 import TcButton from "@/components/ui/button/TcButton.vue";
 import {useQuery} from "@vue/apollo-composable";
 import {graphql} from "@/gql/gql";
-import {computed, ref} from "vue";
+import {ref} from "vue";
 import TcIcon from "@/components/ui/icons/TcIcon.vue";
-import TcComboBox from "@/components/ui/combobox/TcComboBox.vue";
 import TcBadge from "@/components/ui/badge/TcBadge.vue";
 import TcDialog from "@/components/ui/dialog/TcDialog.vue";
 import TcOriginationPricingEditor from "@/components/fixedincome/origination/pricing/table/TcOriginationPricingEditor.vue";
 import TcOriginationPricingLists from "@/components/fixedincome/origination/pricing/lists/TcOriginationPricingLists.vue";
 import TcOriginationPricingChart from "@/components/fixedincome/origination/pricing/chart/TcOriginationPricingChart.vue";
-
+import TcClientLookup from "@/components/common/lookup/TcClientLookup.vue";
+import {useBrowserWindow} from "@/composables/window";
 const addPricingLabel = "Add Pricing";
 
 const newPricingOpen = ref(true);
 
-const { result, loading } = useQuery(graphql(`
-    query Query {
-        temp {
-            b
-        }
-    }
-`));
-const x = computed(() => {
-    if (result.value) {
-        return result.value.temp.b
-    }
-});
+// const { result } = useQuery(graphql(`
+//     query Query {
+//         temp {
+//             b
+//         }
+//     }
+// `));
+//"http://localhost:5173/test"
+
+const message = ref("Before");
+
+const openNewPricingWindow = useBrowserWindow<string>(
+    "/add_pricing",
+    msg => message.value = msg.data,
+    console.log,
+    () => message.value = "got closed"
+);
 </script>
 
 <style scoped>

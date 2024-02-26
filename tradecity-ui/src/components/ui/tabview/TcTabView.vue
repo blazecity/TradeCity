@@ -4,8 +4,8 @@
     <div class="border-b-zinc-800 border-b-[1px]">
       <div
           v-for="tab in tabs" :key="tab.id"
-          :class="['inline-block border-b-[3px] border-base px-2.5 py-1 hover:cursor-pointer',  activeTab === tab.id ? 'font-bold border-tc-blue bg-tertiary' : 'hover:bg-tertiary border-neutral-500']"
-          @click="() => switchTab(tab.id)"
+          :class="['inline-block border-b-[3px] border-base px-2.5 py-1 hover:cursor-pointer',  activeTab === tab.id ? 'font-bold border-tc-blue bg-dark' : 'hover:bg-tertiary border-neutral-500']"
+          @click="() => handleTabSwitch(tab.id)"
       >
         {{ tab.label }}
       </div>
@@ -53,7 +53,8 @@ watch(tabs, newTabs => {
 }, {immediate: true});
 
 // ============ EVENT HANDLERS ============
-function switchTab(id: string) {
+
+function handleTabSwitch(id: string) {
   activeTab.value = id;
 }
 </script>

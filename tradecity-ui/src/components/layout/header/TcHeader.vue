@@ -1,5 +1,5 @@
 <template>
-  <header class="header-grid w-full border-b border-zinc-900 py-0.5 px-2 z-10 h-7 bg-dark">
+  <header class="header-grid w-full py-0.5 px-2 z-10 h-7 bg-dark">
       <router-view name="FunctionalityNameArea" class="col-span-2"></router-view>
       <div class="flex gap-2 ml-auto items-center">
           <slot></slot>

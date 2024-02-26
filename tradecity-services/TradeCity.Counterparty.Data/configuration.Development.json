@@ -1,0 +1,7 @@
+{
+  "service": "Counterparty",
+  "database": {
+    "connectionString": "Host=localhost;Database=tradecity;SearchPath=counterparty_service,public;Username=postgres;Password=postgres",
+    "schema": "counterparty_service"
+  }
+}

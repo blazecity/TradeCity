@@ -11,10 +11,10 @@
           }
       ]">
           <input
-              :id="id" :type="type" :class="['bg-transparent outline-none px-1.5 w-full', {'text-center': tableInput}]" :value="displayedValue"
-              @focusout="focusOutHandler" @input="inputHandler" onclick="this.select()" :placeholder="placeholder" v-bind="attrs"
+                  :id="id" :type="type" :class="['bg-transparent outline-none px-1.5 w-full', {'text-center': tableInput}]" :value="displayedValue"
+                  @focusout="handleFocusOut" @input="handleInput" onclick="this.select()" :placeholder="placeholder" v-bind="attrs"
           >
-          <tc-icon v-if="!tableInput" :class="['text-lg', validationResult.isValid ? 'text-white' : 'text-red-500']" icon="close" clickable @click="resetClickHandler" />
+          <tc-icon v-if="!tableInput" :class="['text-lg', validationResult.isValid ? 'text-white' : 'text-red-500']" icon="close" clickable @click="handleResetClick" />
       </div>
   </div>
 </template>
@@ -65,7 +65,7 @@ const validationResult = computed(() => props.validation(sanitizedValue.value));
 watch(() => props.modelValue, val => { displayedValue.value = props.format(val) }, { immediate: true });
 
 // ============== EVENT HANDLERS ==============
-function focusOutHandler(event: Event): void {
+function handleFocusOut(event: Event): void {
   const newValue = (event.target as HTMLInputElement).value;
   rawInput.value = newValue;
   const sanitizingResult = props.sanitize(newValue);
@@ -94,12 +94,12 @@ function focusOutHandler(event: Event): void {
   }
 }
 
-function inputHandler(event: Event): void {
+function handleInput(event: Event): void {
     const newValue = (event.target as HTMLInputElement).value;
     displayedValue.value = props.intermediateSanitize(newValue) as V;
 }
 
-function resetClickHandler(): void {
+function handleResetClick(): void {
   sanitizedValue.value = props.zeroValue;
   displayedValue.value = props.format(props.zeroValue);
   emits("update:modelValue", props.zeroValue);

@@ -9,13 +9,15 @@
     }
   ],
   "compilerOptions": {
+    "target": "es2022",
+    "lib": ["es2022", "esnext", "dom"],
     "plugins": [
       {
         "name": "@0no-co/graphqlsp",
         "schema": "../config/schema.graphql",
         "disableTypegen": true,
         "templateIsCallExpression": true,
-        "template": "graphql"
+        "template": "graphql",
       }
     ]
   }

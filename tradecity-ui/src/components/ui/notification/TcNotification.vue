@@ -3,7 +3,7 @@
       <!-- title -->
       <div class="flex justify-between leading-3">
           <span :class="['underline underline-offset-4 decoration-[3px] font-bold mr-3 line-clamp-1', color]">{{ title }}</span>
-          <tc-icon icon="close" class="large-icon" clickable @click="closeClickHandler" />
+          <tc-icon icon="close" class="large-icon" clickable @click="handleCloseClick" />
       </div>
       <!-- body -->
       <div class="whitespace-normal break-words">
@@ -43,7 +43,7 @@ const color = computed(() => {
 });
 
 // =========== EVENT HANDLERS ===========
-function closeClickHandler(): void {
+function handleCloseClick(): void {
     emits("close");
 }
 </script>

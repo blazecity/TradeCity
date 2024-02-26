@@ -9,6 +9,8 @@
     "build/**/*"
   ],
   "compilerOptions": {
+    "target": "es2022",
+    "lib": ["es2022", "esnext", "dom"],
     "composite": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",

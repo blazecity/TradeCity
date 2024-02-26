@@ -1,6 +1,6 @@
 <template>
   <dialog :id="id" ref="dialogElement" class="min-w-[400px] bg-tertiary text-white p-1 rounded-sm outline-none">
-      <tc-title-bar :title="title" icon="close" @icon-click="closeClickHandler" />
+      <tc-title-bar :title="title" icon="close" @icon-click="handleCloseClick" />
       <div>
           <slot></slot>
       </div>
@@ -28,7 +28,7 @@ const { registerHandler } = useClickContext();
 const id = crypto.randomUUID();
 registerHandler(id, 0, () => {
     if (props.open) {
-        closeClickHandler();
+        handleCloseClick();
         return true;
     }
 
@@ -49,7 +49,7 @@ watch(() => props.open, isOpen => {
 });
 
 // ============= EVENT HANDLERS =============
-function closeClickHandler(): void {
+function handleCloseClick(): void {
     emits("update:open", false);
 }
 </script>

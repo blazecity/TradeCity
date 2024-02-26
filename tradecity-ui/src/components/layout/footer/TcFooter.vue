@@ -1,5 +1,5 @@
 <template>
-  <footer class="flex bg-dark text-xs h-5 justify-between items-center border-t border-zinc-900">
+  <footer class="flex bg-dark text-xs h-5 justify-between items-center">
       <div class="flex items-center h-full">
           <slot name="left"></slot>
       </div>

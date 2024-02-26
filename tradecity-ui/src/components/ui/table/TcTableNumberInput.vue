@@ -1,11 +1,19 @@
 <template>
-  <div class="inline-flex items-center bg-dark">
-      <button @click.stop="decreaseHandler" class="inline-flex items-center hover:bg-base bg-table-secondary h-5 outline-none">
-          <tc-icon class="" icon="remove" rounding="unrounded" />
+  <div :class="[
+      'inline-flex justify-between text-white items-center w-full',
+      {'border-x border-b border-zinc-800': withBorder},
+      {'border-t': first},
+      {'bg-black': !header}
+  ]">
+      <button @click.stop="handleDecrease" class="inline-flex items-center hover:bg-base rounded-full outline-none">
+          <tc-icon class="text-sm" icon="remove" rounding="unrounded" />
       </button>
-      <tc-number-input :model-value="modelValue" @update:model-value="updateHandler" placeholder="value" table-input :class="attrs.class" :decimal-places="decimalPlaces" @click.stop  />
-      <button @click.stop="increaseHandler" class="inline-flex items-center hover:bg-base bg-table-secondary h-5 outline-none">
-          <tc-icon class="" icon="add" rounding="unrounded" />
+      <tc-number-input
+         :model-value="modelValue" @update:model-value="handleUpdate" placeholder="value" table-input
+         :class="[attrs.class, 'w-20']" :decimal-places="decimalPlaces" @click.stop
+      />
+      <button @click.stop="handleIncrease" class="inline-flex items-center hover:bg-base rounded-full outline-none">
+          <tc-icon class="text-sm" icon="add" rounding="unrounded" />
       </button>
   </div>
 </template>
@@ -18,6 +26,9 @@ import {useAttrs} from "vue";
 type TcTableNumberInputProps = {
     modelValue: number;
     decimalPlaces: number;
+    withBorder?: boolean;
+    first?: boolean;
+    header?: boolean;
 };
 const props = defineProps<TcTableNumberInputProps>();
 
@@ -32,15 +43,15 @@ defineOptions({
 });
 
 // ========== EVENT HANDLERS ==========
-function updateHandler(val: number): void {
+function handleUpdate(val: number): void {
     emits("update:modelValue", val);
 }
 
-function decreaseHandler(): void {
+function handleDecrease(): void {
     emits("update:modelValue", props.modelValue - 1);
 }
 
-function increaseHandler(): void {
+function handleIncrease(): void {
     emits("update:modelValue", props.modelValue + 1);
 }
 </script>

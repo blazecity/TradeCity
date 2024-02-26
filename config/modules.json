@@ -3,7 +3,7 @@
     "navigationName": "Home",
     "name": "TradeCity",
     "icon": "title",
-    "path": "/",
+    "path": "",
     "functionalityGroups": {
 
     }
@@ -12,7 +12,7 @@
     "navigationName": "FixedIncome",
     "name": "Fixed Income",
     "icon": "flowsheet",
-    "path": "/fixed_income",
+    "path": "fixed_income",
     "functionalityGroups": {
       "origination": {
         "name": "Origination",
@@ -38,7 +38,7 @@
     "navigationName": "Clients",
     "name": "Clients",
     "icon": "manage_accounts",
-    "path": "/clients",
+    "path": "clients",
     "functionalityGroups": {
       "clientManagement": {
         "name": "Client Management",
@@ -64,7 +64,7 @@
     "navigationName": "Developer",
     "name": "Developer",
     "icon": "code",
-    "path": "/developer",
+    "path": "developer",
     "functionalityGroups": {
       "system": {
         "name": "System",
