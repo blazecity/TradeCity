@@ -1,6 +1,8 @@
 import {TcBroadcastChannel} from "@/utilities/window";
 import type {TcBroadcastChannelMessageCallback} from "@/utilities/window";
 import {onBeforeUnmount, onUnmounted} from "vue";
+import type {Option} from "@/utilities/functional";
+import {None, Some} from "@/utilities/functional";
 
 export function useBroadcastChannel<T>(
     name: string,
@@ -16,6 +18,11 @@ export function useBroadcastChannel<T>(
     return channel;
 }
 
+type ChannelWindowPair<T> = {
+    channel: TcBroadcastChannel<T>,
+    appWindow: Window
+}
+
 export function useBrowserWindow<T>(
     url: string,
     onMessage: TcBroadcastChannelMessageCallback<T>,
@@ -24,15 +31,12 @@ export function useBrowserWindow<T>(
     height: number = 500,
     width: number = 1100
 ) {
-    const channelRegistry = new Map<string, {
-        channel: TcBroadcastChannel<T>,
-        appWindow: Window
-    }>();
+    const channelRegistry = new Map<string, ChannelWindowPair<T>>();
 
-    const openNewWindow = () => {
+    const openNewWindow = (): Option<ChannelWindowPair<T>> => {
         const channelId = crypto.randomUUID();
         const appWindow = window.open(url, channelId, `height=${height},width=${width}`);
-        if (!appWindow) return null;
+        if (!appWindow) return None();
         const channel = new TcBroadcastChannel<T>(channelId, onMessage, onErrorMessage, onClose);
         const registryEntry = {
             channel,
@@ -40,7 +44,7 @@ export function useBrowserWindow<T>(
         };
 
         channelRegistry.set(channelId, registryEntry);
-        return registryEntry;
+        return Some(registryEntry);
     };
 
     onUnmounted(() => channelRegistry.forEach(entry => {

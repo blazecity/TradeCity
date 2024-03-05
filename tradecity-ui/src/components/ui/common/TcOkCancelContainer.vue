@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-rows-fr-auto">
+  <div class="grid grid-rows-fr-auto h-full">
       <div>
           <slot></slot>
       </div>

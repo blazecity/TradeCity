@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import {moduleTree} from "@/modules/index.gen";
+import TestPanel from "@/views/TestPanel.vue";
 
 // App
 const BaseApp = () => import("@/views/BaseApp.vue");
@@ -9,7 +10,6 @@ const AppWindow = () => import("@/views/AppWindow.vue");
 const TcDefaultHeaderContext = () => import("@/components/layout/header/TcDefaultHeaderContext.vue");
 
 // Fixed Income - Origination
-const TcOriginationContext = () => import("@/views/fixedincome/origination/TcOriginationContext.vue");
 const TcOriginationPricing = () => import("@/views/fixedincome/origination/pricing/TcOriginationPricing.vue");
 const TcOriginationComparablesManagement = () => import("@/views/fixedincome/origination/comparables/TcOriginationComparablesManagement.vue");
 
@@ -21,6 +21,10 @@ const TcEditClient = () => import("@/views/clients/clientmanagement/edit/TcEditC
 const TcSystemStatusOverview = () => import("@/views/dev/system/TcSystemStatusOverview.vue");
 
 const TcOriginationPricingEditorWindow = () => import("@/components/fixedincome/origination/pricing/table/TcOriginationPricingEditorWindow.vue");
+
+const TcLookupWindow = () => import("@/components/ui/lookup/TcLookupWindow.vue");
+
+const TcTestPanel = () => import("@/views/TestPanel.vue");
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,6 +40,12 @@ const router = createRouter({
           path: "add_pricing",
           components: {
             AppWindow: TcOriginationPricingEditorWindow
+          }
+        },
+        {
+          path: "search",
+          components: {
+            AppWindow: TcLookupWindow
           }
         }
       ]

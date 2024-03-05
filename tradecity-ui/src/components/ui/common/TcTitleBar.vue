@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-between p-0.5 mb-1">
+    <div class="flex justify-between px-1.5 py-0.5 mb-1">
         <span class="text-xs font-bold">{{ title }}</span>
         <tc-icon :icon="icon" class="text-[16px]" clickable @click="iconClickHandler" />
     </div>

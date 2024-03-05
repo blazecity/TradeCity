@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-rows-auto-fr">
+  <div class="grid grid-rows-auto-fr h-full w-full bg-dark">
       <tc-title :title="title" />
       <slot :channel="channel" :close="closeWindow"></slot>
   </div>

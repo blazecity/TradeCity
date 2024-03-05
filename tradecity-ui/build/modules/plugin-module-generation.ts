@@ -44,8 +44,7 @@ export default function moduleGeneration(): PluginOption {
     return {
         name: "module-generation",
         handleHotUpdate({ file }) {
-            console.log(file);
-            sourceGeneration();
+            if (!file.includes("index.gen.ts")) sourceGeneration();
         },
         buildStart: {
             async handler() {

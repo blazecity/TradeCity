@@ -1,5 +1,5 @@
 <template>
-  <div :class="['grid bg-black gap-px group', {'panel-expanded': hasExpandedPanel}]">
+  <div :class="['grid gap-1 h-full group', {'panel-expanded': hasExpandedPanel}]">
       <slot :expansion-handler="expansionHandler"></slot>
   </div>
 </template>

@@ -1,22 +1,20 @@
 <template>
-    <div class="layout-container h-full w-full">
-        <tc-navigation class="row-span-2 flex" />
-        <tc-header class="col-span-2">
-            <tc-icon class="text-xl" icon="notifications" />
-            <tc-icon class="text-xl" icon="help" />
-        </tc-header>
-        <tc-main class="col-span-2">
-        </tc-main>
-        <tc-footer class="col-span-full">
-            <template #left>
-                <tc-system-version />
-            </template>
-            <template #right>
-                <tc-system-status />
-                <tc-connection-status />
-            </template>
-        </tc-footer>
+  <div class="outer-container h-full w-full">
+    <div class="bg-zinc-950 grid grid-cols-auto-fr inner-container-rows overflow-hidden">
+      <tc-navigation class="row-span-full"></tc-navigation>
+      <tc-header></tc-header>
+      <tc-main></tc-main>
     </div>
+    <tc-footer class="col-span-full">
+      <template #left>
+        <tc-system-version/>
+      </template>
+      <template #right>
+        <tc-system-status/>
+        <tc-connection-status/>
+      </template>
+    </tc-footer>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -33,32 +31,36 @@ import {provide} from "vue";
 import {DefaultApolloClient} from "@vue/apollo-composable";
 import {ApolloClient, HttpLink, InMemoryCache} from "@apollo/client/core";
 
-const { registerClick } = useClickContext();
+const {registerClick} = useClickContext();
 
 document.addEventListener("keydown", event => {
-    if (event.key === "Escape") {
-        registerClick(ClickType.ESCAPE);
-    }
+  if (event.key === "Escape") {
+    registerClick(ClickType.ESCAPE);
+  }
 });
 
 document.addEventListener("mousedown", () => {
-    registerClick(ClickType.OUTSIDE)
+  registerClick(ClickType.OUTSIDE)
 });
 
 const apolloClient = new ApolloClient({
-    cache: new InMemoryCache(),
-    link: new HttpLink({
-        uri: "/graphql"
-    })
+  cache: new InMemoryCache(),
+  link: new HttpLink({
+    uri: "/graphql"
+  })
 });
 
 provide(DefaultApolloClient, apolloClient);
 </script>
 
 <style scoped>
-.layout-container {
-    display: grid;
-    grid-template-columns: auto auto 1fr;
-    grid-template-rows: auto 1fr auto;
+.outer-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+}
+
+.inner-container-rows {
+  grid-template-rows: auto 1fr;
 }
 </style>

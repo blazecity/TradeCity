@@ -1,57 +1,23 @@
 <template>
-  <tc-ok-cancel-container class="w-full">
-      <tc-collapsable-panel title="General">
-          <div class="grid grid-cols-3 gap-x-4 gap-y-1">
-              <tc-string-input v-model="description" placeholder="Description" with-label class="w-full" />
-              <tc-combo-box placeholder="Collateral" :items="[]" :level="1" with-label />
-              <tc-combo-box placeholder="Coupon Frequency" :items="[]" :level="1" with-label />
-              <tc-combo-box placeholder="Ccy Comparison" :items="[]" :level="1" with-label />
-          </div>
-      </tc-collapsable-panel>
-      <tc-collapsable-panel title="Fees">
-          <div class="grid grid-cols-3 gap-x-4 gap-y-1 items-center">
-              <tc-number-input v-model="couponPayingAgentFeeInBps" placeholder="Cp pay agent fee" with-label />
-              <tc-number-input v-model="redemptionFeeInBps" placeholder="Red fee" with-label />
-              <tc-number-input v-model="outOfPocketFee" placeholder="Out of pocket fee" with-label />
-          </div>
-      </tc-collapsable-panel>
-      <tc-collapsable-panel title="Tenors">
-          <div class="grid grid-cols-1 gap-y-1">
-              <div class="flex items-center gap-1.5">
-                  <tc-number-input v-model="tenor" placeholder="Tenor" with-label />
-                  <tc-button plain @click="() => handleAddTenorClick(0)">
-                      <tc-icon icon="add" class="large-icon" />
-                      <span>Add</span>
-                  </tc-button>
-                  <tc-button plain @click="() => handleAddTenorClick(1)">
-                      <tc-icon icon="upgrade" class="large-icon" />
-                      <span>Add +1</span>
-                  </tc-button>
-                  <tc-button plain @click="() => handleAddTenorClick(5)">
-                      <tc-icon icon="upgrade" class="large-icon" />
-                      <span>Add +5</span>
-                  </tc-button>
-                  <tc-button plain @click="handleAddDefaultTenorClick">
-                      <tc-icon icon="format_list_numbered" class="large-icon" />
-                      <span>Add Default Range</span>
-                  </tc-button>
-                  <tc-button v-if="removeVisible" plain dangerous>
-                      <tc-icon icon="remove" class="large-icon" />
-                      <span>Remove</span>
-                  </tc-button>
-              </div>
-              <div class="bg-dark p-1 h-48">
-                  <tc-table
-                      :headers="tenorTableHeaders" :data="tableData" description="" selectable
-                      @selection-changed="handleTableSelectionChange"
-                  >
-                      <template #data.tenor="{ dataIndex }">
-                          <tc-table-number-input :decimal-places="1" v-model="tableData[dataIndex].tenor" />
-                      </template>
-                  </tc-table>
-              </div>
-          </div>
-      </tc-collapsable-panel>
+  <tc-ok-cancel-container>
+    <div class="pricing-grid p-1.5 gap-y-0.5 gap-x-2">
+      <span>Description</span>
+      <tc-string-input v-model="description" placeholder="Description" />
+      <span>Collateral</span>
+      <tc-combo-box placeholder="Collateral" :items="[]" :level="1" />
+      <span>Coupon Frequency</span>
+      <tc-combo-box placeholder="Coupon Frequency" :items="[]" :level="1" />
+      <span>Cross Currency Comparison</span>
+      <tc-combo-box placeholder="Ccy Comparison" :items="[]" :level="1" />
+      <span>Coupon Paying Agent Fee (bps)</span>
+      <tc-number-input v-model="couponPayingAgentFeeInBps" placeholder="Cp pay agent fee" />
+      <span>Redemption Fee (bps)</span>
+      <tc-number-input v-model="redemptionFeeInBps" placeholder="Red fee" />
+      <span>Out-of-pocket Fee (CHF)</span>
+      <tc-number-input v-model="outOfPocketFee" placeholder="Out of pocket fee" />
+      <span>Tenor</span>
+      <tc-number-input v-model="tenor" placeholder="Tenor" />
+    </div>
   </tc-ok-cancel-container>
 </template>
 
@@ -124,3 +90,10 @@ function handleTableSelectionChange(data: Array<TenorTableData>): void {
     removeVisible.value = data.length > 0;
 }
 </script>
+
+<style scoped>
+.pricing-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+</style>

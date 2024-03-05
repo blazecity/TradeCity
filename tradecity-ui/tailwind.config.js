@@ -14,7 +14,11 @@ export default {
         tertiary: "var(--tertiary)",
         "table-primary": "var(--table-primary)",
         "table-secondary": "var(--table-secondary)",
-        "table-tertiary": "var(--table-tertiary)"
+        "table-tertiary": "var(--table-tertiary)",
+        "nav-primary": "var(--nav-primary)",
+        "nav-secondary": "var(--nav-secondary)",
+        "nav-tertiary": "var(--nav-tertiary)",
+        main: "var(--main)"
       },
       fontSize: {
         normal: "0.77rem"

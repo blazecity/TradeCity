@@ -1,6 +1,6 @@
 <template>
     <tc-tooltip :text="description" direction="top">
-        <div class="flex items-center rounded-sm gap-x-0.5 bg-tertiary px-0.5 py-px font-bold">
+        <div class="flex items-center rounded-sm gap-x-1 bg-gray-500 px-0.5 py-px font-bold">
             <tc-icon :icon="icon" />
             <span>{{ text }}</span>
         </div>

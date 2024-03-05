@@ -16,6 +16,14 @@ type ResultInternals<T> = {
 type OkCallback<T, A> = (ok: T) => A;
 type ErrCallback<A> = (err: TradeCityException) => A;
 
+export function Ok<T>(value: T): Result<T> {
+    return Result.Ok(value);
+}
+
+export function Err<T>(err: TradeCityException): Result<T> {
+    return Result.Err(err);
+}
+
 export class Result<T> {
 
     private _internals: ResultInternals<T>;
@@ -55,6 +63,14 @@ export class Result<T> {
 
         return callback();
     }
+}
+
+export function Some<T>(val: T): Option<T> {
+    return Option.Some(val);
+}
+
+export function None<T>(): Option<T> {
+    return Option.None();
 }
 
 export class Option<T> {

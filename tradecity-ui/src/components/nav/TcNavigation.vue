@@ -1,32 +1,32 @@
 <template>
-  <div>
-      <!-- module navigation -->
-      <div :class="['flex flex-col gap-2 bg-dark z-30 p-1.5', {'border-r border-zinc-950': functionalitiesVisible}]">
-          <tc-module-navigation-element
-                  v-for="(module, moduleKey) in moduleTree" :key="moduleKey" :icon="module.icon" :text="module.name" :path="module.path"
-                  :navigation-name="module.navigationName" :is-selected="moduleKey === selectedModuleByRoute"
-                  :is-selected-softly="moduleKey === selectedModuleKey" @click="() => handleModuleClick(moduleKey as unknown as string)"
+  <div class="flex">
+    <!-- module navigation -->
+    <div class="flex flex-col gap-2 z-30 p-2 bg-nav-primary">
+      <tc-module-navigation-element
+          v-for="(module, moduleKey) in moduleTree" :key="moduleKey" :icon="module.icon" :text="module.name" :path="module.path"
+          :navigation-name="module.navigationName" :is-selected="moduleKey === selectedModuleByRoute"
+          :is-selected-softly="moduleKey === selectedModuleKey" @click="() => handleModuleClick(moduleKey as unknown as string)"
+      />
+    </div>
+    <!-- functionality navigation -->
+    <div :class="['grid grid-rows-auto-fr min-w-[200px] z-20', {'hidden': !functionalitiesVisible}]">
+      <div class="flex items-center justify-between py-1 px-2 font-bold h-7 bg-nav-secondary border-b border-neutral-950">
+        <span v-if="selectedModule">{{ selectedModule.name }}</span>
+        <tc-icon class="large-icon" icon="remove" clickable @click="handleCollapseClick"  />
+      </div>
+      <div class="h-full bg-nav-secondary">
+        <tc-functionality-navigation-section
+            v-for="(functionalityGroup, functionalityGroupKey) in functionalityGroups"
+            :key="functionalityGroupKey" :title="functionalityGroup.name"
+        >
+          <tc-functionality-navigation-element
+              v-if="functionalityGroup.functionalities" v-for="(functionality, functionalityKey) in functionalityGroup.functionalities"
+              :key="functionalityKey" :text="functionality.name" :navigation-name="functionality.navigationName"
+              :is-selected="functionalityKey as unknown as string === selectedFunctionality"
           />
+        </tc-functionality-navigation-section>
       </div>
-      <!-- functionality navigation -->
-      <div :class="['grid grid-rows-auto-fr bg-dark min-w-[200px] z-20 h-full', {'hidden': !functionalitiesVisible}]">
-          <div class="flex items-center justify-between py-1 border-b border-r border-zinc-950 px-2 font-bold h-7">
-              <span v-if="selectedModule">{{ selectedModule.name }}</span>
-              <tc-icon class="large-icon" icon="remove" clickable @click="handleCollapseClick"  />
-          </div>
-          <div class="h-full">
-              <tc-functionality-navigation-section
-                      v-for="(functionalityGroup, functionalityGroupKey) in functionalityGroups"
-                      :key="functionalityGroupKey" :title="functionalityGroup.name"
-              >
-                  <tc-functionality-navigation-element
-                          v-if="functionalityGroup.functionalities" v-for="(functionality, functionalityKey) in functionalityGroup.functionalities"
-                          :key="functionalityKey" :text="functionality.name" :navigation-name="functionality.navigationName"
-                          :is-selected="functionalityKey as unknown as string === selectedFunctionality"
-                  />
-              </tc-functionality-navigation-section>
-          </div>
-      </div>
+    </div>
   </div>
 </template>
 

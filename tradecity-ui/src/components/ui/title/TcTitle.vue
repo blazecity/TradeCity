@@ -8,3 +8,9 @@ type TcTitleProps = {
 }
 defineProps<TcTitleProps>();
 </script>
+
+<style scoped lang="postcss">
+h1 {
+  @apply text-xl text-white font-bold m-1.5;
+}
+</style>

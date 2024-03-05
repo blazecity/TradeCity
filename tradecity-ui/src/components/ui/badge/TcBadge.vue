@@ -1,10 +1,6 @@
 <template>
-  <div class="text-normal inline py-px px-0.5 rounded-sm font-bold">{{ text }}</div>
+  <div class="text-normal inline py-px px-0.5 rounded-sm font-bold">
+    <slot></slot>
+  </div>
 </template>
 
-<script setup lang="ts">
-interface TcBadgeProps {
-  text: string;
-}
-defineProps<TcBadgeProps>();
-</script>

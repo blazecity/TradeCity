@@ -2,15 +2,18 @@
     <div class="grid grid-rows-fr-auto overflow-hidden w-fit h-full">
         <div class="overflow-auto scrollbar">
             <table class="bg-table-primary border-separate border-spacing-0 w-full">
+              <colgroup>
+                <col class="bg-red-300">
+              </colgroup>
                 <thead class="sticky top-0 text-zinc-400 z-10">
                     <!-- group row -->
                     <tr v-if="grouped">
                         <th v-if="selectable" class="table-selectable-cell"></th>
                         <th
                             v-for="(group, groupKey, index) in headers" :key="groupKey" :colspan="Object.keys(group.headers).length"
-                            :class="['table-header-cell']"
+                            :class="['table-header-cell border-b']"
                         >
-                            <div class="flex items-center">
+                            <div class="flex items-center resize-x">
                                 <div v-if="index !== 0" class="inline-block h-[12px] bg-zinc-700 w-px justify-self-start"></div>
                                 <div class="w-full">
                                     <slot :name="'group.' + groupKey" :group="groupKey" :label="group.label">
@@ -22,12 +25,12 @@
                     </tr>
                     <!-- header row -->
                     <tr>
-                        <th v-if="selectable" :class="['table-selectable-cell', {'border-t': !grouped}]">
+                        <th v-if="selectable" :class="['table-selectable-cell', {'border-t': grouped}]">
                             <tc-check-box v-model="allSelected" />
                         </th>
                         <th
                             v-for="([headerKey, header], index) in flatHeaders" :key="headerKey"
-                            :class="['table-header-cell', {'border-t': !grouped}]"
+                            :class="['table-header-cell', {'border-t': grouped, 'border-b': subHeader}]"
                         >
                             <div class="flex justify-between items-center">
                                 <div v-if="index !== 0" class="inline-block h-[12px] bg-zinc-700 w-px justify-self-start"></div>
@@ -39,6 +42,7 @@
                             </div>
                         </th>
                     </tr>
+                    <!-- subheader row -->
                     <tr v-if="subHeader">
                         <th v-if="selectable" class="table-selectable-cell"></th>
                         <th
@@ -48,8 +52,7 @@
                             <div class="flex justify-between items-center">
                                 <div v-if="index !== 0" class="inline-block h-[12px] bg-zinc-700 w-px justify-self-start"></div>
                                 <div class="w-full mx-0.5">
-                                    <slot :name="'subheader.' + headerKey" :header="headerKey" :label="header">
-                                    </slot>
+                                    <slot :name="'subheader.' + headerKey" :header="headerKey" :label="header"></slot>
                                 </div>
                             </div>
                         </th>
@@ -117,8 +120,6 @@ watch(allSelected, isSelected => {
         selectedData.clear();
     }
 });
-const lengthHeaderGroups = computed(() => Object.keys(props.headers).length);
-const lengthHeaders = computed(() => flatHeaders.value.length);
 
 // ========== HELPER FUNCTIONS ==========
 function isSelected(dataEntry: T): boolean {
@@ -137,3 +138,33 @@ function handleToggleSelection(dataEntry: T): void {
     }
 }
 </script>
+
+<style scoped lang="postcss">
+.table-header-cell {
+  @apply border-zinc-800 bg-table-primary py-1 px-0 resize-x overflow-x-auto w-fit;
+}
+
+.table-subheader-cell {
+  @apply border-zinc-800 bg-table-primary py-1 px-0;
+}
+
+.table-header-cell::-webkit-resizer {
+  display: none;
+}
+
+.table-data-row {
+  @apply hover:cursor-pointer hover:bg-zinc-700 odd:bg-table-secondary even:bg-table-primary;
+}
+
+.table-data-cell {
+  @apply p-0;
+}
+
+.table-selectable-cell {
+  @apply flex bg-table-secondary border-zinc-900 border-b border-l sticky left-0 justify-center items-center;
+}
+
+.table-default-cell-content {
+  @apply inline-block px-1 py-0.5 whitespace-nowrap;
+}
+</style>

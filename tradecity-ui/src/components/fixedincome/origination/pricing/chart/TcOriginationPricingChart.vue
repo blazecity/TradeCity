@@ -15,7 +15,7 @@ onMounted(() => {
 
     Chart.register(...registerables);
     new Chart(ctx, {
-        type: 'line',
+        type: 'scatter',
         data: {
             labels: ["January", "February", "March", "April", "May", "June", "July"],
             datasets: [
