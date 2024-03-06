@@ -1,7 +1,9 @@
 <template>
   <tc-tab-panel :rows="1" :cols="4" :expansion-handler="expansionHandler" :tab-headers="tabHeaders" #="{ activeTab }">
     <tc-tab id="comparables" :active-id="activeTab">
-      <tc-comparables-table />
+      <div class="overflow-hidden h-full">
+        <tc-comparables-table />
+      </div>
     </tc-tab>
     <tc-tab id="secMarket" label="Secondary Market" :active-id="activeTab">
       <tc-secondary-market-table />

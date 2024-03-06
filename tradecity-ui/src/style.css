@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: "Webly Sleek UI";
+    font-family: "aktiv-grotesk";
     font-style: normal;
     font-weight: normal;
-    src: url(./assets/fonts/WeblySleek_UI_Semilight.woff2);
+    src: url(./assets/fonts/aktiv_grotesk_normal.woff2);
 }
 
 @font-face {
-    font-family: "Webly Sleek UI";
+    font-family: "aktiv-grotesk";
     font-style: normal;
     font-weight: bold;
-    src: url(./assets/fonts/WeblySleek_UI_Semibold.woff2);
+    src: url(./assets/fonts/aktiv_grotesk_bold.woff2);
 }
 
 /* Material Icons */
@@ -71,19 +71,18 @@
 }
 
 :root {
-    font-family: "Webly Sleek UI", sans-serif;
     --dark: #0e0e0e;
     --primary: #151517;
-    --secondary: #23252a;
+    --secondary: #1a1f25;
     --tertiary: #292c31;
     --base: #3b58c2;
     --base-dark: #0355ad;
 
-    --main: #5a6775;
+    --main: #272d35;
 
     /* table colors */
-    --table-primary: #0f1011;
-    --table-secondary: #23252d;
+    --table-primary: #2d353f;
+    --table-secondary: #19191d;
     --table-tertiary: #333333;
 
     --nav-primary: var(--primary);
@@ -93,8 +92,8 @@
 
 body {
     color: white;
-    font-size: 0.8rem;
-    font-weight: 200;
+    font-family: "aktiv-grotesk", sans-serif;
+    font-size: 0.75rem;
 }
 
 .standard-border {
@@ -183,3 +182,4 @@ input[type=number] {
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
 }
+

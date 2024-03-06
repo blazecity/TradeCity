@@ -1,13 +1,13 @@
 <template>
-  <div class="grid grid-rows-auto-fr text-xs w-full h-full bg-primary pt-1">
+  <div class="grid grid-rows-auto-fr text-xs w-full h-full pt-1">
     <!-- tab registers -->
-    <div class="pl-1 flex items-center justify-between border-b border-b-zinc-800">
+    <div class="px-1 flex items-center justify-between gap-1">
       <div>
         <div
             v-for="tab in tabHeaders" :key="tab.id"
             :class="[
-              'inline-block px-2 py-1 hover:cursor-pointer border-b-[3px]',
-              activeTab === tab.id ? ' border-b-base tab-background' : 'border-gray-600 hover:bg-tertiary',
+              'inline-block px-2 py-0.5 hover:cursor-pointer rounded',
+              activeTab === tab.id ? 'font-bold border-b-base bg-base' : 'border-gray-600 hover:bg-tertiary',
           ]"
             @click="() => handleTabSwitch(tab.id)"
         >
@@ -44,9 +44,3 @@ function handleTabSwitch(id: string) {
   activeTab.value = id;
 }
 </script>
-
-<style scoped>
-.tab-background {
-  background-color: rgba(150, 176, 246, 0.15);
-}
-</style>

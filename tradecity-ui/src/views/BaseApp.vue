@@ -1,6 +1,6 @@
 <template>
   <div class="outer-container h-full w-full">
-    <div class="bg-zinc-950 grid grid-cols-auto-fr inner-container-rows overflow-hidden">
+    <div class="bg-main grid grid-cols-auto-fr inner-container-rows overflow-hidden">
       <tc-navigation class="row-span-full"></tc-navigation>
       <tc-header></tc-header>
       <tc-main></tc-main>

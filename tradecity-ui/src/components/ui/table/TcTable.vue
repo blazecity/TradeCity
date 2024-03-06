@@ -1,45 +1,39 @@
 <template>
     <div class="grid grid-rows-fr-auto overflow-hidden w-fit h-full">
         <div class="overflow-auto scrollbar">
-            <table class="bg-table-primary border-separate border-spacing-0 w-full">
+            <table class="border-separate border-spacing-0 w-full bg-transparent table-font-size">
               <colgroup>
-                <col class="bg-red-300">
+                <col>
               </colgroup>
-                <thead class="sticky top-0 text-zinc-400 z-10">
+                <thead class="sticky top-0 z-10">
                     <!-- group row -->
                     <tr v-if="grouped">
                         <th v-if="selectable" class="table-selectable-cell"></th>
                         <th
                             v-for="(group, groupKey, index) in headers" :key="groupKey" :colspan="Object.keys(group.headers).length"
-                            :class="['table-header-cell border-b']"
+                            :class="['table-header-cell border-t']"
                         >
-                            <div class="flex items-center resize-x">
-                                <div v-if="index !== 0" class="inline-block h-[12px] bg-zinc-700 w-px justify-self-start"></div>
-                                <div class="w-full">
-                                    <slot :name="'group.' + groupKey" :group="groupKey" :label="group.label">
-                                        <span class="whitespace-nowrap">{{ group.label ?? "" }}</span>
-                                    </slot>
-                                </div>
-                            </div>
+                          <div class="w-full">
+                            <slot :name="'group.' + groupKey" :group="groupKey" :label="group.label">
+                              <span class="whitespace-nowrap">{{ group.label ?? "" }}</span>
+                            </slot>
+                          </div>
                         </th>
                     </tr>
                     <!-- header row -->
                     <tr>
-                        <th v-if="selectable" :class="['table-selectable-cell', {'border-t': grouped}]">
+                        <th v-if="selectable" :class="['table-selectable-cell']">
                             <tc-check-box v-model="allSelected" />
                         </th>
                         <th
                             v-for="([headerKey, header], index) in flatHeaders" :key="headerKey"
                             :class="['table-header-cell', {'border-t': grouped, 'border-b': subHeader}]"
                         >
-                            <div class="flex justify-between items-center">
-                                <div v-if="index !== 0" class="inline-block h-[12px] bg-zinc-700 w-px justify-self-start"></div>
-                                <div class="w-full mx-0.5">
-                                    <slot :name="'header.' + headerKey" :header="headerKey" :label="header">
-                                        <span class="border-white table-default-cell-content whitespace-nowrap">{{ header }}</span>
-                                    </slot>
-                                </div>
-                            </div>
+                          <div class="w-full mx-0.5">
+                            <slot :name="'header.' + headerKey" :header="headerKey" :label="header">
+                              <span class="border-white table-default-cell-content whitespace-nowrap">{{ header }}</span>
+                            </slot>
+                          </div>
                         </th>
                     </tr>
                     <!-- subheader row -->
@@ -61,7 +55,7 @@
                 <tbody>
                     <!-- data row -->
                     <tr v-for="(entry, dataIndex) in data" :key="dataIndex"
-                        :class="['table-data-row', isSelected(entry) ? 'bg-gray-500' : 'bg-table-primary']"
+                        :class="['table-data-row', {'bg-gray-500': isSelected(entry)}]"
                     >
                         <td v-if="selectable" class="table-selectable-cell">
                             <tc-check-box :model-value="isSelected(entry)" @update:model-value="() => handleToggleSelection(entry)" />
@@ -82,7 +76,7 @@
         </div>
         <div v-if="footer" class="bg-tertiary px-1 border-t border-zinc-800">
             <slot name="footer">
-                <span class="text-gray-200 text-xs">{{ description }}</span>
+                <span class="text-gray-200">{{ description }}</span>
             </slot>
         </div>
     </div>
@@ -140,12 +134,16 @@ function handleToggleSelection(dataEntry: T): void {
 </script>
 
 <style scoped lang="postcss">
+.table-font-size {
+  font-size: 0.7rem;
+}
+
 .table-header-cell {
-  @apply border-zinc-800 bg-table-primary py-1 px-0 resize-x overflow-x-auto w-fit;
+  @apply border-zinc-700 bg-table-primary py-1 px-0 resize-x overflow-x-hidden w-fit border-l font-normal;
 }
 
 .table-subheader-cell {
-  @apply border-zinc-800 bg-table-primary py-1 px-0;
+  @apply border-zinc-700 bg-table-primary py-1 px-0;
 }
 
 .table-header-cell::-webkit-resizer {
@@ -153,15 +151,15 @@ function handleToggleSelection(dataEntry: T): void {
 }
 
 .table-data-row {
-  @apply hover:cursor-pointer hover:bg-zinc-700 odd:bg-table-secondary even:bg-table-primary;
+  @apply hover:cursor-pointer hover:bg-zinc-700;
 }
 
 .table-data-cell {
-  @apply p-0;
+  @apply p-0 border-l border-t border-zinc-700;
 }
 
 .table-selectable-cell {
-  @apply flex bg-table-secondary border-zinc-900 border-b border-l sticky left-0 justify-center items-center;
+  @apply flex border-b border-l sticky left-0 justify-center items-center;
 }
 
 .table-default-cell-content {

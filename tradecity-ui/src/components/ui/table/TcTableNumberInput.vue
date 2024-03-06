@@ -1,8 +1,6 @@
 <template>
   <div :class="[
       {'inline-flex justify-between text-white items-center': withPlusMinus},
-      {'border-x border-b border-zinc-800': withBorder},
-      {'border-t': first},
       {'bg-black': !header}
   ]">
     <tc-table-icon-button v-if="withPlusMinus" icon="remove" @click.stop="handleDecrease"/>
@@ -25,7 +23,6 @@ type TcTableNumberInputProps = {
   decimalPlaces: number;
   withBorder?: boolean;
   withPlusMinus?: boolean;
-  first?: boolean;
   header?: boolean;
 };
 const props = defineProps<TcTableNumberInputProps>();

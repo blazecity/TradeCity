@@ -60,6 +60,12 @@
       }
     }
   },
+  "crypto": {
+    "navigationName": "Digital Assets",
+    "name": "Digital Assets",
+    "icon": "currency_bitcoin",
+    "path": "da"
+  },
   "dev": {
     "navigationName": "Developer",
     "name": "Developer",
