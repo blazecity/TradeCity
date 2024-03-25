@@ -15,18 +15,39 @@ onMounted(() => {
 
     Chart.register(...registerables);
     new Chart(ctx, {
-        type: 'scatter',
+        type: 'line',
         data: {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: ["2yr", "3yr", "4yr", "5yr", "6yr", "7yr", "8yr"],
             datasets: [
                 {
-                    data: [65, 59, 80, 81, 56, 55, 40],
+                    label: "Curve",
+                    pointRadius: 4,
+                    pointStyle: "dot",
+                    borderColor: "cornflowerblue",
+                    backgroundColor: "cornflowerblue",
+                    data: [10, 10, 11, 12, 10, 11, 11],
+                    showLine: false
                 }
             ],
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: "bottom",
+                    labels: {
+                        usePointStyle: true
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    type: "linear",
+                    beginAtZero: true,
+                    max: 15
+                }
+            }
         }
     });
 });

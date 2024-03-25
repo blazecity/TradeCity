@@ -4,7 +4,7 @@
       @click="handleNavigationClick"
   >
       <tc-icon :icon="icon" class="text-xl mr-1" />
-      <span class="-mt-0.5">{{ text }}</span>
+      <span>{{ text }}</span>
   </div>
 </template>
 

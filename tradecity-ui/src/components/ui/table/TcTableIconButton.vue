@@ -1,5 +1,5 @@
 <template>
-  <button class="icon text-white">
+  <button class="icon text-white" tabindex="-1">
     <tc-icon class="text-[16px]" :icon="icon" rounding="unrounded" />
   </button>
 </template>

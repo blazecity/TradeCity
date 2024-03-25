@@ -1,7 +1,7 @@
 <template>
   <tc-input
-          :zero-value="zeroValue" :format="format" v-model="internalValue" :placeholder="placeholder"
-          :sanitize="sanitize" :validation="validation" :table-input="tableInput" :intermediate-sanitize="intermediateSanitize"
+          :zero-value="zeroValue" :format="format" v-model="internalValue" :placeholder="placeholder" :unit="unit"
+          :sanitize="sanitize" :validation="validation" :dark="dark" :intermediate-sanitize="intermediateSanitize"
   />
 </template>
 
@@ -16,11 +16,11 @@ interface TcNumberInputProps {
   placeholder: string;
   decimalPlaces?: number;
   validation?: ValidationFn<number>;
-  tableInput?: boolean;
+  dark?: boolean;
+  unit?: string;
 }
 const props = withDefaults(defineProps<TcNumberInputProps>(), {
-  validation: () => ({ isValid: true, errorMessage: "" }),
-  decimalPlaces: 1
+  decimalPlaces: 1,
 });
 
 interface TcNumberInputEmits {

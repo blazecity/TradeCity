@@ -1,9 +1,9 @@
 <template>
     <tc-tooltip :text="description" direction="top">
-        <div class="flex items-center rounded-sm gap-x-1 bg-gray-500 px-0.5 py-px font-bold">
+        <tc-badge class="bg-yellow-200 text-black">
             <tc-icon :icon="icon" />
-            <span>{{ text }}</span>
-        </div>
+            {{ text }}
+        </tc-badge>
     </tc-tooltip>
 </template>
 

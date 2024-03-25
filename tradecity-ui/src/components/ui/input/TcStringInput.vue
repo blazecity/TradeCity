@@ -1,7 +1,7 @@
 <template>
   <tc-input
           zero-value="" :format="format" v-model="internalValue" :placeholder="placeholder"
-          :sanitize="sanitize" :validation="validation"
+          :sanitize="sanitize" :validation="validation" :unit="unit" :dark="dark"
   />
 </template>
 
@@ -15,10 +15,10 @@ interface TcStringInputProps {
   modelValue: string;
   placeholder: string;
   validation?: ValidationFn<string>;
+  unit?: string;
+  dark?: boolean;
 }
-const props = withDefaults(defineProps<TcStringInputProps>(), {
-  validation: () => ({ isValid: true, errorMessage: "" })
-});
+const props = defineProps<TcStringInputProps>();
 
 interface TcStringInputEmits {
   (e: "update:modelValue", value: string): void;

@@ -1,9 +1,9 @@
 <template>
   <div class="outer-container h-full w-full">
-    <div class="bg-main grid grid-cols-auto-fr inner-container-rows overflow-hidden">
-      <tc-navigation class="row-span-full"></tc-navigation>
       <tc-header></tc-header>
-      <tc-main></tc-main>
+    <div class="bg-main grid grid-cols-auto-fr overflow-hidden h-full">
+        <tc-navigation />
+      <tc-main :class="{'col-span-full': !navigationVisible}"></tc-main>
     </div>
     <tc-footer class="col-span-full">
       <template #left>
@@ -30,8 +30,11 @@ import TcSystemVersion from "@/components/dev/system/TcSystemVersionBadge.vue";
 import {provide} from "vue";
 import {DefaultApolloClient} from "@vue/apollo-composable";
 import {ApolloClient, HttpLink, InMemoryCache} from "@apollo/client/core";
+import {storeToRefs} from "pinia";
+import {useNavigation} from "@/stores/navigation";
 
 const {registerClick} = useClickContext();
+const { navigationVisible } = storeToRefs(useNavigation());
 
 document.addEventListener("keydown", event => {
   if (event.key === "Escape") {
@@ -57,10 +60,6 @@ provide(DefaultApolloClient, apolloClient);
 .outer-container {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr auto;
-}
-
-.inner-container-rows {
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr auto;
 }
 </style>

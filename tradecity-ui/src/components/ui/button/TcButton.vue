@@ -1,6 +1,10 @@
 <template>
   <button
-      :class="['text-normal font-bold outline-none min-w-fit rounded-sm', style(), {'px-2 py-0.5': styling !== 'plain'}]"
+      :class="[
+          'font-bold outline-none min-w-fit rounded-sm',
+          style(),
+          {'px-2 py-0.5': plain}
+      ]"
       :disabled="disabled"
   >
     <span class="flex items-center justify-center gap-x-0.5">
@@ -13,32 +17,19 @@
 interface TcButtonProps {
   dangerous?: boolean;
   disabled?: boolean;
-  styling?: "standard" | "plain" | "dark"
+  plain?: boolean;
 }
-const props = withDefaults(defineProps<TcButtonProps>(), {
-  styling: "standard"
-});
+const props = defineProps<TcButtonProps>();
 
 function style(): string {
   if (props.dangerous) {
-    switch (props.styling) {
-      case "standard":
-        return "dangerous-background hover:bg-red-700 border border-red-500";
-      case "plain":
-        return "text-red-500 hover:text-red-400";
-      case "dark":
-        return "dangerous-background hover:bg-red-700 border border-red-500";
-    }
+      if (props.plain) return "text-red-500 hover:text-red-400";
+      return "dangerous-background hover:bg-red-700 border border-red-500";
   }
 
-  switch (props.styling) {
-    case "standard":
-      return "bg-neutral-950 hover:bg-zinc-800 border border-neutral-700";
-    case "plain":
-      return "text-neutral-400 hover:text-neutral-200";
-    case "dark":
-      return "bg-neutral-950 hover:bg-zinc-800 border border-neutral-700";
-  }
+  if (props.plain) return "text-neutral-400 hover:text-neutral-200";
+
+  return "bg-zinc-400 text-black hover:bg-zinc-500";
 }
 </script>
 

@@ -1,9 +1,11 @@
 <template>
   <div :class="[
-      'grid grid-rows-auto-fr overflow-hidden bg-secondary rounded-sm',
+      'pb-1 grid grid-rows-auto-fr overflow-hidden bg-dark rounded-sm',
       expanded ? 'col-span-full row-span-full' : 'group-[.panel-expanded]:hidden panel'
   ]">
-      <tc-title-bar :title="title" :icon="expanded ? 'close_fullscreen' : 'open_in_full'" @icon-click="handleExpandClick" />
+      <tc-title-bar :title="title ?? ''" :icon="expanded ? 'close_fullscreen' : 'open_in_full'" @icon-click="handleExpandClick">
+          <slot name="bar"></slot>
+      </tc-title-bar>
       <div class="overflow-auto min-w-0 min-h-0 scrollbar">
           <slot></slot>
       </div>

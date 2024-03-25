@@ -1,6 +1,6 @@
 <template>
   <div :class="[
-      'overflow-hidden bg-secondary rounded-sm',
+      'overflow-hidden bg-dark rounded-sm',
       expanded ? 'col-span-full row-span-full' : 'group-[.panel-expanded]:hidden panel'
   ]">
     <tc-tab-view :tab-headers="tabHeaders" class="h-full">

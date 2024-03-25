@@ -20,7 +20,7 @@ type Handler = {
     guard: boolean;
 };
 
-export const useClickContext = defineStore("clickcontext", () =>{
+export const useClickContext = defineStore("clickcontext", () => {
     const clickContext: ClickContext = reactive({
         clickToggle: true,
         clickType: ClickType.ESCAPE

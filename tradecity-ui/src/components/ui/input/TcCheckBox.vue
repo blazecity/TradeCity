@@ -21,6 +21,6 @@ function changeHandler(event: Event): void {
 
 <style scoped lang="postcss">
 .checkbox {
-  @apply form-checkbox m-px z-0 bg-primary checked:bg-primary border-gray-600 ring-base focus:ring-1 focus:ring-offset-1 focus:ring-offset-primary text-gray-800 checked:border-gray-600;
+  @apply form-checkbox h-3.5 w-3.5 m-px z-0 bg-primary checked:bg-base hover:border-gray-400 hover:cursor-pointer border-gray-600 ring-base focus:ring-1 focus:ring-offset-1 focus:ring-offset-primary text-gray-800 checked:border-gray-600;
 }
 </style>

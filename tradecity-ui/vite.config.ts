@@ -2,7 +2,6 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import moduleGeneration from "./build/modules/plugin-module-generation";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,7 +11,6 @@ export default defineConfig({
         babelParserPlugins: ["explicitResourceManagement"]
       }
     }),
-    moduleGeneration()
   ],
   resolve: {
     alias: {

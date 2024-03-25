@@ -1,6 +1,5 @@
-import { createRouter, createWebHistory } from "vue-router";
-import {moduleTree} from "@/modules/index.gen";
-import TestPanel from "@/views/TestPanel.vue";
+import {createRouter, createWebHistory} from "vue-router";
+import {moduleTree} from "@/modules";
 
 // App
 const BaseApp = () => import("@/views/BaseApp.vue");
@@ -10,6 +9,7 @@ const AppWindow = () => import("@/views/AppWindow.vue");
 const TcDefaultHeaderContext = () => import("@/components/layout/header/TcDefaultHeaderContext.vue");
 
 // Fixed Income - Origination
+const TcOriginationContext = () => import("@/components/fixedincome/origination/context/TcOriginationContext.vue")
 const TcOriginationPricing = () => import("@/views/fixedincome/origination/pricing/TcOriginationPricing.vue");
 const TcOriginationComparablesManagement = () => import("@/views/fixedincome/origination/comparables/TcOriginationComparablesManagement.vue");
 
@@ -20,8 +20,6 @@ const TcEditClient = () => import("@/views/clients/clientmanagement/edit/TcEditC
 // Developer - System
 const TcSystemStatusOverview = () => import("@/views/dev/system/TcSystemStatusOverview.vue");
 
-const TcOriginationPricingEditorWindow = () => import("@/components/fixedincome/origination/pricing/table/TcOriginationPricingEditorWindow.vue");
-
 const TcLookupWindow = () => import("@/components/ui/lookup/TcLookupWindow.vue");
 
 const TcTestPanel = () => import("@/views/TestPanel.vue");
@@ -29,27 +27,6 @@ const TcTestPanel = () => import("@/views/TestPanel.vue");
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: "/",
-      name: "AppWindow",
-      components: {
-        RootView: AppWindow
-      },
-      children: [
-        {
-          path: "add_pricing",
-          components: {
-            AppWindow: TcOriginationPricingEditorWindow
-          }
-        },
-        {
-          path: "search",
-          components: {
-            AppWindow: TcLookupWindow
-          }
-        }
-      ]
-    },
     {
       path: "/app",
       name: "BaseApp",
@@ -67,35 +44,35 @@ const router = createRouter({
         },
         // Fixed Income
         {
-          path: moduleTree.fixedIncome.path,
-          name: moduleTree.fixedIncome.navigationName,
+          path: moduleTree.fixedincome.path,
+          name: moduleTree.fixedincome.navigationName,
           children: [
             // Fixed Income - Origination
             {
-              path: moduleTree.fixedIncome.functionalityGroups?.origination.path,
+              path: moduleTree.fixedincome.functionalityGroups?.origination.path,
               children: [
                 // Fixed Income - Origination - Pricing
                 {
-                  path: moduleTree.fixedIncome.functionalityGroups.origination.functionalities.pricing.path,
-                  name: moduleTree.fixedIncome.functionalityGroups.origination.functionalities.pricing.navigationName,
+                  path: moduleTree.fixedincome.functionalityGroups.origination.functionalities.pricingdashboard.path,
+                  name: moduleTree.fixedincome.functionalityGroups.origination.functionalities.pricingdashboard.navigationName,
                   components: {
                     MainArea: TcOriginationPricing,
-                    FunctionalityNameArea: TcDefaultHeaderContext
+                    HeaderContext: TcOriginationContext,
                   },
                   props: {
-                    FunctionalityNameArea: { text: moduleTree.fixedIncome.functionalityGroups.origination.functionalities.pricing.name }
+                    FunctionalityNameArea: { text: moduleTree.fixedincome.functionalityGroups.origination.functionalities.pricingdashboard.name }
                   }
                 },
                 // Fixed Income - Origination - Comparables
                 {
-                  path: moduleTree.fixedIncome.functionalityGroups.origination.functionalities.comparables.path,
-                  name: moduleTree.fixedIncome.functionalityGroups.origination.functionalities.comparables.navigationName,
+                  path: moduleTree.fixedincome.functionalityGroups.origination.functionalities.comparables.path,
+                  name: moduleTree.fixedincome.functionalityGroups.origination.functionalities.comparables.navigationName,
                   components: {
                     MainArea: TcOriginationComparablesManagement,
                     FunctionalityNameArea: TcDefaultHeaderContext
                   },
                   props: {
-                    FunctionalityNameArea: { text: moduleTree.fixedIncome.functionalityGroups.origination.functionalities.comparables.name }
+                    FunctionalityNameArea: { text: moduleTree.fixedincome.functionalityGroups.origination.functionalities.comparables.name }
                   }
                 }
               ]
@@ -109,30 +86,30 @@ const router = createRouter({
           children: [
             // Clients - Client Management
             {
-              path: moduleTree.clients.functionalityGroups.clientManagement.path,
+              path: moduleTree.clients.functionalityGroups.management.path,
               children: [
                 // Clients - Client Management - Add Client
                 {
-                  path: moduleTree.clients.functionalityGroups.clientManagement.functionalities.add.path,
-                  name: moduleTree.clients.functionalityGroups.clientManagement.functionalities.add.navigationName,
+                  path: moduleTree.clients.functionalityGroups.management.functionalities.add.path,
+                  name: moduleTree.clients.functionalityGroups.management.functionalities.add.navigationName,
                   components: {
                     MainArea: TcAddClient,
                     FunctionalityNameArea: TcDefaultHeaderContext
                   },
                   props: {
-                    FunctionalityNameArea: { text: moduleTree.clients.functionalityGroups.clientManagement.functionalities.add.name }
+                    FunctionalityNameArea: { text: moduleTree.clients.functionalityGroups.management.functionalities.add.name }
                   }
                 },
                 // Clients - Client Management - Edit Client
                 {
-                  path: moduleTree.clients.functionalityGroups.clientManagement.functionalities.edit.path,
-                  name: moduleTree.clients.functionalityGroups.clientManagement.functionalities.edit.navigationName,
+                  path: moduleTree.clients.functionalityGroups.management.functionalities.edit.path,
+                  name: moduleTree.clients.functionalityGroups.management.functionalities.edit.navigationName,
                   components: {
                     MainArea: TcEditClient,
                     FunctionalityNameArea: TcDefaultHeaderContext
                   },
                   props: {
-                    FunctionalityNameArea: { text: moduleTree.clients.functionalityGroups.clientManagement.functionalities.edit.name }
+                    FunctionalityNameArea: { text: moduleTree.clients.functionalityGroups.management.functionalities.edit.name }
                   }
                 }
               ]

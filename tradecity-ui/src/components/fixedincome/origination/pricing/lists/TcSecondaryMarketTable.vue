@@ -56,7 +56,7 @@ type SecondaryMarketEntry = {
 }
 
 const data: Array<SecondaryMarketEntry> = [];
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 10; i++) {
   data.push({
     issuer: faker.company.name(),
     collateral: "Senior preferred",

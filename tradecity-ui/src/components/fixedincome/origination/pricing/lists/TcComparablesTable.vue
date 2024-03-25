@@ -1,6 +1,11 @@
 <template>
-<tc-table :headers="tableHeaders" :data="data" description="Comparable Bonds">
-
+<tc-table :headers="tableHeaders" :data="data" description="Comparable Bonds" excess-column selectable>
+    <template #data.maturity="{ dataIndex }">
+        <tc-table-immutable-date :value="data[dataIndex].maturity" />
+    </template>
+    <template #data.yield="{ dataIndex }">
+        <tc-table-immutable-number :decimal-places="0" :value="data[dataIndex].yield" colored />
+    </template>
 </tc-table>
 </template>
 
@@ -8,6 +13,8 @@
 import TcTable from "@/components/ui/table/TcTable.vue";
 import {reactive} from "vue";
 import {faker} from "@faker-js/faker";
+import TcTableImmutableNumber from "@/components/ui/table/TcTableImmutableNumber.vue";
+import TcTableImmutableDate from "@/components/ui/table/TcTableImmutableDate.vue";
 
 const tableHeaders = reactive({
   baseGroup: {
@@ -16,12 +23,12 @@ const tableHeaders = reactive({
       issuer: "Issuer",
       collateral: "Collateral",
       rating: "Rating",
-      coupon: "Cpn",
+      coupon: "Coupon",
       maturity: "Maturity",
       currency: "Currency",
       size: "Size out",
       yield: "Yield",
-      zSpreadSaron: "Z-Spread SARON"
+      zSpreadSaron: "Z-Spread"
     }
   }
 });
@@ -52,4 +59,15 @@ for (let i = 0; i < 100; i++) {
     zSpreadSaron: 7
   })
 }
+data.push({
+    issuer: "Last Company",
+    collateral: "Covered",
+    rating: "A / A+ / Aa1",
+    coupon: faker.number.float({ min: 0, max: 5, fractionDigits: 3 }),
+    maturity: new Date(),
+    currency: "CHF",
+    size: 100,
+    yield: 10,
+    zSpreadSaron: 7
+})
 </script>

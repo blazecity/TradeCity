@@ -1,7 +1,10 @@
 <template>
-    <div class="flex justify-between px-1.5 py-0.5 mb-1">
-        <span class="text-xs font-bold">{{ title }}</span>
-        <tc-icon :icon="icon" class="text-[16px]" clickable @click="iconClickHandler" />
+    <div class="flex items-center justify-between px-1.5 pt-1 mb-1">
+        <span class="text-xs">{{ title }}</span>
+        <div class="flex gap-2 items-center">
+            <slot></slot>
+            <tc-icon :icon="icon" class="text-[16px]" clickable @click="iconClickHandler" />
+        </div>
     </div>
 </template>
 
@@ -20,11 +23,8 @@ type TcTitleBarEmits = {
 const emits = defineEmits<TcTitleBarEmits>();
 
 // =========== EVENT HANDLERS ===========
+
 function iconClickHandler(): void {
     emits("iconClick");
 }
 </script>
-
-<style scoped>
-
-</style>

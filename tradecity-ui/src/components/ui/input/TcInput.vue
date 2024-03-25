@@ -1,19 +1,19 @@
 <template>
   <div :class="[
-          tableInput ? 'table-input' : 'base-input',
+      'base-input',
+      dark ? 'bg-input-dark' : 'bg-input',
           {
-              'valid-input': validationResult.isValid && !tableInput,
-              'error-input': !validationResult.isValid && !tableInput,
-              'table-valid-input': validationResult.isValid && tableInput,
-              'table-error-input': !validationResult.isValid && tableInput
+              'valid-input': validationResult.isValid,
+              'error-input': !validationResult.isValid,
           }
       ]">
     <input
-        :id="id" :type="type" :class="['bg-transparent outline-none px-1.5 py-px w-full', {'text-center': tableInput}]"
+        :id="id" :type="type" :class="['bg-transparent outline-none px-1.5 py-px w-full']"
         :value="displayedValue" @focusout="handleFocusOut" @input="handleInput" onclick="this.select()"
         :placeholder="placeholder" size="5" v-bind="attrs"
     >
-    <tc-icon v-if="!tableInput" :class="['text-lg', validationResult.isValid ? 'text-white' : 'text-red-500']" icon="close" clickable @click="handleResetClick" />
+      <div v-if="unit" class="mx-1 text-small bg-zinc-700 text-gray-300 rounded-sm px-1">{{ unit }}</div>
+    <tc-icon v-if="showIcon" :class="['text-lg', validationResult.isValid ? 'text-white' : 'text-red-500']" icon="close" clickable @click="handleResetClick" />
   </div>
 </template>
 
@@ -39,10 +39,11 @@ type TcInputProps = {
   intermediateSanitize?: (input: string) => string,
   zeroValue: T;
   type?: string;
-  tableInput?: boolean;
+  dark?: boolean;
+  unit?: string;
+  showIcon?: boolean;
 }
 const props = withDefaults(defineProps<TcInputProps>(), {
-    validation: () => ({ isValid: true, errorMessage: "" }),
     intermediateSanitize: input => input,
     type: "text"
 });
@@ -58,7 +59,7 @@ const id = crypto.randomUUID();
 const rawInput = ref("");
 const sanitizedValue = ref(props.zeroValue) as Ref<T>;
 const displayedValue = ref(props.format(props.modelValue)) as Ref<V>;
-const validationResult = computed(() => props.validation(sanitizedValue.value));
+const validationResult = computed(() => props.validation?.(sanitizedValue.value) ?? { isValid: true, errorMessage: "" });
 watch(() => props.modelValue, val => { displayedValue.value = props.format(val) }, { immediate: true });
 
 // ============== EVENT HANDLERS ==============
@@ -105,19 +106,11 @@ function handleResetClick(): void {
 
 <style scoped lang="postcss">
 .base-input {
-  @apply inline-flex items-center border rounded-sm py-1 pr-0.5;
-}
-
-.table-input {
-  @apply inline-flex items-center;
-}
-
-.table-error-input {
-  @apply bg-red-300 text-red-300;
+  @apply inline-flex items-center pr-0.5 py-px h-fit;
 }
 
 .valid-input {
-  @apply bg-neutral-900 border-neutral-950 border ;
+  @apply rounded-sm;
 }
 
 .error-input {

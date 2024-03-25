@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import TcStatusBadge from "@/components/dev/system/TcStatusBadge.vue";
 import {status} from "@/components/dev/system/index";
-import {moduleTree} from "@/modules/index.gen";
+import {moduleTree} from "@/modules";
 import {useRouter} from "vue-router";
 
 const router = useRouter();

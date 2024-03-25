@@ -1,7 +1,7 @@
 <template>
-  <div class="flex items-center standard-border bg-dark py-px pr-0.5">
+  <div :class="['flex items-center rounded-sm py-px pr-1', dark ? 'bg-input-dark' : 'bg-input']">
     <input
-        type="text" :placeholder="placeholder" v-model="inputValue" class="bg-dark px-1.5 w-full outline-none"
+        type="text" :placeholder="placeholder" v-model="inputValue" class="bg-transparent px-1.5 py-px w-full outline-none"
         @keyup.enter="handleEnterClick"
     >
     <tc-icon icon="search" class="large-icon"/>
@@ -33,7 +33,8 @@ executeSearch = searchVal => search(searchVal) then display the results in table
 type TcLookupProps = {
   placeholder: string;
   lookupWindowPath: string;
-  tableConfiguration: TableHeaderGroups<T> // generate table from within the component, no outside slot needed
+  tableConfiguration: TableHeaderGroups<T>; // generate table from within the component, no outside slot needed
+  dark?: boolean;
 };
 const props = defineProps<TcLookupProps>();
 

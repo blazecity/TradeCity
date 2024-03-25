@@ -1,5 +1,5 @@
 <template>
-  <div :class="['flex rounded-xl hover:cursor-pointer', modelValue ? 'bg-blue-400' : 'bg-gray-500']" @click="handleClick">
+  <div :class="['flex rounded-xl hover:cursor-pointer', modelValue ? 'bg-blue-500' : 'bg-gray-500']" @click="handleClick">
     <div v-if="!modelValue" class="switch-knob"></div>
     <span :class="['prevent-select mt-[3px] font-bold', modelValue ? 'ml-1.5 mr-0.5' : 'ml-0.5 mr-1.5']">
       <slot></slot>

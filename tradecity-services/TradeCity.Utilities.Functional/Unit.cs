@@ -1,3 +1,3 @@
-namespace TradeCity.Utilities.Functional;
+namespace TradeCity;
 
 public struct Unit;

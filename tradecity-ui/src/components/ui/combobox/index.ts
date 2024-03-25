@@ -36,7 +36,7 @@ export function useSearch<T extends object>(items: ComboBoxItems<T>) {
     };
 
     const firstObject = items[0]
-    Object.entries(firstObject.data).map(([key, value]) => {
+    Object.entries(Object.entries(items)[0]).map(([key, value]) => {
         const indexKey = key as keyof T;
         if (Array.isArray(value) && value.length > 0) {
             const firstEntry = value[0];

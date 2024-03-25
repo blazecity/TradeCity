@@ -11,6 +11,9 @@
     <tc-tab id="pricingHistory" label="Pricing History" :active-id="activeTab">
       Pricing History
     </tc-tab>
+      <tc-tab id="pricingMatrix" :active-id="activeTab">
+          Pricing Matrix
+      </tc-tab>
   </tc-tab-panel>
 </template>
 
@@ -29,5 +32,6 @@ const tabHeaders = [
   { id: "comparables", label: "Comparables" },
   { id: "secMarket", label: "Secondary Market" },
   { id: "pricingHistory", label: "Pricing History" },
+  { id: "pricingMatrix", label: "Pricing Matrix"},
 ]
 </script>

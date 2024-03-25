@@ -1,5 +1,5 @@
 <template>
-  <tc-lookup :displayed-value="displayedValue" placeholder="Client" @search-enter="handleSearchEnter">
+  <tc-lookup :displayed-value="displayedValue" placeholder="Client" @search-enter="handleSearchEnter" dark>
       <div class="client-lookup-grid container">
           <div class="client-lookup-form-grid">
               <tc-string-input v-model="nameSearch" placeholder="Client Name" with-label class="col-span-full" />

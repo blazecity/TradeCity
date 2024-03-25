@@ -1,5 +1,5 @@
 <template>
-  <div v-if="activeId === id" class="px-1 pt-1 h-full overflow-hidden">
+  <div v-if="activeId === id" class="h-full overflow-hidden">
     <slot></slot>
   </div>
 </template>

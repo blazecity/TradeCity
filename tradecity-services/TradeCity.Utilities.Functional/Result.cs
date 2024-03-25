@@ -44,7 +44,7 @@ public struct Result<T> where T: notnull
     public Option<T> ToOption() => this.IsOk() ? Option<T>.Some(this._okVal!) : Option<T>.None();
 }
 
-public struct Result
+public static class Result
 {
     public static Result<T> Ok<T>(T val) where T : notnull => Result<T>.Ok(val);
 

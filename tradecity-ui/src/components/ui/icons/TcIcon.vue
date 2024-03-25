@@ -1,15 +1,16 @@
 <template>
   <span
       :class="[
+          'select-none w-fit',
           filled ? 'material-symbols-filled' : 'material-icons',
           {
               'hover:cursor-pointer': clickable,
               'rounded-xl': rounding === 'rounded' && clickable,
               'rounded-sm': rounding === 'semi-rounded' && clickable,
               'rounded-none': rounding === 'unrounded' && clickable,
-              'hover:bg-base': dark && clickable,
-              'hover:bg-neutral-700': !dark && clickable,
-              'bg-base': dark && durableBackground,
+              'hover:bg-zinc-900': dark && clickable,
+              'hover:bg-slate-500': !dark && clickable,
+              'bg-neutral-800': dark && durableBackground,
               'bg-neutral-700': !dark && durableBackground,
               'bg-gray-500': soft && durableBackground
           }

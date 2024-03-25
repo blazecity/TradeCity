@@ -2,7 +2,7 @@
   <div class="relative tooltip inline-block">
       <slot></slot>
       <div :class="[
-          'tooltip-content text-black inline-block z-50 tooltip-background h-fit w-fit px-1.5 pt-0.5 pb-1 font-bold rounded-sm whitespace-nowrap',
+          'tooltip-content text-black inline-block z-[90] tooltip-background h-fit w-fit px-1.5 pt-0.5 pb-1 font-bold rounded-sm whitespace-nowrap',
           { 'my-auto mr-0 ml-2.5 top-0 bottom-0 tooltip-content-right': direction === 'right' },
           { 'my-auto ml-0 mr-2.5 top-0 bottom-0 right-full tooltip-content-left': direction === 'left' },
           { 'mt-0 mb-2.5 left-1/2 -translate-x-1/2 bottom-full tooltip-content-top': direction === 'top' },
