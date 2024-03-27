@@ -21,15 +21,14 @@
             </div>
         </div>
         <!-- dropdown -->
-        <div v-if="expanded" :class="['dropdown absolute border-neutral-900 border p-1 mt-1 max-h-80 overflow-hidden z-10 w-full', dark ? 'bg-input-dark' : 'bg-input']">
+        <div v-if="expanded" :class="['dropdown absolute border-base border p-1 mt-1 max-h-80 overflow-hidden z-10 w-full', dark ? 'bg-input-dark' : 'bg-input']">
             <!-- dropdown action bar -->
             <div v-if="multiSelect" class="flex items-center gap-1 mb-1.5">
                 <tc-button text="Select all" @click="handleSelectAllClick"/>
                 <tc-button text="Remove all" @click="handleRemoveAllClick" dangerous/>
             </div>
             <div class="overflow-auto h-full">
-                <div v-for="([id, isSelected], index) in displayedDropdownItems" :key="index"
-                     class="flex items-center px-0.5">
+                <div v-for="([id, isSelected], index) in displayedDropdownItems" :key="index" class="flex items-center px-0.5">
                     <tc-check-box
                         :model-value="isSelected"
                         @update:model-value="isNowSelected => handleSelectedClick(id, isNowSelected)"
@@ -51,12 +50,13 @@ import TcIcon from "@/components/ui/icons/TcIcon.vue";
 import TcComboBoxSelectedItem from "@/components/ui/combobox/TcComboBoxSelectedItem.vue";
 import TcButton from "@/components/ui/button/TcButton.vue";
 import TcCheckBox from "@/components/ui/input/TcCheckBox.vue";
-import {ComboBoxItems, useSearch} from "@/components/ui/combobox/index";
+import type {ComboBoxItems} from "@/components/ui/combobox/index";
+import {useSearch} from "@/components/ui/combobox/index";
 import {useClickContext} from "@/stores/clickcontext";
-// TODO: Muss über v-model gesteuert werden, da sonst keine Defaultwerte gesetzt werden können.
-// Flow: -> Die selektierten Items sind über den props mitgegeben, um sie als selektiert zu markieren, muss man
-// vergleichen, ob sie ob das item inter selektierten Collection drin ist. Es wäre dabei etwas effizienter die Combo
-// Box items als Objekt hineinzugeben, da dann mit einem Key gearbeitet werden kann.
+
+// The current selection has to be setup as v-model, because otherwise you cannot set default values.
+// items (ComboBoxItems
+
 type TcComboBoxProps = {
     items: ComboBoxItems<T>;
     placeholder: string;
@@ -71,8 +71,10 @@ const props = withDefaults(defineProps<TcComboBoxProps>(), {
     level: 0
 });
 
+const selectionModel = defineModel<Array<string>>();
+
 type TcComboBoxEmits = {
-    "selectionChanged": [currentSelection: Array<string>, selectionAdded: Array<string>, selectionRemoved: Array<string>];
+    "selectionChanged": [selectionAdded: Array<string>, selectionRemoved: Array<string>];
     "update:selection": [currentSelection: Array<string>];
 };
 const emits = defineEmits<TcComboBoxEmits>();
@@ -86,16 +88,16 @@ const searchTerm = ref("");
 const dropdownItems = ref(new Map(Object.keys(props.items).map(key => [key, false])));
 const displayedDropdownItems = ref(dropdownItems.value);
 const numberOfSelectedItems = computed(() => [...dropdownItems.value.values()].filter(isSelected => isSelected).length);
-const firstSelectedItem = computed(() => [...dropdownItems.value.entries()].find(([, isSelected]) => isSelected)?.[0]);
 const previousSelectedId = ref<string>();
 watch(searchTerm, async val => {
-    if (val === "") {
+   if (val === "") {
         displayedDropdownItems.value = dropdownItems.value;
         return;
     }
+
     expanded.value = true;
-    const searchResult: [string] = await searchDb.value(val);
-    displayedDropdownItems.value = new Map([...searchResult.map(id => [id, dropdownItems.value.get(id)])]);
+    const searchResult: Array<string> = await searchDb.value(val);
+  displayedDropdownItems.value = new Map([...searchResult.map(id => [id, dropdownItems.value.get(id)])]);
 }, {immediate: true});
 
 registerHandler(uuid, props.level, () => {
@@ -141,9 +143,10 @@ function handleSelectedClick(id: string, isSelected: boolean): void {
 
     dropdownItems.value.set(id, isSelected);
     previousSelectedId.value = id;
+    selectionModel.value = [...dropdownItems.value.keys()];
+
     emits(
         "selectionChanged",
-        [...dropdownItems.value.keys()],
         isSelected ? [id] : [],
         isSelected ? [] : [id]
     );
